@@ -1,0 +1,768 @@
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>DOLLAR SURVEY</title>
+
+  <style>
+
+    body {
+
+      margin: 0;
+
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+      background-color: #000;
+
+      color: #fff;
+
+      display: flex;
+
+      flex-direction: column;
+
+      min-height: 100vh;
+
+    }
+
+    header {
+
+      padding: 20px 24px 10px;
+
+      border-bottom: 2px solid #0f0;
+
+      background-color: #111;
+
+      user-select: none;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+    }
+
+    #title {
+
+      font-size: 2.5rem;
+
+      font-weight: bold;
+
+      color: #0f0;
+
+      margin-bottom: 12px;
+
+      white-space: nowrap;
+
+    }
+
+    #user-controls {
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      gap: 30px;
+
+      flex-wrap: wrap;
+
+    }
+
+    #user-id {
+
+      font-weight: 600;
+
+      color: #fff;
+
+      font-size: 1.2rem;
+
+    }
+
+    #balance {
+
+      font-weight: 700;
+
+      color: #0f0;
+
+      margin-left: 6px;
+
+    }
+
+    #withdraw-btn {
+
+      background-color: #0f0;
+
+      border: none;
+
+      color: #000;
+
+      font-weight: 700;
+
+      padding: 10px 18px;
+
+      border-radius: 6px;
+
+      cursor: pointer;
+
+      transition: background-color 0.3s ease;
+
+      min-width: 110px;
+
+    }
+
+    #withdraw-btn:hover {
+
+      background-color: #0b0;
+
+    }
+
+    main {
+
+      flex-grow: 1;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      padding: 20px;
+
+    }
+
+    #question-zone {
+
+      background: #fff;
+
+      border: 3px solid #0f0;
+
+      border-radius: 12px;
+
+      padding: 30px 40px;
+
+      width: 100%;
+
+      max-width: 700px;
+
+      color: #000;
+
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      user-select: none;
+
+    }
+
+    #question-counter {
+
+      font-weight: 700;
+
+      margin-bottom: 15px;
+
+      color: #080;
+
+      font-size: 1.1rem;
+
+    }
+
+    #question-text {
+
+      font-size: 1.5rem;
+
+      margin-bottom: 35px;
+
+      text-align: center;
+
+      min-height: 100px;
+
+      line-height: 1.3;
+
+    }
+
+    .answer-buttons {
+
+      display: flex;
+
+      gap: 40px;
+
+      width: 100%;
+
+      max-width: 400px;
+
+    }
+
+    .btn {
+
+      flex: 1;
+
+      padding: 18px 0;
+
+      font-size: 1.3rem;
+
+      font-weight: 700;
+
+      border-radius: 10px;
+
+      border: 2px solid #080;
+
+      cursor: pointer;
+
+      background-color: #fff;
+
+      color: #080;
+
+      transition: all 0.3s ease;
+
+      text-align: center;
+
+    }
+
+    .btn:active,
+
+    .btn.animated {
+
+      animation: tapAnim 0.3s ease forwards;
+
+    }
+
+    .btn:hover:not(:disabled) {
+
+      background-color: #e0ffe0;
+
+    }
+
+    .btn:disabled {
+
+      opacity: 0.5;
+
+      cursor: default;
+
+    }
+
+    @keyframes tapAnim {
+
+      0% { transform: scale(1); background-color: #0f0; color: #000; }
+
+      50% { transform: scale(0.9) rotate(-5deg); background-color: #0b0; color: #fff; }
+
+      100% { transform: scale(1); background-color: #0f0; color: #000; }
+
+    }
+
+    @media (max-width: 600px) {
+
+      #question-zone {
+
+        padding: 20px 25px;
+
+      }
+
+      #question-text {
+
+        font-size: 1.2rem;
+
+        min-height: 80px;
+
+      }
+
+      .btn {
+
+        font-size: 1.1rem;
+
+        padding: 14px 0;
+
+      }
+
+      #user-controls {
+
+        gap: 20px;
+
+      }
+
+    }
+
+    /* Modal styles */
+
+    .modal {
+
+      display: none;
+
+      position: fixed;
+
+      z-index: 1000;
+
+      left: 0; top: 0;
+
+      width: 100%; height: 100%;
+
+      background-color: rgba(0, 0, 0, 0.75);
+
+      justify-content: center;
+
+      align-items: center;
+
+    }
+
+    .modal-content {
+
+      background-color: #111;
+
+      padding: 30px 25px;
+
+      border-radius: 10px;
+
+      max-width: 400px;
+
+      width: 90%;
+
+      box-shadow: 0 0 20px #0f0;
+
+      color: #0f0;
+
+      text-align: center;
+
+    }
+
+    .modal-content h2 {
+
+      margin-top: 0;
+
+      margin-bottom: 20px;
+
+    }
+
+    .modal-content input {
+
+      width: 100%;
+
+      padding: 12px;
+
+      margin: 10px 0;
+
+      border-radius: 5px;
+
+      border: none;
+
+      font-size: 1rem;
+
+    }
+
+    .modal-content button {
+
+      background-color: #0f0;
+
+      color: #000;
+
+      font-weight: bold;
+
+      padding: 10px 20px;
+
+      border: none;
+
+      border-radius: 6px;
+
+      cursor: pointer;
+
+      margin-top: 10px;
+
+    }
+
+    .modal-content button:hover {
+
+      background-color: #0b0;
+
+    }
+
+    .modal-content .error {
+
+      color: red;
+
+      font-size: 0.9rem;
+
+      margin-top: 5px;
+
+    }
+
+    .close {
+
+      position: absolute;
+
+      top: 20px;
+
+      right: 30px;
+
+      font-size: 2rem;
+
+      color: #0f0;
+
+      cursor: pointer;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <header>
+
+    <div id="title">DOLLAR SURVEY</div>
+
+    <div id="user-controls">
+
+      <div id="user-id">UserID: USER98765</div>
+
+      <div id="balance">$0.00</div>
+
+      <button id="withdraw-btn" type="button">Withdraw</button>
+
+    </div>
+
+  </header> <!-- Invite Link + Share Button -->
+<div style="display: flex; align-items: center; gap: 10px; margin: 20px;">
+  <a id="inviteLink" href="https://example.com/invite/123456" target="_blank" style="color: green; font-weight: bold;">
+    https://example.com/invite/123456
+  </a>
+  <button onclick="shareInvite()" style="padding: 5px 10px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer;">
+    Share
+  </button>
+</div>
+
+<script>
+  function shareInvite() {
+    const link = document.getElementById("inviteLink").href;
+
+    if (navigator.share) {
+      navigator.share({
+        title: "Join me!",
+        text: "Use my invite link to sign up:",
+        url: link
+      }).catch((error) => console.log("Sharing failed", error));
+    } else {
+      // Fallback: copy link to clipboard
+      navigator.clipboard.writeText(link).then(() => {
+        alert("Link copied to clipboard!");
+      });
+    }
+  }
+</script>
+
+
+  <main>
+
+    <section id="question-zone">
+
+      <div id="question-counter">Question 1 / 100</div>
+
+      <div id="question-text"></div>
+
+      <div class="answer-buttons">
+
+        <button class="btn" id="btn-yes" type="button">Yes</button>
+
+        <button class="btn" id="btn-no" type="button">No</button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Modal -->
+
+  <div id="withdraw-modal" class="modal">
+
+    <div class="modal-content">
+
+      <span class="close" onclick="document.getElementById('withdraw-modal').style.display='none'">&times;</span>
+
+      <h2>Withdraw</h2>
+      <input type="text" id="wallet-address name" placeholder="Enter wallet address name" />
+      
+      <input type="text" id="wallet-address" placeholder="Enter Crypto Wallet Address" />
+
+      <input type="number" id="withdraw-amount" placeholder="Enter Amount ($100 min)" />
+
+      <div id="withdraw-error" class="error"></div>
+
+      <button onclick="submitWithdraw()">Withdraw</button>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    const questions = [
+  "Did you sleep well last night?",
+  "Did you eat breakfast today?",
+  "Did you exercise today?",
+  "Do you drink enough water daily?",
+  "Did you make your bed this morning?",
+  "Did you brush your teeth today?",
+  "Have you meditated in the past 24 hours?",
+  "Have you gone outside today?",
+  "Did you spend time in natural sunlight today?",
+  "Did you avoid sugary snacks today?",
+  "Did you eat any vegetables today?",
+  "Did you eat any fruits today?",
+  "Did you drink coffee today?",
+  "Did you limit your screen time this morning?",
+  "Did you write down any goals today?",
+  "Did you complete your top priority task today?",
+  "Did you avoid procrastination this morning?",
+  "Did you read something educational today?",
+  "Did you spend time with friends or family today?",
+  "Did you compliment someone today?",
+  "Did you avoid junk food today?",
+  "Did you avoid soft drinks today?",
+  "Did you stay hydrated throughout the day?",
+  "Did you get at least 7 hours of sleep last night?",
+  "Did you clean your room today?",
+  "Did you do any house chores today?",
+  "Did you walk for at least 15 minutes today?",
+  "Did you stretch your body today?",
+  "Did you take a break from work or study today?",
+  "Did you feel happy most of today?",
+  "Did you write in a journal today?",
+  "Did you express gratitude today?",
+  "Did you avoid social media distractions today?",
+  "Did you stay focused on a task for over 30 minutes today?",
+  "Did you help someone today?",
+  "Did you avoid arguing with anyone today?",
+  "Did you smile at someone today?",
+  "Did you turn off your phone during a task today?",
+  "Did you spend at least 5 minutes in silence today?",
+  "Did you take deep breaths when stressed today?",
+  "Did you eat home-cooked food today?",
+  "Did you eat at the same time as yesterday?",
+  "Did you avoid late-night snacking yesterday?",
+  "Did you take any supplements today?",
+  "Did you wash your hands before meals today?",
+  "Did you avoid alcohol today?",
+  "Did you limit caffeine intake today?",
+  "Did you spend time doing something creative today?",
+  "Did you work on a hobby today?",
+  "Did you avoid gossip or negativity today?",
+  "Did you encourage someone today?",
+  "Did you complete all your planned tasks today?",
+  "Did you get fresh air today?",
+  "Did you take a walk after eating today?",
+  "Did you avoid overthinking today?",
+  "Did you go to bed early yesterday?",
+  "Did you wake up on time today?",
+  "Did you avoid hitting the snooze button today?",
+  "Did you say something kind to yourself today?",
+  "Did you avoid comparing yourself to others today?",
+  "Did you limit TV or video watching today?",
+  "Did you cook something yourself today?",
+  "Did you avoid fast food today?",
+  "Did you follow a workout plan today?",
+  "Did you track your spending today?",
+  "Did you save money today?",
+  "Did you learn something new today?",
+  "Did you read at least one page of a book today?",
+  "Did you review your goals today?",
+  "Did you listen to calming music today?",
+  "Did you forgive someone today?",
+  "Did you apologize to someone if needed today?",
+  "Did you fix something broken today?",
+  "Did you reduce your use of plastic today?",
+  "Did you recycle something today?",
+  "Did you clean a surface today?",
+  "Did you organize something today?",
+  "Did you plan your day ahead today?",
+  "Did you follow your morning routine today?",
+  "Did you follow your evening routine today?",
+  "Did you check on a loved one today?",
+  "Did you keep your promises today?",
+  "Did you do something new today?",
+  "Did you avoid complaining today?",
+  "Did you focus on your breathing today?",
+  "Did you avoid overworking today?",
+  "Did you avoid skipping meals today?",
+  "Did you stay calm under pressure today?",
+  "Did you avoid judging someone today?",
+  "Did you take care of your skin today?",
+  "Did you wash your face before bed yesterday?",
+  "Did you floss your teeth today?",
+  "Did you avoid loud or disturbing noises today?",
+  "Did you say 'thank you' today?",
+  "Did you smile at yourself in the mirror today?",
+  "Did you avoid multitasking during important tasks today?",
+  "Did you drink water first thing this morning?",
+  "Did you avoid any unnecessary spending today?",
+  "Did you stay patient with someone today?",
+  "Did you speak up for yourself respectfully today?",
+  "Did you avoid negative news today?",
+  "Did you feel peaceful at any moment today?",
+  "Did you reflect on your actions today?"
+];
+
+
+    const totalQuestions = questions.length;
+
+    let currentQuestion = 0;
+
+    const questionCounterEl = document.getElementById('question-counter');
+
+    const questionTextEl = document.getElementById('question-text');
+
+    const btnYes = document.getElementById('btn-yes');
+
+    const btnNo = document.getElementById('btn-no');
+
+    const userIdEl = document.getElementById('user-id');
+
+    const balanceEl = document.getElementById('balance');
+
+    const currentUserId = 'USER98765';
+
+    let currentBalance = 0;
+
+    function setUserData(userId, balance) {
+
+      currentBalance = balance;
+
+      userIdEl.textContent = `UserID: ${userId}`;
+
+      balanceEl.textContent = `$${balance.toFixed(2)}`;
+
+    }
+
+    function loadQuestion(index) {
+
+      if (index >= totalQuestions) {
+
+        questionCounterEl.textContent = `Survey Completed! Thank you!`;
+
+        questionTextEl.textContent = '';
+
+        btnYes.style.display = 'none';
+
+        btnNo.style.display = 'none';
+
+        setUserData(currentUserId, 1.00);
+
+        return;
+
+      }
+
+      questionCounterEl.textContent = `Question ${index + 1} / ${totalQuestions}`;
+
+      questionTextEl.textContent = questions[index];
+
+      btnYes.disabled = false;
+
+      btnNo.disabled = false;
+
+      btnYes.style.display = '';
+
+      btnNo.style.display = '';
+
+    }
+
+    function animateButton(btn) {
+
+      btn.classList.add('animated');
+
+      setTimeout(() => btn.classList.remove('animated'), 300);
+
+    }
+
+    function handleAnswer(answer) {
+
+      btnYes.disabled = true;
+
+      btnNo.disabled = true;
+
+      const clickedBtn = (answer === 'yes') ? btnYes : btnNo;
+
+      animateButton(clickedBtn);
+
+      setTimeout(() => {
+
+        currentQuestion++;
+
+        loadQuestion(currentQuestion);
+
+      }, 1000);
+
+    }
+
+    btnYes.addEventListener('click', () => handleAnswer('yes'));
+
+    btnNo.addEventListener('click', () => handleAnswer('no'));
+
+    document.getElementById('withdraw-btn').addEventListener('click', () => {
+
+      document.getElementById('withdraw-modal').style.display = 'flex';
+
+      document.getElementById('withdraw-error').textContent = '';
+
+    });
+
+    function submitWithdraw() {
+
+      const address = document.getElementById('wallet-address').value.trim();
+
+      const amount = parseFloat(document.getElementById('withdraw-amount').value);
+
+      const errorEl = document.getElementById('withdraw-error');
+
+      if (!address || isNaN(amount)) {
+
+        errorEl.textContent = "Please enter valid details.";
+
+        return;
+
+      }
+
+      if (amount < 100) {
+
+        errorEl.textContent = "Minimum withdrawal is $100.";
+
+        return;
+
+      }
+
+      if (amount > currentBalance) {
+
+        errorEl.textContent = "You don't have enough balance.";
+
+        return;
+
+      }
+
+      errorEl.textContent = '';
+
+      alert(`Withdrawal request submitted:\nWallet: ${address}\nAmount: $${amount}`);
+
+      document.getElementById('withdraw-modal').style.display = 'none';
+
+    }
+
+    // Initialize
+
+    setUserData(currentUserId, 0);
+
+    loadQuestion(currentQuestion);
+
+  
+  </script>
+
+</body>
+
+</html>
