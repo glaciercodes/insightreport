@@ -434,8 +434,8 @@
 
   </header> <!-- Invite Link + Share Button -->
 <div style="display: flex; align-items: center; gap: 10px; margin: 20px;">
-  <a id="inviteLink" href="https://example.com/invite/123456" target="_blank" style="color: green; font-weight: bold;">
-    https://example.com/invite/123456
+  <a id="inviteLink" href="https://dollarsurvey.netlify.app" target="_blank" style="color: green; font-weight: bold;">
+   dollarsurvey.netlify.app
   </a>
   <button onclick="shareInvite()" style="padding: 5px 10px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer;">
     Share
@@ -449,7 +449,7 @@
     if (navigator.share) {
       navigator.share({
         title: "Join me!",
-        text: "Use my invite link to sign up:",
+        text: "Use my invite link to sign up and get paid after survey:",
         url: link
       }).catch((error) => console.log("Sharing failed", error));
     } else {
