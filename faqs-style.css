@@ -58,3 +58,26 @@ strong {
     font-size: 14px;
   }
 }
+.back-button {
+  background-color: #00ff88;
+  color: #000000;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+.back-button:hover {
+  background-color: #00cc66;
+  box-shadow: 0 0 15px #00ff88;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
