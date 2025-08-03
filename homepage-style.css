@@ -521,7 +521,7 @@ body {
 }
 .referral-banner {
   position: fixed;
-  top: 200px;
+  top: 130px;
   right: -100%; /* Start off screen */
   background-color: rgb(14, 77, 14);
   color: #000;
@@ -730,4 +730,5 @@ button:hover {
   border-radius: 100px; /* Optional: round the corners */
   box-shadow: 0 0 15px #15ff00; /* Optional: glow effect */
 }
+
 
