@@ -58,4 +58,30 @@ strong {
     font-size: 14px;
   }
 }
+.go-back-btn {
+  background-color: #00ff88;
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ff88;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 30px;
+}
+
+.go-back-btn:hover {
+  background-color: #00cc66;
+  box-shadow: 0 0 15px #00ff88;
+}
+
+@media (max-width: 600px) {
+  .go-back-btn {
+    width: 100%;
+    font-size: 15px;
+  }
+}
+
 
