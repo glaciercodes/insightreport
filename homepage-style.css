@@ -670,10 +670,14 @@ body {
   max-width: 600px;
   margin: 50px auto;
   padding: 30px;
-  background-color: #111;
+  background-color: #111; /* dark background */
+  color: #00ff88; /* luminous green text */
+  border: 1px solid #00ff88; /* visible border */
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+  font-family: Arial, sans-serif;
 }
+
 
 .survey-question {
   font-size: 18px;
@@ -726,3 +730,4 @@ button:hover {
   border-radius: 100px; /* Optional: round the corners */
   box-shadow: 0 0 15px #15ff00; /* Optional: glow effect */
 }
+
