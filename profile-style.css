@@ -1,109 +1,74 @@
 body {
-  margin: 0;
-  padding: 0;
+  background-color: #000000;
+  color: #4dff00;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #111;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
+  padding: 20px;
 }
 
-.profile-container {
-  background-color: #1e1e1e;
-  padding: 40px 20px;
-  border-radius: 12px;
+/* User Info Section */
+.user-info {
+  background-color: #111111;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #0bf207;
+  margin-bottom: 25px;
+  box-shadow: 0 0 12px #04f023;
+}
+
+#user-email,
+#user-balance {
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: #04fe04;
+}
+
+/* Referral Section */
+.referral-section {
+  background-color: #111111;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #00ff2a;
+  box-shadow: 0 0 12px #11ff00;
   text-align: center;
-  box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-  width: 100%;
-  max-width: 400px;
-  border: 2px solid #0f0;
-  margin-top: 30px;
 }
 
-.selected-profile img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: 4px solid #0f0;
-  margin-bottom: 10px;
+#referral-link {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  color: #00ff4c;
+  margin-bottom: 15px;
+  word-wrap: break-word;
 }
 
-.user-id {
-  font-size: 1.2rem;
-  color: #0f0;
-  margin-bottom: 20px;
-}
-
-.change-btn {
-  padding: 10px 20px;
-  background-color: #0f0;
-  color: black;
+/* Invite Button */
+.referral-section button {
+  background-color: #42ad09;
+  color: #000000;
   border: none;
+  padding: 10px 24px;
+  font-size: 15px;
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
-}
-.change-btn:hover {
-  background-color: #0c0;
+  box-shadow: 0 0 10px #1eff00;
+  transition: background-color 0.3s ease;
 }
 
-/* Modal styles */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  justify-content: center;
-  align-items: center;
+.referral-section button:hover {
+  background-color: #128b22;
+  box-shadow: 0 0 14px #11ff00;
 }
 
-.modal-content {
-  background: #222;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 0 15px #0f0;
+/* Responsive Style */
+@media (max-width: 600px) {
+  .referral-section button,
+  #referral-link {
+    font-size: 14px;
+    width: 100%;
+  }
 }
-
-.modal-content h3 {
-  color: #0f0;
-  margin-bottom: 15px;
-}
-
-.image-options {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.image-options img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: border 0.3s ease;
-}
-
-.image-options img:hover {
-  border-color: #0f0;
-}
-
-.close {
-  position: absolute;
-  top: 20px;
-  right: 25px;
-  color: #0f0;
-  font-size: 28px;
-  cursor: pointer;
-}
-.go-back-btn {
-  position: absolute;
+.go-back-btn {position: absolute;
   top: 15px;
   left: 15px;
   background-color: transparent;
@@ -120,39 +85,4 @@ body {
   background-color: #0f0;
   color: #000;
 }
-.user-info {
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 0 20px;
-  font-family: Arial, sans-serif;
-  color: #222;
-}
 
-.user-info h3 {
-  font-size: 1.5em;
-  margin-bottom: 10px;
-}
-
-.user-info p {
-  font-size: 1.1em;
-  margin: 8px 0;
-}
-
-.user-info a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.user-info a:hover {
-  text-decoration: underline;
-}
-.box2 {
-  border: 1px solid #ccc;
-  padding: 20px;
-  margin: 20px 0; /* adds space between the two boxes */
-  border-radius: 8px;
-}
-.vertical-box {
-  display: flex;
-  flex-direction: column; /* stacks items vertically */
-}
