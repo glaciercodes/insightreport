@@ -60,13 +60,15 @@ strong {
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
-  width:500px;            
+  width:500px; 
+  height:500px            
 }
 
 .go-back-btn:hover {
   background-color: #0f0;
   color: #000;
 }
+
 
 
 
