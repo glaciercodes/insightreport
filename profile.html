@@ -7,72 +7,149 @@
   <link rel="stylesheet" href="profile-style.css">
 </head>
 <body>
+  <h2>User Profile</h2>
     <button class="go-back-btn" onclick="goBack()">⬅ Back</button>
-
-  <div class="profile-container">
-    <div class="selected-profile">
-      <img id="selected-img" src="" alt="Profile Image" />
-
-    <div class="user-id">
-      <strong>User ID:</strong> <span id="userId">YourID_9765</span>
-    </div>
-
-    <!-- Change Image Button -->
-    <button class="change-btn" onclick="openModal()">Change Image</button>
-  </div>
-
-  <!-- Modal -->
-   <div>
-  <div id="imageModal" class="modal">
-    <div class="box1">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h3>Select a Profile Image</h3>
-      <div class="image-options">
-        <img src="https://api.dicebear.com/9.x/adventurer/svg?seed=Adrian" onclick="selectAvatar(this.src)">
-        <img src="https://api.dicebear.com/9.x/adventurer/svg?seed=Jordan" onclick="selectAvatar(this.src)">
-        <img src="https://api.dicebear.com/9.x/adventurer/svg?seed=Taylor" onclick="selectAvatar(this.src)">
-        <img src="https://api.dicebear.com/9.x/adventurer/svg?seed=Alex" onclick="selectAvatar(this.src)">
-      </div>
-    </div>
-  </div>
-  
-  <div>
-  <div class="box2">
-  <h3>User Contact</h3>
-  <p><strong>Email/Phone:</strong> <span id="userContact">user@example.com</span></p>
-
-  <p>
-    <strong>Contact us at:</strong>
-    <a href="mailto:support@example.com">dollarsurveyus@gmail.com</a>
-  </p>
+<div class="user-info">
+  <div id="user-email">User: ...</div>
+  <div id="user-balance">Balance: $0.00</div>
 </div>
-</div>
+  <div class="referral-section">
+  <span id="referral-link">https://dollarsurveys.netlify.app</span>
+  <button onclick="shareReferral()">Invite Others</button>
+  <p style="color: #00ff88; font-size: 16px;">
+  Having any problem? 
+  <a href="mailto:dollarsurveyus@gmail.com" style="color: #00ff88; text-decoration: underline;">
+    Contact us at dollarsurveyus@gmail.com
+  </a>
+</p>
+
   <script>
-    const userEmailOrPhone = "useremail@example.com"; // or phone number
+function shareReferral() {
+  const referralUrl = document.getElementById('referral-link').textContent;
 
-  document.getElementById("userContact").textContent = userEmailOrPhone;
-    function goBack() {
-    window.history.back(); // Goes to the previous page
+  if (navigator.share) {
+    navigator.share({
+      title: 'Join Dollar Survey',
+      text: 'Sign up using my referral link and get paid from answering surveys:',
+      url: referralUrl
+    }).catch((err) => {
+      console.error('Share failed:', err);
+      fallbackCopy(referralUrl);
+    });
+  } else {
+    fallbackCopy(referralUrl);
   }
-    // Random image on load
-    const randomIndex = Math.floor(Math.random() * images.length);
-    document.getElementById("selected-img").src = images[randomIndex];
-    document.getElementById("userId").textContent = "YourID_9765";
+}
 
-    function selectImage(index) {
-      document.getElementById("selected-img").src = images[index];
-      closeModal();
+function fallbackCopy(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Referral link copied to clipboard!");
+  }).catch(err => {
+    console.error('Clipboard copy failed:', err);
+    alert("Failed to copy link. Please copy it manually.");
+  });
+}
+
+  function toggleMenu() {
+    var menu = document.getElementById("menu-dropdown");
+    menu.classList.toggle("show");
+  }
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, doc, setDoc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
+    authDomain: "dollar-survey-60fe7.firebaseapp.com",
+    projectId: "dollar-survey-60fe7",
+    storageBucket: "dollar-survey-60fe7.appspot.com",
+    messagingSenderId: "293471697208",
+    appId: "1:293471697208:web:664863f09e830e420c69cd"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  let userCountry = "Unknown";
+
+  fetch("https://ipapi.co/json")
+    .then(res => res.json())
+    .then(data => {
+      userCountry = data.country_name || "Unknown";
+    });
+
+  // Show user info live
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      document.getElementById("user-email").textContent = `User: ${user.email || 'Anonymous'}`;
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+      const balance = userSnap.exists() ? userSnap.data().balance || 0 : 0;
+      document.getElementById("user-balance").textContent = `Balance: $${balance.toFixed(2)}`;
+    }
+  });
+
+  // Survey submission
+  window.submitFullSurvey = async function () {
+    const answerEls = document.querySelectorAll(".survey-answer");
+    const questionEls = document.querySelectorAll(".survey-question");
+
+    const allAnswered = Array.from(answerEls).every(el => el.value.trim() !== "");
+    if (!allAnswered) {
+      alert("Please answer all questions before submitting.");
+      return;
     }
 
-    function openModal() {
-      document.getElementById("imageModal").style.display = "flex";
-    }
+    const responses = {};
+    questionEls.forEach((qEl, idx) => {
+      responses[qEl.innerText] = answerEls[idx].value.trim();
+    });
 
-    function closeModal() {
-      document.getElementById("imageModal").style.display = "none";
+    const user = auth.currentUser;
+    const uid = user?.uid || "anonymous";
+    const email = user?.email || "anonymous@user.com";
+
+    try {
+      // Save survey response
+      await addDoc(collection(db, "submittedSurveys"), {
+        userId: uid,
+        email: email,
+        responses: responses,
+        country: userCountry,
+        timestamp: serverTimestamp()
+      });
+
+      // Update balance
+      const userRef = doc(db, "users", uid);
+      const userSnap = await getDoc(userRef);
+      const currentBalance = userSnap.exists() ? userSnap.data().balance || 0 : 0;
+      const newBalance = currentBalance + 0.5;
+
+      await setDoc(userRef, { balance: newBalance }, { merge: true });
+
+      document.getElementById("user-balance").textContent = `Balance: $${newBalance.toFixed(2)}`;
+
+      alert("Survey submitted. Balance updated!");
+      answerEls.forEach(el => el.value = "");
+
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Survey submission failed.");
     }
-  </script>
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1947981398780941"
-     crossorigin="anonymous"></script>
+  };
+</script>
+<script>
+  function goBack() {
+    if (document.referrer !== "") {
+      window.history.back();
+    } else {
+      window.location.href = "index.html"; // fallback to homepage
+    }
+  }
+</script>
+
 </body>
 </html>
