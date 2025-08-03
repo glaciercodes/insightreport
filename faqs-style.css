@@ -1,0 +1,60 @@
+body {
+  background-color: #000000;
+  color: #ccff00; /* Luminous green */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  background-color: #111111;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px #00ff88;
+}
+
+h1 {
+  text-align: center;
+  color: #00ff88;
+  margin-bottom: 25px;
+  font-size: 28px;
+}
+
+.faq {
+  margin-bottom: 25px;
+}
+
+.faq h3 {
+  color: #ccff00;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.faq p {
+  color: #e0ffe0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+strong {
+  color: #00ff88;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .faq h3 {
+    font-size: 16px;
+  }
+
+  .faq p {
+    font-size: 14px;
+  }
+}
