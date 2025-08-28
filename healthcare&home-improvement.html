@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dollar-Survey — Health Care & Home Improvement</title>
+  <style>
+    :root{
+      --bg:#0f1221; --card:#171a2b; --muted:#7f8cff; --text:#f4f8f4; --accent:#66e0a3; --line:#262a43;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      color:var(--text); background: radial-gradient(1200px 800px at 10% -10%, #1d2245 0%, #0f1221 55%, #0b0e1a 100%);
+      letter-spacing:.2px;
+    }
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(15,18,33,.92), rgba(15,18,33,.65) 70%, rgba(15,18,33,0));
+      border-bottom:1px solid var(--line);
+    }
+    .container{max-width:1100px; margin:0 auto; padding:20px}
+    .topbar{display:flex; gap:14px; align-items:center; justify-content:space-between}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:36px; height:36px; border-radius:12px; background: conic-gradient(from 180deg at 50% 50%, #66e0a3, #7f8cff, #66e0a3); box-shadow:0 8px 18px rgba(127,140,255,.35)}
+    h1{font-size:22px; margin:0}
+    .searchwrap{display:flex; gap:10px; align-items:center}
+    .search{
+      display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:14px; background:var(--card); border:1px solid var(--line);
+      min-width:280px; transition: box-shadow .2s ease, transform .2s ease;
+    }
+    .search:focus-within{ box-shadow:0 10px 24px rgba(127,140,255,.15); transform: translateY(-1px)}
+    .search input{background:transparent; border:0; outline:0; color:var(--text); width:100%}
+    .seg{
+      display:inline-flex; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:4px; gap:4px;
+    }
+    .seg button{
+      border:0; background:transparent; color:var(--text); padding:8px 12px; border-radius:10px; cursor:pointer; transition: all .2s ease;
+      font-weight:600; opacity:.8
+    }
+    .seg button.active{ background:linear-gradient(120deg, rgba(127,140,255,.2), rgba(102,224,163,.2)); opacity:1 }
+    .tools{display:flex; gap:10px; align-items:center}
+    .iconbtn{border:1px solid var(--line); background:var(--card); padding:8px 10px; border-radius:10px; cursor:pointer; transition: transform .12s ease, box-shadow .2s ease}
+    .iconbtn:hover{ transform: translateY(-1px); box-shadow:0 10px 18px rgba(0,0,0,.25)}
+
+    /* hero */
+    .hero{padding:24px 0 8px}
+    .hero h2{margin:0 0 8px 0; font-size:28px}
+    .hero p{margin:0; opacity:.9; max-width:820px}
+
+    /* grid */
+    .grid{display:grid; grid-template-columns: repeat(12, 1fr); gap:16px; margin-top:18px}
+    .card{
+      grid-column: span 6; background: linear-gradient(180deg, rgba(23,26,43,.8), rgba(23,26,43,.55));
+      border:1px solid var(--line); border-radius:18px; overflow:hidden; position:relative; box-shadow:var(--shadow);
+      transition: transform .2s ease, box-shadow .25s ease, border-color .2s ease;
+    }
+    .card:hover{ transform: translateY(-3px); box-shadow: 0 18px 40px rgba(127,140,255,.15); border-color:#2c3054 }
+    .card .cover{ height:140px; background: radial-gradient(600px 80px at 0% 0%, rgba(127,140,255,.25), transparent 60%),
+                                    linear-gradient(120deg, rgba(127,140,255,.15), rgba(102,224,163,.15));}
+    .card .content{ padding:16px 16px 14px}
+    .tag{font-size:12px; letter-spacing:.6px; text-transform:uppercase; opacity:.75}
+    .title{font-size:20px; margin:6px 0 8px}
+    .meta{display:flex; gap:8px; align-items:center; font-size:12px; opacity:.8}
+    .meta .dot{width:5px; height:5px; background:var(--muted); border-radius:50%}
+    .body{margin-top:10px; line-height:1.6}
+    .actions{display:flex; gap:10px; margin-top:14px}
+    .btn{border:1px solid var(--line); background:var(--card); color:var(--text); padding:8px 12px; border-radius:10px; cursor:pointer; transition: all .2s ease; font-weight:600}
+    .btn:hover{transform: translateY(-1px)}
+    .btn.primary{ background: linear-gradient(120deg, #7f8cff, #66e0a3); border-color:transparent; color:#0b0e1a}
+
+    @media (max-width:900px){ .card{ grid-column: span 12 } }
+
+    /* accordion */
+    details{ border-top:1px dashed #2e335b; padding-top:10px; margin-top:8px }
+    details summary{ cursor:pointer; list-style:none; position:relative }
+    details summary::-webkit-details-marker{display:none}
+    details[open] summary .chev{ transform: rotate(180deg) }
+    .chev{ display:inline-block; transition: transform .2s ease }
+
+    /* toast */
+    .toast{ position:fixed; right:20px; bottom:20px; background:var(--card); border:1px solid var(--line); padding:12px 14px; border-radius:12px; box-shadow:var(--shadow); opacity:0; pointer-events:none; transform:translateY(8px); transition: all .2s ease}
+    .toast.show{ opacity:1; transform:translateY(0); pointer-events:auto }
+
+    /* footer */
+    footer{margin:40px 0 80px; opacity:.75; font-size:14px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>Dollar Survey</h1>
+      </div>
+      <div class="searchwrap">
+        <div class="seg" role="tablist" aria-label="Sections">
+          <button class="active" data-seg="all" role="tab" aria-selected="true">All</button>
+          <button data-seg="health" role="tab" aria-selected="false">Health Care</button>
+          <button data-seg="home" role="tab" aria-selected="false">Home Improvement</button>
+        </div>
+        <div class="search" role="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".7"/><circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="2" opacity=".7"/></svg>
+          <input id="q" type="search" placeholder="Search topics, e.g. radiology, TikTok, nutrition…" />
+        </div>
+      </div>
+      <div class="tools">
+
+
+        <button class="iconbtn" id="modeBtn" aria-label="Toggle contrast">🌓</button>
+        <button class="iconbtn" id="shuffleBtn" aria-label="Inspire me">✨</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" aria-labelledby="heroTitle">
+      <h2 id="heroTitle">Build a healthier life and a happier home</h2>
+      <p>Welcome to <strong>Dollar Survey</strong>, a curated guide that blends essential health knowledge with practical home strategies. Explore each card, save your favorites, and expand sections to reveal quick, research‑inspired tips you can use today. Small steps compound—start with one card and keep going.</p>
+    </section>
+
+    <section class="grid" id="grid" aria-live="polite">
+
+      <!-- Health Care: Dental Care -->
+      <article class="card" data-tags="health dental teeth" data-seg="health">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Health Care</div>
+          <h3 class="title">Dental Care: Daily Habits for a Lifetime Smile</h3>
+          <div class="meta"><span>3‑minute read</span><span class="dot"></span><span>Care routines & checkups</span></div>
+          <p class="body">Great dental health is less about perfection and more about consistency. Brush for two minutes twice a day with a soft‑bristle brush, floss every evening, and rinse when you can’t brush. A calcium‑rich diet, plenty of water, and limiting frequent sugar exposures help protect enamel. If gums bleed, don’t stop flossing—bleeding usually means they’re irritated and need gentler, regular care. Schedule cleanings every six months; professional scaling removes plaque you can’t reach, and early x‑rays catch problems before they hurt. Keep a travel kit with a foldable brush—your future self will thank you.</p>
+          <details>
+            <summary><span class="chev">▾</span> Quick boosts</summary>
+            <ul>
+              <li>Change your toothbrush or head every 3 months.</li>
+              <li>Chew sugar‑free gum after meals to stimulate saliva.</li>
+              <li>Use a night guard if you grind—protects enamel and jaw.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Health Care: Plastic/Cosmetic Surgery -->
+      <article class="card" data-tags="health plastic cosmetic surgery aesthetics" data-seg="health">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Health Care</div>
+          <h3 class="title">Plastic & Cosmetic Surgery: Informed, Safe, and Personal</h3>
+          <div class="meta"><span>4‑minute read</span><span class="dot"></span><span>Expectations & safety</span></div>
+          <p class="body">Cosmetic decisions are deeply personal. Start with clarity: what outcome matters most—function, confidence, comfort? Choose board‑certified surgeons, ask about complication rates, and review before‑after portfolios for cases like yours. A good consult includes alternatives such as lifestyle changes or non‑surgical options. Plan recovery honestly—sleep, nutrition, and avoiding tobacco accelerate healing. Mental readiness matters, too: align goals with your values rather than trends. Your body, your timeline, your consent. When care is collaborative and evidence‑based, results are more predictable and satisfaction lasts longer.</p>
+          <details>
+            <summary><span class="chev">▾</span> Consultation checklist</summary>
+            <ul>
+              <li>Credentials, hospital privileges, and emergency plan.</li>
+              <li>Total cost breakdown—including follow‑ups and meds.</li>
+              <li>Realistic outcome ranges; ask about revision policies.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Health Care: Therapy -->
+      <article class="card" data-tags="health therapy counseling mental resilience" data-seg="health">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Health Care</div>
+          <h3 class="title">Therapy: Tools for Clarity, Resilience, and Growth</h3>
+          <div class="meta"><span>3‑minute read</span><span class="dot"></span><span>Mind health</span></div>
+          <p class="body">Therapy isn’t only for crises. It’s a structured conversation that helps you name patterns, practice skills, and build a toolbox you can reuse for life. Cognitive‑behavioral techniques challenge unhelpful thoughts; acceptance‑based work helps you act on values even when feelings are loud. Fit matters—if a provider isn’t a match, it’s okay to switch. Between sessions, micro‑habits make the difference: a two‑minute breathing reset, journaling one line per day, or a weekly values check. Progress isn’t a straight line, but steady practice leads to quieter noise and stronger choices.</p>
+          <details>
+            <summary><span class="chev">▾</span> Try this</summary>
+            <ul>
+              <li>Box breathing: 4‑4‑4‑4 count for two minutes.</li>
+              <li>“Name it to tame it”: label a feeling; watch intensity fall.</li>
+              <li>Schedule worrying: 10 minutes at a fixed time reduces rumination.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+            
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Health Care: Chiropractors -->
+      <article class="card" data-tags="health chiropractor spine posture movement" data-seg="health">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Health Care</div>
+          <h3 class="title">Chiropractors: Movement, Mechanics, and Everyday Relief</h3>
+          <div class="meta"><span>2‑minute read</span><span class="dot"></span><span>Back & joints</span></div>
+          <p class="body">Many back issues improve with movement—gentle, regular, and smart. Chiropractors focus on spinal mechanics and soft‑tissue work to reduce pain and restore function. Combine adjustments with mobility drills and strength around hips and core. Set workstation ergonomics: screen at eye level, feet supported, and a reminder to stand every 30–45 minutes. Recovery loves rhythm: hydration, walking, and sleep. If pain radiates, you lose strength, or symptoms persist, partner with a physician for imaging and a broader plan.</p>
+          <details>
+            <summary><span class="chev">▾</span> Micro‑mobility</summary>
+            <ul>
+              <li>90/90 hip switches for desk stiffness.</li>
+              <li>Cat‑camel spinal waves: 6 slow reps, breathe with the motion.</li>
+              <li>Walk after meals—digestion + back relief in 10 minutes.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Health Care: Radiology -->
+      <article class="card" data-tags="health radiology imaging x-ray mri ct" data-seg="health">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Health Care</div>
+          <h3 class="title">Radiology: Seeing the Story Beneath the Surface</h3>
+          <div class="meta"><span>3‑minute read</span><span class="dot"></span><span>Imaging insights</span></div>
+          <p class="body">Imaging answers precise questions: Is a bone broken? Is there internal bleeding? How is a tumor responding? X‑ray, ultrasound, CT, and MRI each have strengths. Good referrals match modality to the question, reducing radiation when possible. Ask your provider what the test will show and how it will change care. Bring prior images or reports—they help radiologists compare and avoid repeat studies. Afterward, request a lay summary and next steps; clarity turns complex pictures into simple decisions.</p>
+          <details>
+            <summary><span class="chev">▾</span> Smart imaging</summary>
+            <ul>
+              <li>Ultrasound first for many soft‑tissue and pregnancy questions.</li>
+              <li>MRI excels at nerves, joints, and soft tissue—no ionizing radiation.</li>
+              <li>CT is fast and lifesaving in emergencies; keep a record of exposures.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Health Care: Oncology -->
+      <article class="card" data-tags="health oncology cancer screening chemo radiation" data-seg="health">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Health Care</div>
+          <h3 class="title">Oncology: Prevention, Early Detection, and Support</h3>
+          <div class="meta"><span>4‑minute read</span><span class="dot"></span><span>Screening & care</span></div>
+          <p class="body">Cancer care begins long before treatment, with prevention: smoke‑free living, active days, colorful diets, and vaccines like HPV and hepatitis B where indicated. Know your family history and talk to a clinician about age‑appropriate screenings—mammograms, colonoscopy or stool tests, Pap smears, or low‑dose CT for high‑risk smokers. If cancer is diagnosed, you won’t walk alone: oncology teams include surgeons, medical and radiation oncologists, nurses, dietitians, and counselors. Ask about clinical trials and supportive care for pain, sleep, and mood. Dignity and data belong together.</p>
+          <details>
+            <summary><span class="chev">▾</span> Support pillars</summary>
+            <ul>
+              <li>Keep a single binder (or digital folder) with reports and meds.</li>
+              <li>Bring a note‑taker to appointments; two brains hear more.</li>
+              <li>Nutrition and gentle movement improve energy during therapy.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Health Care: Heart Care -->
+      <article class="card" data-tags="health heart cardiology blood pressure cholesterol exercise" data-seg="health">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Health Care</div>
+          <h3 class="title">Heart Care: Tiny Choices, Big Protection</h3>
+          <div class="meta"><span>3‑minute read</span><span class="dot"></span><span>Cardio basics</span></div>
+          <p class="body">Your heart loves rhythm: regular movement, steady sleep, and meals built around plants, lean proteins, and healthy fats. Track blood pressure at home; aim for consistency, not obsession. Replace “all‑or‑nothing” with “always something”—10 minutes of brisk walking counts. If you smoke, quitting is the single strongest gift to your arteries. Build a care team early if you have diabetes, high cholesterol, or family history. Prevention feels invisible until the day it’s not; start now and your future will be grateful.</p>
+          <details>
+            <summary><span class="chev">▾</span> Daily anchors</summary>
+            <ul>
+              <li>Move after sitting for 45 minutes.</li>
+              <li>Half your plate plants, a quarter protein, a quarter whole grains.</li>
+              <li>Keep ladders of intensity: stroll → brisk walk → short intervals.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Home: Consumer Services -->
+      <article class="card" data-tags="home consumer services warranty budgeting contractors" data-seg="home">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Home Improvement</div>
+          <h3 class="title">Consumer Services: Buy Smart, Fix Faster</h3>
+          <div class="meta"><span>3‑minute read</span><span class="dot"></span><span>Home economics</span></div>
+          <p class="body">Homeownership (or renting) runs smoother when you treat services like a small ecosystem. Keep a shortlist of reliable pros—plumber, electrician, handyman—and a simple maintenance calendar. Get three quotes, compare scope not just price, and ask for warranties in writing. Pay by milestone, not upfront. Track recurring bills and cancel what you don’t use. Small frictions—like a leaky tap—cost more the longer they linger. A calm, organized home starts with clear requests and fair agreements.</p>
+          <details>
+            <summary><span class="chev">▾</span> Playbook</summary>
+            <ul>
+              <li>Share photos/videos when requesting quotes—reduces surprises.</li>
+              <li>Bundle small jobs in one visit to save call‑out fees.</li>
+              <li>Keep a “home dossier”: paint codes, filter sizes, appliance manuals.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Home: Enjoy Living Alone -->
+      <article class="card" data-tags="home solo living alone happiness routines design" data-seg="home">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Home Improvement</div>
+          <h3 class="title">How to Enjoy Living Alone: Design for Your Joy</h3>
+          <div class="meta"><span>4‑minute read</span><span class="dot"></span><span>Solo wellness</span></div>
+          <p class="body">Living alone is a creativity upgrade. Set zones that serve your energy: a bright corner for morning coffee and reading, a tech‑free pocket for evening wind‑down. Rituals beat willpower—Sunday reset, midweek tidy, and a Friday playlist. Cook for one by batch‑prepping staples and freezing portions. Keep a “connection roster” and schedule short calls or walks with friends so solitude doesn’t slide into isolation. Your space is a mirror; arrange it to reflect who you’re becoming.</p>
+          <details>
+            <summary><span class="chev">▾</span> Simple upgrades</summary>
+            <ul>
+              <li>Motion‑sensor lights for late‑night kitchen trips.</li>
+              <li>Smart speaker routines: “Good night” dims lights and queues calm music.</li>
+              <li>A “landing tray” near the door stops key/wallet hunts.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Home: Cope with Friends -->
+      <article class="card" data-tags="home friends conflict communication boundaries" data-seg="home">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Home Improvement</div>
+          <h3 class="title">How to Cope with Friends: Boundaries that Strengthen Bonds</h3>
+          <div class="meta"><span>3‑minute read</span><span class="dot"></span><span>Relationships</span></div>
+          <p class="body">Friendships change as life changes. When expectations are named—how often to talk, what support means, how to handle money—friendships get stronger. Practice “clear + kind”: be honest without drama. When tension rises, move to voice or face‑to‑face; text is a poor container for complex feelings. Protect your recharge time and respect theirs. The best friendships feel like breathable fabric: stretchy, resilient, and comfortable even after honest conversations.</p>
+          <details>
+            <summary><span class="chev">▾</span> Conversation starters</summary>
+            <ul>
+              <li>“What does support look like for you this month?”</li>
+              <li>“Can we set a check‑in so things don’t bottle up?”</li>
+              <li>“I value this friendship; here’s what I can do and can’t do.”</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Home: Be Home Productive (+ Temu & Delivery) -->
+      <article class="card" data-tags="home productivity routines temu delivery shopping systems" data-seg="home">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Home Improvement</div>
+          <h3 class="title">Home Productivity: Systems, Not Just Motivation</h3>
+          <div class="meta"><span>4‑minute read</span><span class="dot"></span><span>Tools & logistics</span></div>
+          <p class="body">Productivity is the art of reducing friction. Use time blocks with gentle alarms and tie tasks to anchors: tidy for five minutes after breakfast; review budgets every Sunday. Keep task lists bite‑sized and visible. Online marketplaces and home delivery save bandwidth—batch your purchases, set up subscriptions for staples, and compare reviews to avoid returns. Discount platforms like Temu can stretch budgets for organizers, kitchen tools, or DIY parts; pair deals with quality checks and warranty awareness. Delivery turns errands into minutes, freeing time for learning, exercise, and real rest.</p>
+          <details>
+            <summary><span class="chev">▾</span> Quick wins</summary>
+            <ul>
+              <li>Create a “house kit”: tape, batteries, hooks, spare bulbs.</li>
+              <li>Use a rolling cart to move projects between rooms.</li>
+              <li>Delivery windows? Schedule light tasks during wait times.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Home: Weight Loss & Nutrition -->
+      <article class="card" data-tags="home weight loss nutrition protein fiber sleep habits" data-seg="home">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Home Improvement</div>
+          <h3 class="title">Weight Loss & Nutrition: Gentle Discipline, Durable Results</h3>
+          <div class="meta"><span>4‑minute read</span><span class="dot"></span><span>Food & habits</span></div>
+          <p class="body">Lasting change favors simple rules you can keep on busy days. Aim for protein at each meal, colorful plants, and fiber that keeps you full. Keep tempting snacks inconvenient and healthy ones visible. Sleep is a hidden lever—poor sleep spikes hunger and drains willpower. Weigh weekly at the same time and watch the trend, not the day‑to‑day noise. Move more in ways you enjoy: dancing counts. When progress stalls, adjust one variable at a time—portion, movement, or bedtime—so you learn what truly helps your body.</p>
+          <details>
+            <summary><span class="chev">▾</span> Pantry upgrades</summary>
+            <ul>
+              <li>Beans, oats, canned fish, frozen berries—cheap, powerful staples.</li>
+              <li>Pre‑cut veggies on Sundays to speed weeknight meals.</li>
+              <li>Keep a water bottle at your workspace as a visual cue.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Home: Social Media Interaction Benefits -->
+      <article class="card" data-tags="home social media facebook tiktok snapchat community learning" data-seg="home">
+        <div class="cover"></div>
+
+
+        <div class="content">
+          <div class="tag">Home Improvement</div>
+          <h3 class="title">Social Media: Use Platforms to Build, Not Drain</h3>
+          <div class="meta"><span>3‑minute read</span><span class="dot"></span><span>Digital well‑being</span></div>
+          <p class="body">Used intentionally, social platforms multiply opportunity. Facebook groups can solve home and tech problems in minutes; TikTok compresses learning with visual micro‑tutorials; Snapchat keeps small circles warm with low‑effort touchpoints. The key is to follow creators that teach, inspire, or connect you locally—and to prune the rest. Set timers, mute outrage cycles, and post your work in progress to attract collaborators. Your feed should reflect your goals, not steal them.</p>
+          <details>
+            <summary><span class="chev">▾</span> Pro tips</summary>
+            <ul>
+              <li>Use “lists” and “favorites” to focus on high‑value voices.</li>
+              <li>Batch replies once or twice a day to avoid constant context switching.</li>
+              <li>Archive, don’t delete: curate your digital garden over time.</li>
+            </ul>
+          </details>
+          <div class="actions">
+
+
+            <button class="btn primary save">Save</button>
+            <button class="btn more">Read more</button>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <footer>
+      © <span id="yr"></span><dollarsurveys class="netlify com"></dollarsurveys> Educational content only; not a substitute for professional medical advice. Always consult qualified providers for diagnosis and care.
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Saved to Favorites</div>
+
+  <script>
+    // simple state
+    const segButtons = document.querySelectorAll('.seg button');
+    const cards = [...document.querySelectorAll('.card')];
+    const search = document.getElementById('q');
+    const toast = document.getElementById('toast');
+    const yr = document.getElementById('yr');
+    const modeBtn = document.getElementById('modeBtn');
+    const shuffleBtn = document.getElementById('shuffleBtn');
+
+    yr.textContent = new Date().getFullYear();
+
+    // favorites
+    const saved = new Set(JSON.parse(localStorage.getItem('wellnest:favs')||'[]'));
+
+    function showToast(msg){
+      toast.textContent = msg; toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'), 1500);
+    }
+
+    function render(){
+      const active = document.querySelector('.seg button.active')?.dataset.seg || 'all';
+      const q = (search.value||'').toLowerCase().trim();
+
+      cards.forEach(card=>{
+        const inSeg = active==='all' || card.dataset.seg===active;
+        const inSearch = !q || card.dataset.tags.includes(q) || card.querySelector('.title').textContent.toLowerCase().includes(q) || card.querySelector('.body').textContent.toLowerCase().includes(q);
+        card.style.display = (inSeg && inSearch) ? 'block' : 'none';
+      });
+    }
+
+    segButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        segButtons.forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+        segButtons.forEach(b=>b.setAttribute('aria-selected', b===btn));
+        render();
+      });
+    });
+
+    search.addEventListener('input', render);
+
+    document.querySelectorAll('.save').forEach((btn, i)=>{
+      btn.addEventListener('click', ()=>{
+        const card = btn.closest('.card');
+        const key = [...cards].indexOf(card);
+        if(saved.has(key)){ saved.delete(key); showToast('Removed from Favorites'); btn.textContent='Save'; }
+        else { saved.add(key); showToast('Saved to Favorites'); btn.textContent='Saved ✓'; }
+        localStorage.setItem('wellnest:favs', JSON.stringify([...saved]));
+      });
+    });
+
+    document.querySelectorAll('.more').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const det = btn.closest('.content').querySelector('details');
+        det.open = !det.open;
+      });
+    });
+
+    // shuffle spotlight
+    shuffleBtn.addEventListener('click', ()=>{
+      const visible = cards.filter(c=>c.style.display!=="none");
+      if(!visible.length) return;
+      const pick = visible[Math.floor(Math.random()*visible.length)];
+      pick.scrollIntoView({behavior:'smooth', block:'center'});
+      pick.animate([
+        {transform:'scale(1)', boxShadow:'var(--shadow)'},
+        {transform:'scale(1.02)', boxShadow:'0 20px 50px rgba(102,224,163,.25)'},
+        {transform:'scale(1)', boxShadow:'var(--shadow)'}
+      ], {duration:800, easing:'ease-out'});
+    });
+
+    // contrast toggle
+    let dark = true;
+    modeBtn.addEventListener('click', ()=>{
+      dark = !dark;
+      document.documentElement.style.setProperty('--bg', dark? '#0f1221': '#f6f7fb');
+      document.documentElement.style.setProperty('--card', dark? '#171a2b': '#ffffff');
+      document.documentElement.style.setProperty('--text', dark? '#0d1228': '#0d1228');
+      document.body.style.background = dark
+        ? 'radial-gradient(1200px 800px at 10% -10%, #1d2245 0%, #0f1221 55%, #0b0e1a 100%)'
+        : 'linear-gradient(180deg, #f6f7fb, #eef1ff)';
+      document.body.style.color = dark? '#e8eaf6' : '#0d1228';
+      document.querySelectorAll('.tag').forEach(el=> el.style.opacity = dark? .75 : .6);
+    });
+
+    // initial render + restore favorites
+    render();
+    [...saved].forEach(idx=>{
+      const btn = cards[idx]?.querySelector('.save'); if(btn){ btn.textContent='Saved ✓'; }
+    });
+  </script>
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1947981398780941"
+
+     crossorigin="anonymous"></script>
+
+<!-- Gold 2 -->
+
+<ins class="adsbygoogle"
+
+     style="display:block"
+
+     data-ad-client="ca-pub-1947981398780941"
+
+     data-ad-slot="8705367749"
+
+     data-ad-format="auto"
+
+     data-full-width-responsive="true"></ins>
+
+<script>
+
+     (adsbygoogle = window.adsbygoogle || []).push({});
+
+</script>
+
+
+</body>
+
+
+</html>
