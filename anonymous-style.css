@@ -354,7 +354,7 @@ header h4 {
 }
 
 .custom-btn {
-  padding: 12px 25px;
+  padding: 12px 10px;
   text-decoration: none;
   color: white;
   background: linear-gradient(135deg, #3cf604, #00070a);
@@ -370,3 +370,4 @@ header h4 {
   transform: translateY(-3px);
   box-shadow: 0 6px 15px rgba(24, 247, 4, 0.929);
 }
+
