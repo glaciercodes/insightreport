@@ -59,7 +59,7 @@ body{
 .brand-icon{ width:28px; height:28px; fill: var(--accent); filter: drop-shadow(0 4px 8px var(--ring)); }
 
 .header-controls{ display:flex; gap:12px; align-items:center; }
-.search-wrap{ display:flex; align-items:center; gap:8px; background: var(--panel); padding:6px 8px; border-radius: 12px; border:1px solid color-mix(in oklab, var(--text) 12%, transparent); }
+.search-wrap{ display:flex; align-items:center; gap:8px; background: var(--panel); padding:6px 5px; border-radius: 12px; border:1px solid color-mix(in oklab, var(--text) 12%, transparent); }
 .search-wrap input{ background: transparent; border:0; outline:0; color: var(--text); min-width: 200px; }
 .range-wrap{ display:flex; gap:8px; align-items:center; padding:6px 10px; border-radius:12px; border:1px dashed color-mix(in oklab, var(--text) 20%, transparent); }
 .range-wrap input[type="range"]{ width: 120px; accent-color: var(--accent); }
@@ -354,7 +354,7 @@ header h4 {
 }
 
 .custom-btn {
-  padding: 12px 10px;
+  padding: 12px 9px;
   text-decoration: none;
   color: white;
   background: linear-gradient(135deg, #3cf604, #00070a);
@@ -370,4 +370,5 @@ header h4 {
   transform: translateY(-3px);
   box-shadow: 0 6px 15px rgba(24, 247, 4, 0.929);
 }
+
 
