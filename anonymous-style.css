@@ -67,7 +67,7 @@ body{body {width: 100%; max-width: 480px; margin: 0 auto; padding: 0 10px;
   align-items: center;
   gap: 8px;
   background: var(--panel);
-  padding: 10px 10px;
+  padding: 8px 10px;
   border-radius: 15px;
   border: 1px solid color-mix(in oklab, var(--text) 12%, transparent);
   width: 100%;
@@ -339,6 +339,7 @@ header h4 {
   transform: translateY(-3px);
   box-shadow: 0 6px 15px rgba(24, 247, 4, 0.929);
 }
+
 
 
 
