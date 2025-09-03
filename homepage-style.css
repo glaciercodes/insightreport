@@ -170,3 +170,34 @@ button:hover {
   color: black;
 }
 
+.user-info {
+  display: flex;
+  gap: 12px;                  /* space between boxes */
+  justify-content: center;    /* center them */
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  width: 100%;                /* take full width */
+  max-width: 600px;           /* prevent over-stretching on big screens */
+}
+
+.tab {
+  background-color: #064e3b;   /* dark green */
+  border: 3px solid #ff7a00;   /* orange border */
+  color: #fff;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;                     /* ✅ make both boxes share space equally */
+  min-width: 0;                /* ✅ allow shrinking on mobile */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+
