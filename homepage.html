@@ -4,244 +4,56 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dollarsurvey | Home</title>
-
   <style>
     :root{
+      --green:#adff2f;
       --bg:#000;
-      --accent:#adff2f;
-      --muted:rgba(173,255,47,0.08);
-      --glass: rgba(173,255,47,0.04);
-      --card-shadow: 0 6px 30px rgba(173,255,47,0.06);
-      --radius:14px;
-      --radius-sm:8px;
-      --maxwidth:980px;
-      --gap:14px;
+      --panel: rgba(0,255,0,0.05);
+      --glass: rgba(173,255,47,0.06);
+      --muted: #9fbf5f;
     }
-    html,body{height:100%;}
-    body{
-      margin:0;
-      font-family: "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
-      background:var(--bg);
-      color:var(--accent);
-      display:flex;
-      justify-content:center;
-      padding:24px;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-
-    .wrap{
-      width:100%;
-      max-width:var(--maxwidth);
-    }
-
-    /* HEADER */
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      margin-bottom:18px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-
-    .logo{
-      display:inline-flex;
-      width:64px;
-      height:64px;
-      background:linear-gradient(180deg, rgba(173,255,47,0.12), rgba(173,255,47,0.04));
-      border-radius:12px;
-      border:1px solid rgba(173,255,47,0.18);
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      color:var(--accent);
-      font-weight:700;
-      font-size:20px;
-    }
-
-    .title{
-      font-size:18px;
-      line-height:1;
-      font-weight:700;
-      letter-spacing:0.2px;
-    }
-
-    .meta{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      font-size:14px;
-    }
-
-    .meta .id, .meta .balance{
-      background:var(--glass);
-      padding:8px 12px;
-      border-radius:10px;
-      border:1px solid rgba(173,255,47,0.07);
-      box-shadow:var(--card-shadow);
-      color:var(--accent);
-      font-weight:600;
-    }
-
-    /* menu top-right */
-    .menu-btn{
-      background:transparent;
-      border:1px solid rgba(173,255,47,0.12);
-      color:var(--accent);
-      padding:8px 12px;
-      border-radius:999px;
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      cursor:pointer;
-    }
-
-    nav.menu{
-      display:none;
-      position:absolute;
-      right:20px;
-      top:82px;
-      background:rgba(0,0,0,0.9);
-      border:1px solid rgba(173,255,47,0.06);
-      padding:10px;
-      border-radius:10px;
-      min-width:160px;
-      z-index:80;
-    }
-
-    nav.menu a{
-      display:block;
-      padding:8px 10px;
-      color:var(--accent);
-      text-decoration:none;
-      border-radius:8px;
-      font-size:14px;
-    }
-    nav.menu a:hover{background:rgba(173,255,47,0.04);}
-
-    /* SURVEYS AREA */
-    main{
-      margin-top:6px;
-    }
-
-    .surveys-heading{
-      font-size:26px;
-      font-weight:900;
-      margin:8px 0 14px 0;
-      color:var(--accent);
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:var(--gap);
-    }
-
-    .card{
-      background:linear-gradient(180deg, rgba(173,255,47,0.02), rgba(173,255,47,0.01));
-      border-radius:var(--radius);
-      padding:14px;
-      border:1px solid rgba(173,255,47,0.06);
-      box-shadow:var(--card-shadow);
-    }
-
-    .question{
-      font-size:15px;
-      line-height:1.4;
-      margin-bottom:10px;
-      color:var(--accent);
-    }
-
-    textarea.answer{
-      width:100%;
-      min-height:72px;
-      resize:vertical;
-      padding:10px;
-      border-radius:10px;
-      background:transparent;
-      border:1px dashed rgba(173,255,47,0.14);
-      color:var(--accent);
-      outline:none;
-      font-size:14px;
-    }
-
-    .card-footer{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-top:8px;
-      gap:10px;
-    }
-
-    .share-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border-radius:8px;
-      border:1px solid rgba(173,255,47,0.08);
-      background:transparent;
-      cursor:pointer;
-      color:var(--accent);
-      font-size:14px;
-    }
-
-    .submit-row{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      margin-top:18px;
-      flex-wrap:wrap;
-    }
-
-    button.primary{
-      background:var(--accent);
-      color:#000;
-      border:none;
-      padding:12px 16px;
-      border-radius:10px;
-      cursor:pointer;
-      font-weight:800;
-    }
-    button.ghost{
-      background:transparent;
-      border:1px solid rgba(173,255,47,0.12);
-      padding:10px 12px;
-      border-radius:10px;
-      color:var(--accent);
-      cursor:pointer;
-    }
-
-    /* toast */
-    .toast{
-      position:fixed;
-      left:50%;
-      transform:translateX(-50%);
-      bottom:22px;
-      background:rgba(0,0,0,0.88);
-      border:1px solid rgba(173,255,47,0.07);
-      color:var(--accent);
-      padding:12px 16px;
-      border-radius:12px;
-      box-shadow:var(--card-shadow);
-      display:none;
-      z-index:999;
-      font-weight:700;
-    }
-
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--green);font-family:Inter, "Segoe UI", system-ui, -apple-system, sans-serif;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:980px;margin:28px auto;padding:18px;display:flex;flex-direction:column;gap:16px}
+    /* header */
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:64px;height:64px;border-radius:10px;background:linear-gradient(180deg,#081,#020);display:flex;align-items:center;justify-content:center;text-decoration:none;color:#000;font-weight:700}
+    .title{font-size:20px;font-weight:700}
+    .sub{font-size:13px;color:var(--muted);margin-top:3px}
+    /* top-right menu */
+    .menu-btn{background:var(--green);color:#000;padding:8px 12px;border-radius:10px;font-weight:700;border:none;cursor:pointer}
+    .menu-panel{position:fixed;top:16px;right:16px;background:var(--panel);border:1px solid var(--green);padding:12px;border-radius:8px;display:none;min-width:160px;box-shadow:0 8px 30px rgba(0,255,0,0.06)}
+    .menu-panel a{display:block;color:var(--green);text-decoration:none;padding:8px 6px;border-radius:6px}
+    .menu-panel a:hover{background:var(--glass)}
+    /* user info row */
+    .info{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .chip{padding:8px 12px;border-radius:999px;border:1px solid var(--green);background:transparent;font-weight:600}
+    .id-chip{letter-spacing:1px}
+    .balance{font-weight:800;background:linear-gradient(90deg,rgba(173,255,47,0.06),transparent);padding:8px 12px;border-radius:10px;border:1px solid var(--green)}
+    .signout{background:transparent;border:1px solid var(--green);padding:8px 10px;border-radius:8px;color:var(--green);cursor:pointer}
+    /* surveys area */
+    .surveys{background:rgba(0,0,0,0.35);padding:18px;border-radius:12px;border:1px solid rgba(173,255,47,0.06);box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+    .surveys h1{font-size:24px;margin:0 0 14px 0;font-weight:900}
+    .question{padding:14px;border-radius:10px;border:1px solid rgba(173,255,47,0.06);margin-bottom:12px;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.55))}
+    .q-text{font-size:15px;line-height:1.4;margin-bottom:8px;color:var(--green)}
+    textarea{width:100%;min-height:64px;padding:10px;border-radius:8px;border:1px solid var(--green);background:transparent;color:var(--green);resize:vertical;outline:none;font-size:14px}
+    .q-actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+    .share{background:transparent;border:1px solid var(--green);padding:6px 10px;border-radius:8px;cursor:pointer}
+    .share:active{transform:translateY(1px)}
+    /* submit */
+    .submit-row{display:flex;gap:12px;align-items:center;justify-content:flex-end;margin-top:10px}
+    .submit-btn{background:var(--green);border:none;padding:12px 18px;border-radius:12px;font-weight:800;color:#000;cursor:pointer}
+    .submit-btn[disabled]{opacity:0.35;cursor:not-allowed}
+    /* notification */
+    #notify{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;padding:12px 18px;border-radius:10px;background:rgba(0,0,0,0.9);border:1px solid var(--green);color:var(--green);font-weight:700;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+    #notify.show{opacity:1;transform:translate(-50%,-6px);pointer-events:auto}
     /* responsive */
-    @media(min-width:720px){
-      .grid{grid-template-columns:1fr 1fr;}
-    }
-    @media(min-width:980px){
-      .grid{grid-template-columns:1fr 1fr;}
-      header{align-items:center;}
+    @media (max-width:600px){
+      .wrap{padding:12px}
+      .logo{width:52px;height:52px}
+      .title{font-size:18px}
+      .surveys h1{font-size:20px}
+      textarea{min-height:72px}
     }
   </style>
 </head>
@@ -252,48 +64,46 @@
         <a class="logo" href="#" aria-label="Dollarsurvey logo">DS</a>
         <div>
           <div class="title">Welcome to Dollarsurvey</div>
-          <div style="font-size:13px; opacity:0.85;">Answer surveys & earn</div>
+          <div class="sub">Earn by sharing short opinions</div>
         </div>
       </div>
 
-      <div class="meta" id="metaArea">
-        <div class="id" id="userId">ID: ---</div>
-        <div class="balance" id="balance">$0.00</div>
-        <button class="menu-btn" id="menuBtn">☰ Menu</button>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="menu-btn" id="menuBtn">Menu</div>
+        <div class="menu-panel" id="menuPanel" role="menu" aria-hidden="true">
+          <a href="#" id="gotoHome">Home</a>
+          <a href="#" id="gotoProfile">Profile</a>
+          <a href="#" id="gotoFAQ">FAQ</a>
+          <a href="#" id="logoutBtn">Sign out</a>
+        </div>
       </div>
-
-      <!-- floating menu (hidden by default) -->
-      <nav class="menu" id="menuPanel" aria-hidden="true">
-        <a href="homepage.html">Home</a>
-        <a href="profile.html">Profile</a>
-        <a href="faq.html">FAQ</a>
-        <a href="terms&privacy.html">Terms & Privacy</a>
-        <a href="login.html" id="signOutLink">Sign out</a>
-      </nav>
     </header>
 
-    <main>
-      <h1 class="surveys-heading">We have got some surveys for you</h1>
+    <section class="info" aria-live="polite">
+      <div class="chip id-chip">User ID: <span id="userId">—</span></div>
+      <div class="balance">Balance: <span id="balanceVal">$0.00</span></div>
+      <button class="signout" id="signOutSmall">Sign out</button>
+    </section>
 
-      <form id="surveysForm">
-        <div class="grid" id="questionsGrid">
-          <!-- Survey cards will be injected here -->
-        </div>
+    <section class="surveys" id="surveysSection">
+      <h1>We have got some surveys for you</h1>
+
+      <form id="surveyForm">
+        <!-- questions injected here -->
+        <div id="questionsWrap"></div>
 
         <div class="submit-row">
-          <button type="button" class="primary" id="submitBtn">Submit all answers</button>
-          <button type="button" class="ghost" id="clearBtn">Clear answers</button>
-          <div style="flex:1"></div>
+          <div style="flex:1;color:var(--muted);font-size:13px;padding-left:6px">All fields required. Min 5 characters per answer.</div>
+          <button class="submit-btn" id="submitBtn" type="submit" disabled>Submit & Earn +$0.50</button>
         </div>
       </form>
-    </main>
+    </section>
   </div>
 
-  <div class="toast" id="toast"></div>
+  <div id="notify" role="status"></div>
 
-  <!-- Firebase SDK and App logic -->
+  <!-- Firebase + App logic -->
   <script type="module">
-    // Firebase (based on your provided config)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
     import {
@@ -305,14 +115,13 @@
       getDatabase,
       ref,
       set,
-      update,
-      get,
-      child,
       push,
-      serverTimestamp
+      runTransaction,
+      get,
+      child
     } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
 
-    // YOUR firebaseConfig (from your snippet)
+    // ---- your firebase config (kept from your snippet) ----
     const firebaseConfig = {
       apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
       authDomain: "dollar-survey-60fe7.firebaseapp.com",
@@ -324,219 +133,225 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    try { getAnalytics(app); } catch(e){ /* analytics optional */ }
-
+    try { getAnalytics(app); } catch(e){ /* analytics may fail in some envs */ }
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    // UI refs
-    const questionsGrid = document.getElementById('questionsGrid');
-    const submitBtn = document.getElementById('submitBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const toast = document.getElementById('toast');
+    // ------ UI helpers ------
+    const notifyEl = document.getElementById('notify');
+    function notify(msg, ms = 3000){
+      notifyEl.textContent = msg;
+      notifyEl.classList.add('show');
+      setTimeout(()=> notifyEl.classList.remove('show'), ms);
+    }
+
+    // menu toggle
     const menuBtn = document.getElementById('menuBtn');
     const menuPanel = document.getElementById('menuPanel');
-    const signOutLink = document.getElementById('signOutLink');
-    const userIdEl = document.getElementById('userId');
-    const balanceEl = document.getElementById('balance');
-
-    // Toggle menu
-    menuBtn.addEventListener('click', () => {
+    menuBtn.addEventListener('click', ()=> {
       const open = menuPanel.style.display === 'block';
       menuPanel.style.display = open ? 'none' : 'block';
       menuPanel.setAttribute('aria-hidden', open ? 'true' : 'false');
     });
+    document.addEventListener('click', (e)=>{
+      if (!menuPanel.contains(e.target) && e.target !== menuBtn) menuPanel.style.display = 'none';
+    });
 
-    // Custom toast
-    function showToast(msg, opts = {}) {
-      toast.style.display = 'block';
-      toast.style.background = opts.bg || 'rgba(0,0,0,0.88)';
-      toast.style.color = opts.color || 'var(--accent)';
-      toast.textContent = msg;
-      setTimeout(()=> {
-        toast.style.display = 'none';
-      }, opts.timeout || 3000);
+    // sign out handlers
+    const logoutBtn = document.getElementById('logoutBtn');
+    const signOutSmall = document.getElementById('signOutSmall');
+    async function doSignOut(){
+      try {
+        await signOut(auth);
+        notify('Signed out — redirecting to login', 1800);
+        setTimeout(()=> location.href = 'login.html', 1200);
+      } catch(e){ notify('Sign out failed', 2200); }
     }
+    logoutBtn.addEventListener('click', doSignOut);
+    signOutSmall.addEventListener('click', doSignOut);
 
-    // Example: 10 AdSense-safe ~50-word surveys (consumer preference situational)
-    // Each question includes a small situational prompt and asks for a short typed answer (>=5 chars)
+    // ---- survey questions (Adsense-safe, ~50 words each) ----
     const SURVEYS = [
-`You’re shopping for a new smartphone for everyday use. Which top three features matter most to you (e.g., battery life, camera, durability) and why would you pick them over price or brand?`,
-`Imagine you need a compact kitchen appliance that saves time. Which appliance would you choose for a busy weeknight routine and describe a typical use-case where it helps?`,
-`Consider a pair of headphones for commuting. What type (in-ear, over-ear, true wireless) would you select and explain the one characteristic that seals your choice?`,
-`You want to upgrade your home lighting for ambiance. Which type of bulb or fixture would you pick and how would it improve your daily living or mood?`,
-`For personal fitness, would you prefer smart wearable tracking or a simple analog tracker; explain which metrics you care about and why they matter to you.`,
-`When buying a laptop for study/work-from-home, which single spec (battery, weight, screen, CPU) would you prioritize and how does it affect your daily tasks?`,
-`If you pick a streaming service subscription, which content or feature convinces you to keep it month-to-month and why is that more important than price?`,
-`Select a type of coffee maker for a small household and describe your ideal routine and how the machine fits into that morning ritual.`,
-`You’re choosing between eco-friendly household cleaners and regular brands. What makes you choose eco-friendly products and in what situations do you switch?`,
-`When selecting a travel bag for weekend trips, what qualities (size, pockets, comfort) are non-negotiable and narrate a short scenario where those qualities help.`
+`When shopping for a new smartphone, think about the last time you replaced yours. Describe which three features mattered most (battery life, camera, price, brand support, durability) and why. Which of these would you pay a small premium for if it significantly improved daily use?`,
+`Imagine buying a pair of everyday headphones. Describe what you expect in sound, fit, durability, and connectivity. Would you trade some sound fidelity for longer battery life or better build quality? Explain which attribute influences repeat purchases for you in typical daily listening situations.`,
+`When choosing household cleaning products, describe the top concerns you have (scent, eco-friendliness, effectiveness, price, packaging). Tell us how you decide between a known brand and a cheaper store brand. Which label or claim makes you more likely to try a new product?`,
+`Think about buying coffee or tea beverages on the go. Describe the factors that influence where you buy (taste, convenience, price, loyalty programs). How often do promotions or app rewards make you switch from your usual choice? Tell us how you pick a new beverage to try.`,
+`When picking casual shoes for daily wear, describe the balance you look for among comfort, style, price, and durability. Would you pay more for sustainable materials or recognized brand names? Explain how often you replace shoes and what design choices make you keep a pair longer.`,
+`Consider subscription services (entertainment, fitness, or meals). Describe what convinces you to subscribe or cancel (content, cost, flexibility, recommendations). Which features in an app or plan make you value the service most, and under what circumstances would you recommend it to friends?`,
+`When buying kitchen appliances, describe which aspects matter most (energy efficiency, warranty, size, ease of cleaning). How do you research options and balance brand reputation with price? Explain a recent appliance purchase and what made you choose that model over others.`,
+`Think about personal care items (skincare, shampoo, toothpaste). Describe how you assess new products: ingredient lists, reviews, brand trust, or price. Which type of claim (organic, dermatologist-tested, cruelty-free) most influences your decision to try or regularly buy a product?`,
+`Imagine choosing a travel backpack or daypack. Describe what features you prioritize (size, comfort, weather resistance, pockets, laptop protection). How much does brand reputation influence your choice versus firsthand reviews or product features? Share one must-have pocket or function.`,
+`When deciding where to buy groceries, describe the priorities that guide you (price, freshness, selection, convenience, online pickup). Would you be willing to pay extra for same-day delivery or specialty items? Describe one recent grocery decision and what influenced it the most.`
     ];
 
-    // Render survey cards
-    function renderSurveys(){
-      questionsGrid.innerHTML = '';
-      SURVEYS.forEach((q, idx) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <div class="question"><strong>Q${idx+1}.</strong> ${q}</div>
-          <textarea id="ans_${idx}" class="answer" minlength="5" placeholder="Type your answer (min 5 characters)"></textarea>
-          <div class="card-footer">
-            <div style="font-size:13px; opacity:0.9;">Answer length must be at least 5 characters.</div>
-            <button type="button" class="share-btn" data-index="${idx}">↗ Share</button>
+    // ensure each survey is roughly ~50 words; these were written to be ~45-60 words and remain Adsense-safe.
+
+    // create question blocks
+    const qWrap = document.getElementById('questionsWrap');
+    function renderQuestions(){
+      qWrap.innerHTML = '';
+      SURVEYS.forEach((txt, i) => {
+        const q = document.createElement('div');
+        q.className = 'question';
+        q.innerHTML = `
+          <div class="q-text"><strong>Q${i+1}.</strong> ${escapeHtml(txt)}</div>
+          <textarea name="q${i}" id="q${i}" placeholder="Write your answer (min 5 chars)"></textarea>
+          <div class="q-actions">
+            <div style="font-size:12px;color:var(--muted)">Answer must be at least 5 characters</div>
+            <button type="button" class="share" data-i="${i}" title="Share this survey">🔗 Share</button>
           </div>
         `;
-        questionsGrid.appendChild(card);
+        qWrap.appendChild(q);
       });
 
-      // attach share handlers
-      document.querySelectorAll('.share-btn').forEach(btn=>{
+      // attach share handlers and textarea input listeners
+      document.querySelectorAll('.share').forEach(btn=>{
         btn.addEventListener('click', async (e)=>{
-          const url = window.location.origin + window.location.pathname; // homepage link
+          const url = location.origin + location.pathname; // homepage link
           try {
-            if (navigator.share) {
-              await navigator.share({ title: 'Dollarsurvey', text: 'Check out Dollarsurvey!', url });
-              showToast('Shared successfully');
-            } else {
-              await navigator.clipboard.writeText(url);
-              showToast('Homepage link copied to clipboard');
-            }
+            await navigator.clipboard.writeText(url);
+            notify('Homepage link copied to clipboard');
           } catch(err){
-            showToast('Could not share link', {timeout:2500});
+            // fallback copy by prompt
+            prompt('Copy this link', url);
           }
         });
       });
+
+      document.querySelectorAll('textarea').forEach(el=>{
+        el.addEventListener('input', validateForm);
+      });
+
+      validateForm();
     }
 
-    renderSurveys();
+    function escapeHtml(s){
+      return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+    }
 
-    // Clear answers
-    clearBtn.addEventListener('click', ()=>{
-      SURVEYS.forEach((_,i)=>{
-        const ta = document.getElementById(`ans_${i}`);
-        if (ta) ta.value = '';
-      });
-      showToast('Answers cleared');
-    });
+    // form validation: ensure all textareas >=5 chars
+    const submitBtn = document.getElementById('submitBtn');
+    function validateForm(){
+      const areas = Array.from(document.querySelectorAll('textarea'));
+      const ok = areas.every(a => a.value.trim().length >= 5);
+      submitBtn.disabled = !ok;
+      return ok;
+    }
 
-    // Sign out behavior
-    signOutLink.addEventListener('click', async (e)=>{
+    // on submit: store answers, increment balance by $0.5, clear inputs, then refresh questions (we'll reload to ensure consistency)
+    const surveyForm = document.getElementById('surveyForm');
+    surveyForm.addEventListener('submit', async (e)=>{
       e.preventDefault();
-      try {
-        await signOut(auth);
-        window.location.href = 'login.html';
-      } catch(err){
-        showToast('Sign out failed');
-      }
-    });
-
-    // Submission logic
-    submitBtn.addEventListener('click', async ()=> {
-      // validate user logged in
-      const user = auth.currentUser;
-      if (!user) {
-        showToast('You must be logged in to submit', { timeout: 3000 });
-        setTimeout(()=> window.location.href = 'login.html', 800);
-        return;
-      }
-
-      // collect answers & validate min length 5 and not empty
-      const answers = [];
-      for (let i=0;i<SURVEYS.length;i++){
-        const ta = document.getElementById(`ans_${i}`);
-        const v = ta?.value?.trim() || '';
-        if (v.length < 5) {
-          showToast(`Please answer Q${i+1} with at least 5 characters`, { timeout: 3000 });
-          ta.focus();
-          return;
-        }
-        answers.push({ qIndex: i+1, question: SURVEYS[i], answer: v });
-      }
-
+      if (!validateForm()) { notify('Please answer all surveys (min 5 chars)', 2600); return; }
       submitBtn.disabled = true;
       submitBtn.textContent = 'Submitting...';
 
-      try {
-        const uid = user.uid;
-        const userRef = ref(db, `users/${uid}`);
-
-        // store answers under user submissions with push()
-        const submissionsRef = ref(db, `users/${uid}/submissions`);
-        const newSubRef = push(submissionsRef);
-        const submissionData = {
-          answers,
-          timestamp: Date.now()
-        };
-        await set(newSubRef, submissionData);
-
-        // Update balance: add $0.5
-        const snap = await get(child(ref(db), `users/${uid}/balance`));
-        let current = 0;
-        if (snap && snap.exists()) {
-          const val = snap.val();
-          current = Number(val) || 0;
-        }
-        const updated = (Math.round((current + 0.5) * 100)/100);
-        await set(ref(db, `users/${uid}/balance`), updated);
-
-        showToast('Submission saved. +$0.50 added to your balance!', { timeout: 2000 });
-
-        // clear answers
-        SURVEYS.forEach((_,i)=>{
-          const ta = document.getElementById(`ans_${i}`);
-          if (ta) ta.value = '';
-        });
-
-        // ensure UI updates before reload
-        balanceEl.textContent = `$${updated.toFixed(2)}`;
-
-        // refresh automatically after brief pause (per requirement)
-        setTimeout(()=> {
-          window.location.reload();
-        }, 1000);
-
-      } catch (err) {
-        console.error(err);
-        showToast('Submission failed. Try again.');
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit all answers';
-      }
-    });
-
-    // Auth state: update UI with email-based user ID and balance load
-    onAuthStateChanged(auth, async (user) => {
+      const user = auth.currentUser;
       if (!user) {
-        // redirect to login if not signed in
-        showToast('Redirecting to login...', { timeout: 1200 });
-        setTimeout(()=> window.location.href = 'login.html', 900);
+        notify('Not signed in. Redirecting to login...', 1800);
+        setTimeout(()=> location.href = 'login.html', 1200);
         return;
       }
-      // User present
+      const uid = user.uid;
       const email = user.email || '';
-      const idText = email.slice(0,5) || user.uid.slice(0,5);
-      userIdEl.textContent = `ID: ${idText}`;
+      // gather answers
+      const answers = {};
+      SURVEYS.forEach((_, i) => {
+        answers['q'+(i+1)] = document.getElementById('q'+i).value.trim();
+      });
 
-      // load balance from DB
+      try{
+        // push a submission record
+        const submissionsRef = ref(db, `users/${uid}/submissions`);
+        const newSubmissionRef = push(submissionsRef);
+        await set(newSubmissionRef, {
+          answers,
+          timestamp: Date.now(),
+          email: email
+        });
+
+        // increment balance atomically by 0.5
+        const balRef = ref(db, `users/${uid}/balance`);
+        await runTransaction(balRef, (current)=>{
+          return (current || 0) + 0.5;
+        });
+
+        // update local displayed balance immediately
+        const b = await get(child(ref(db), `users/${uid}/balance`));
+        if (b.exists()) {
+          updateBalanceDisplay(Number(b.val()));
+        }
+
+        // clear textareas
+        document.querySelectorAll('textarea').forEach(t=> t.value = '');
+        validateForm();
+
+        notify('Submission successful — +$0.50 added to your balance', 2600);
+        // refresh questions (spec says automatically refreshes) — we'll reload to ensure freshness
+        setTimeout(()=> location.reload(), 1200);
+
+      } catch(err){
+        console.error(err);
+        notify('Submission failed. Try again.', 2600);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit & Earn +$0.50';
+      }
+    });
+
+    // update balance UI
+    function updateBalanceDisplay(n){
+      const el = document.getElementById('balanceVal');
+      el.textContent = `$${Number(n).toFixed(2)}`;
+    }
+
+    // update user id UI (first 5 letters of email)
+    function updateUserId(email){
+      const idEl = document.getElementById('userId');
+      const clean = (email || '').split('@')[0] || '';
+      idEl.textContent = clean.slice(0,5) || 'guest';
+    }
+
+    // load user data from db: balance if exists, otherwise create default user node
+    async function ensureUserNode(user){
+      const uid = user.uid;
+      const email = user.email || '';
+      updateUserId(email);
+      const userRef = ref(db, `users/${uid}`);
       try {
-        const balSnap = await get(child(ref(db), `users/${user.uid}/balance`));
-        let current = 0;
-        if (balSnap && balSnap.exists()) current = Number(balSnap.val()) || 0;
-        balanceEl.textContent = `$${(Math.round(current*100)/100).toFixed(2)}`;
-      } catch (e) {
-        balanceEl.textContent = '$0.00';
+        const snap = await get(userRef);
+        if (!snap.exists()) {
+          // create minimal profile (do not store passwords)
+          await set(userRef, { email, createdAt: Date.now(), balance: 0 });
+          updateBalanceDisplay(0);
+        } else {
+          const data = snap.val();
+          updateBalanceDisplay(Number(data.balance || 0));
+        }
+      } catch(e){
+        console.error('read user', e);
+        notify('Could not load profile',2000);
       }
+    }
+
+    // auth state handling
+    onAuthStateChanged(auth, user=>{
+      if (!user) {
+        notify('Not signed in — redirecting',1600);
+        setTimeout(()=> location.href = 'login.html',1100);
+        return;
+      }
+      // user present: render questions and load profile
+      renderQuestions();
+      ensureUserNode(user);
     });
 
-    // close menu when clicking outside
-    document.addEventListener('click', (e)=>{
-      if (!menuPanel.contains(e.target) && !menuBtn.contains(e.target)) {
-        menuPanel.style.display = 'none';
-      }
-    });
+    // initial render (if not logged in yet, questions still render)
+    renderQuestions();
 
-    // Accessibility: disable form enter-submission to avoid partial submits
-    document.getElementById('surveysForm').addEventListener('submit', (e)=> e.preventDefault());
+    // small accessibility: allow Enter in menus etc
+    document.getElementById('gotoHome').addEventListener('click', (e)=> { e.preventDefault(); notify('You are on Home'); });
+    document.getElementById('gotoProfile').addEventListener('click', (e)=> { e.preventDefault(); notify('Profile coming soon'); });
+    document.getElementById('gotoFAQ').addEventListener('click', (e)=> { e.preventDefault(); notify('FAQ coming soon'); });
 
   </script>
 </body>
