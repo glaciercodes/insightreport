@@ -1,49 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Withdraw</title>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1947981398780941"
-     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="withdraw-style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DollarSurvey | Withdraw</title>
+<style>
+  body {
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background:#000;
+    color:#adff2f;
+  }
+  header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 20px;
+    border-bottom:1px solid #adff2f;
+  }
+  .logo {
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:#adff2f;
+    text-align:center;
+    line-height:60px;
+    font-weight:bold;
+    color:black;
+    text-decoration:none;
+  }
+  .user-info {
+    display:flex;
+    gap:20px;
+    padding:15px 20px;
+  }
+  .info-box {
+    background: rgba(173,255,47,0.05);
+    padding:10px 15px;
+    border:1px solid #adff2f;
+    border-radius:8px;
+    min-width:140px;
+    text-align:center;
+  }
+  .withdraw-form, .withdrawal-history {
+    max-width: 500px;
+    margin:20px auto;
+    padding:15px;
+    border:1px solid #adff2f;
+    border-radius:10px;
+    background: rgba(173,255,47,0.05);
+  }
+  input, select {
+    width:100%;
+    padding:10px;
+    margin:5px 0;
+    border-radius:6px;
+    border:1px solid #adff2f;
+    background:transparent;
+    color:#adff2f;
+    outline:none;
+  }
+  button {
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    background:#adff2f;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+  }
+  button:hover { background:#cfff70; }
+  .method-fields { display:none; margin-top:5px; }
+  .withdrawal-card { margin-bottom:10px; padding:5px 10px; border-bottom:1px solid #adff2f; }
+  .status.pending { color:orange; }
+  .status.completed { color:#2ff303; }
+  #withdraw-msg { margin-top:10px; font-weight:bold; text-align:center; opacity:0; transition:opacity 0.5s; }
+</style>
 </head>
 <body>
-  <button class="go-back-btn" onclick="goBack()">⬅ Back</button>
 
- <div class="user-info">
-  <div id="user-email">User: ...</div>
-  <div id="user-balance">Balance: $0.00</div>
-  </header>
+<header>
+  <a href="#" class="logo">Logo</a>
+</header>
 
-  
+<div class="user-info">
+  <div class="info-box" id="user-id">ID: ...</div>
+  <div class="info-box" id="user-balance">Balance: $0.00</div>
+</div>
 
-    
-    <!-- Hidden older withdrawals -->
-    <div id="full-history" style="display: none;">
-      <div class="withdrawal-card">
-        <p><strong>Amount:</strong> $75</p>
-        <p><strong>Status:</strong> <span class="status pending">Pending</span></p>
-        <p><strong>Date:</strong> July 13, 2025</p>
-      </div>
-    </div>
-  </div>
-  
-
-  <script>
-    function goBack() {
-  window.history.back(); // takes user to the previous page
-}
-
-    // You can fetch live data from Firebase or update this manually
-    document.getElementById("balance-amount").textContent = "$0.00";
-  </script>
-<!-- Withdrawal Submission Form -->
 <div class="withdraw-form">
   <h3>Submit Withdrawal</h3>
-
   <input type="number" placeholder="Enter amount ($)" id="withdrawAmount" />
-
   <select id="withdrawMethod" onchange="showMethodFields()">
     <option value="">Select Method</option>
     <option value="bank">Bank</option>
@@ -51,220 +100,160 @@
     <option value="giftcard">Gift Card</option>
   </select>
 
-  <!-- Bank Fields -->
-  <div id="bankFields" class="method-fields" style="display: none;">
+  <div id="bankFields" class="method-fields">
     <input type="text" placeholder="Account Holder Name" />
     <input type="text" placeholder="Bank Name" />
     <input type="text" placeholder="Account Number" />
     <input type="text" placeholder="Country" />
   </div>
-
-  <!-- Crypto Fields -->
-  <div id="cryptoFields" class="method-fields" style="display: none;">
+  <div id="cryptoFields" class="method-fields">
     <input type="text" placeholder="Wallet Address" />
     <input type="text" placeholder="Coin Type (e.g., USDT, BTC)" />
   </div>
-
-  <!-- Gift Card Fields -->
-  <div id="giftcardFields" class="method-fields" style="display: none;">
+  <div id="giftcardFields" class="method-fields">
     <input type="email" placeholder="Your Email Address" />
     <input type="text" placeholder="Type of Gift Card (e.g., Amazon, iTunes)" />
   </div>
 
   <button onclick="submitWithdraw()">Withdraw</button>
-  <p id="withdraw-msg" style="color: #2ff303;"></p>
+  <p id="withdraw-msg"></p>
 </div>
-<script>
-  function showMethodFields() {
-  const method = document.getElementById("withdrawMethod").value;
 
-  document.getElementById("bankFields").style.display = "none";
-  document.getElementById("cryptoFields").style.display = "none";
-  document.getElementById("giftcardFields").style.display = "none";
-
-  if (method === "bank") {
-    document.getElementById("bankFields").style.display = "block";
-  } else if (method === "crypto") {
-    document.getElementById("cryptoFields").style.display = "block";
-  } else if (method === "giftcard") {
-    document.getElementById("giftcardFields").style.display = "block";
-  }
-}
-</script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
-    authDomain: "dollar-survey-60fe7.firebaseapp.com",
-    projectId: "dollar-survey-60fe7",
-    storageBucket: "dollar-survey-60fe7.appspot.com",
-    messagingSenderId: "293471697208",
-    appId: "1:293471697208:web:664863f09e830e420c69cd"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-
-  // ✅ Sync user info to top
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const userEmail = user.email || "anonymous";
-      const uid = user.uid;
-      document.getElementById("user-email").textContent = "User: " + userEmail;
-
-      const userRef = doc(db, "users", uid);
-      const userSnap = await getDoc(userRef);
-
-      if (userSnap.exists()) {
-        const balance = userSnap.data().balance || 0;
-        document.getElementById("user-balance").textContent = "Balance: $" + balance.toFixed(2);
-      }
-    }
-  });
-
-  // ✅ Submit withdrawal and subtract balance
-  window.submitWithdraw = async function () {
-    const method = document.getElementById("withdrawMethod").value;
-    const amount = parseFloat(document.getElementById("withdrawAmount").value.trim());
-    const messageEl = document.getElementById("withdraw-msg");
-
-    if (!amount || !method) {
-      messageEl.textContent = "Please fill out all required fields!";
-      return;
-    }
-if (amount < 100) {
-  messageEl.textContent = "Minimum withdrawal amount is $100.";
-  return;
-}
-
-    const data = {
-      method,
-      amount,
-      timestamp: serverTimestamp()
-    };
-
-    if (method === "bank") {
-      data.accountHolder = document.querySelector("#bankFields input[placeholder='Account Holder Name']").value.trim();
-      data.bankName = document.querySelector("#bankFields input[placeholder='Bank Name']").value.trim();
-      data.accountNumber = document.querySelector("#bankFields input[placeholder='Account Number']").value.trim();
-      data.country = document.querySelector("#bankFields input[placeholder='Country']").value.trim();
-    } else if (method === "crypto") {
-      data.walletAddress = document.querySelector("#cryptoFields input[placeholder='Wallet Address']").value.trim();
-      data.coinType = document.querySelector("#cryptoFields input[placeholder='Coin Type (e.g., USDT, BTC)']").value.trim();
-    } else if (method === "giftcard") {
-      data.email = document.querySelector("#giftcardFields input[placeholder='Your Email Address']").value.trim();
-      data.cardType = document.querySelector("#giftcardFields input[placeholder='Type of Gift Card (e.g., Amazon, iTunes)']").value.trim();
-    }
-
-    const user = auth.currentUser;
-    if (user) {
-      const uid = user.uid;
-      const userEmail = user.email || "anonymous";
-      data.userId = uid;
-      data.userEmail = userEmail;
-
-      const userRef = doc(db, "users", uid);
-      const userSnap = await getDoc(userRef);
-
-      if (userSnap.exists()) {
-        const currentBalance = userSnap.data().balance || 0;
-
-        if (currentBalance < amount) {
-          messageEl.textContent = "Insufficient balance.";
-          return;
-        }
-
-        try {
-          // Deduct balance
-          await updateDoc(userRef, {
-            balance: currentBalance - amount
-          });
-
-          // Add withdrawal request
-          await addDoc(collection(db, "withdrawals"), data);
-
-          messageEl.textContent = "Withdrawal submitted successfully! Amount: $" + amount.toFixed(2) + " via " + method;
-saveWithdrawalToLocal(data); // Store in localStorage
-displayWithdrawals(); // Refresh visible list
-          // Reset form
-          document.querySelectorAll(".withdraw-form input").forEach(i => i.value = "");
-          document.getElementById("withdrawMethod").value = "";
-          document.getElementById("bankFields").style.display = "none";
-          document.getElementById("cryptoFields").style.display = "none";
-          document.getElementById("giftcardFields").style.display = "none";
-
-          // Update UI balance
-          document.getElementById("user-balance").textContent = "Balance: $" + (currentBalance - amount).toFixed(2);
-        } catch (err) {
-          console.error("Error:", err);
-          messageEl.textContent = "Error submitting withdrawal.";
-        }
-      }
-    } else {
-      messageEl.textContent = "You must be logged in.";
-    }
-  };
-  function saveWithdrawalToLocal(data) {
-  let history = JSON.parse(localStorage.getItem("withdrawalHistory")) || [];
-  history.unshift({ ...data, date: new Date().toLocaleString(), status: "Pending" });
-  localStorage.setItem("withdrawalHistory", JSON.stringify(history));
-}
-
-// Display withdrawals on page
-function displayWithdrawals(limit = 3) {
-  const container = document.getElementById("recent-withdrawals");
-  const history = JSON.parse(localStorage.getItem("withdrawalHistory")) || [];
-  container.innerHTML = "";
-
-  history.slice(0, limit).forEach(item => {
-    const div = document.createElement("div");
-    div.className = "withdrawal-card";
-    div.innerHTML = `
-      <p><strong>Amount:</strong> $${item.amount}</p>
-      <p><strong>Method:</strong> ${item.method}</p>
-      <p><strong>Status:</strong> <span class="status pending">${item.status}</span></p>
-      <p><strong>Date:</strong> ${item.date}</p>
-    `;
-    container.appendChild(div);
-  });
-}
-
-window.toggleAllWithdrawals = function () {
-  const btn = document.getElementById("view-all-btn");
-  const showingAll = btn.textContent.includes("Hide");
-
-  if (showingAll) {
-    displayWithdrawals(3);
-    btn.textContent = "View All";
-  } else {
-    displayWithdrawals(Infinity);
-    btn.textContent = "Hide All";
-  }
-}
-window.addEventListener("DOMContentLoaded", () => {
-  displayWithdrawals(); // Show last 3 on load
-});
-
-</script>
-
-
-<!-- Withdrawal History Section -->
 <div class="withdrawal-history">
   <h3>Recent Withdrawals</h3>
   <div id="recent-withdrawals"></div>
   <button onclick="toggleAllWithdrawals()" id="view-all-btn">View All</button>
 </div>
 
-<h2>Note: Withdrawal Updates are Sent Via Your Email.</h2>
-<h4>Having Any Issues Contact Us Via Email: dollarsurveyus@gmail.com</h3>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
+  authDomain: "dollar-survey-60fe7.firebaseapp.com",
+  projectId: "dollar-survey-60fe7",
+  storageBucket: "dollar-survey-60fe7.appspot.com",
+  messagingSenderId: "293471697208",
+  appId: "1:293471697208:web:664863f09e830e420c69cd"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+function notify(msg,color="lime"){
+  const el = document.getElementById("withdraw-msg");
+  el.textContent = msg;
+  el.style.color=color;
+  el.style.opacity=1;
+  setTimeout(()=>el.style.opacity=0,3000);
+}
+
+// Show/hide method fields
+window.showMethodFields = function(){
+  const m = document.getElementById("withdrawMethod").value;
+  document.getElementById("bankFields").style.display="none";
+  document.getElementById("cryptoFields").style.display="none";
+  document.getElementById("giftcardFields").style.display="none";
+  if(m==="bank") document.getElementById("bankFields").style.display="block";
+  if(m==="crypto") document.getElementById("cryptoFields").style.display="block";
+  if(m==="giftcard") document.getElementById("giftcardFields").style.display="block";
+}
+
+// Sync user info
+let currentUser=null;
+onAuthStateChanged(auth, async user=>{
+  if(user){
+    currentUser=user;
+    const uid=user.uid;
+    const email=user.email || "anonymous";
+    document.getElementById("user-id").textContent="ID: "+email.slice(0,5);
+    const refDoc=doc(db,"users",uid);
+    const snap=await getDoc(refDoc);
+    const balance=snap.exists()?snap.data().balance||0:0;
+    document.getElementById("user-balance").textContent="Balance: $"+balance.toFixed(2);
+  }
+});
+
+// LocalStorage withdrawals
+function saveWithdrawalToLocal(data){
+  let history=JSON.parse(localStorage.getItem("withdrawalHistory"))||[];
+  history.unshift({...data,date:new Date().toLocaleString()});
+  localStorage.setItem("withdrawalHistory",JSON.stringify(history));
+}
+
+function displayWithdrawals(limit=3){
+  const container=document.getElementById("recent-withdrawals");
+  const history=JSON.parse(localStorage.getItem("withdrawalHistory"))||[];
+  container.innerHTML="";
+  history.slice(0,limit).forEach(item=>{
+    const div=document.createElement("div");
+    div.className="withdrawal-card";
+    div.innerHTML=`
+      <p><strong>Amount:</strong> $${item.amount}</p>
+      <p><strong>Method:</strong> ${item.method}</p>
+      <p><strong>Status:</strong> <span class="status ${item.status||'pending'}">${item.status||'Pending'}</span></p>
+      <p><strong>Date:</strong> ${item.date}</p>
+    `;
+    container.appendChild(div);
+  });
+}
+window.toggleAllWithdrawals=()=>{
+  const btn=document.getElementById("view-all-btn");
+  if(btn.textContent.includes("Hide")){
+    displayWithdrawals(3);
+    btn.textContent="View All";
+  }else{
+    displayWithdrawals(Infinity);
+    btn.textContent="Hide All";
+  }
+}
+window.addEventListener("DOMContentLoaded",()=>displayWithdrawals());
+
+// Withdraw submission
+window.submitWithdraw=async ()=>{
+  const amount=parseFloat(document.getElementById("withdrawAmount").value.trim());
+  const method=document.getElementById("withdrawMethod").value;
+  if(!amount||!method){ notify("Fill all fields!","red"); return;}
+  if(amount<100){ notify("Minimum withdrawal $100","red"); return;}
+  if(!currentUser){ notify("Login first","red"); return;}
   
+  const uid=currentUser.uid;
+  const userRef=doc(db,"users",uid);
+  const userSnap=await getDoc(userRef);
+  let balance=userSnap.exists()?userSnap.data().balance||0:0;
+  if(amount>balance){ notify("Insufficient balance","red"); return;}
+  
+  const data={amount,method,userEmail:currentUser.email,userId:currentUser.email.slice(0,5),status:"pending"};
+  
+  try{
+    // Subtract balance immediately
+    balance-=amount;
+    document.getElementById("user-balance").textContent="Balance: $"+balance.toFixed(2);
+    updateDoc(userRef,{balance});
+    
+    // Save withdrawal
+    await addDoc(collection(db,"withdrawals"),data);
+    saveWithdrawalToLocal(data);
+    displayWithdrawals();
+    
+    notify("Withdrawal submitted!","lime");
+    
+    // Reset form
+    document.getElementById("withdrawAmount").value="";
+    document.getElementById("withdrawMethod").value="";
+    document.getElementById("bankFields").style.display="none";
+    document.getElementById("cryptoFields").style.display="none";
+    document.getElementById("giftcardFields").style.display="none";
+    
+  }catch(e){
+    console.error(e);
+    notify("Error submitting withdrawal","red");
+  }
+}
+</script>
+
 </body>
 </html>
-</html>
-
-
-
