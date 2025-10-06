@@ -9,109 +9,287 @@
     :root{
       --bg:#000;
       --accent:#adff2f;
-      --accent-dark:#7bbf1a;
-      --card-bg: rgba(13,13,13,0.8);
-      --glass: rgba(173,255,47,0.04);
+      --accent-darker:#8fd120;
+      --muted:rgba(175,255,90,0.06);
+      --card-shadow: 0 6px 24px rgba(173,255,47,0.06);
+      --glass: rgba(0,255,0,0.03);
+      --toast-bg: rgba(10,10,10,0.95);
+      --max-width:1000px;
     }
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--accent);font-family:Inter, "Segoe UI",system-ui, -apple-system, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased;}
-    .wrap{max-width:980px;margin:32px auto;padding:18px;box-sizing:border-box;}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px;}
-    .left{display:flex;align-items:center;gap:12px;}
-    a.logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--accent);}
-    .logo-box{width:56px;height:56px;border-radius:8px;background:linear-gradient(180deg, rgba(173,255,47,0.08), rgba(173,255,47,0.02));display:flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(173,255,47,0.14);}
-    .small-info{display:flex;gap:8px;align-items:center;}
-    .info-pill{background:var(--glass);border:1px solid rgba(173,255,47,0.12);padding:6px 10px;border-radius:10px;font-size:13px;min-width:86px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.6);}
-    .info-label{display:block;font-size:11px;color:#bff789;opacity:0.9;margin-bottom:3px;}
-    .menu-btn{background:var(--accent);border:none;color:#000;padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer;}
-    /* Modal menu */
-    .menu-modal{position:fixed;top:12px;right:12px;background:linear-gradient(180deg, rgba(173,255,47,0.98), var(--accent));color:#000;border-radius:12px;padding:14px;box-shadow:0 10px 40px rgba(0,0,0,0.6);display:none;z-index:80;}
-    .menu-modal a{display:block;color:#000;text-decoration:none;padding:8px 0;font-weight:600;}
-    /* Heading */
-    .title{margin:28px 0 14px;font-size:28px;font-weight:800;line-height:1.05;color:var(--accent);text-shadow:0 2px 12px rgba(173,255,47,0.06);}
-    /* Surveys grid */
-    .surveys{display:grid;grid-template-columns:1fr;gap:14px;}
-    .card{background:var(--card-bg);padding:14px;border-radius:12px;border:1px solid rgba(173,255,47,0.06);box-shadow:0 6px 30px rgba(0,0,0,0.6);}
-    .qtitle{font-weight:800;color:var(--accent);margin-bottom:8px;}
-    .qtext{font-size:14px;color:#cfffa0;margin-bottom:10px;line-height:1.35;}
-    textarea{width:100%;min-height:64px;padding:10px;font-size:15px;border-radius:8px;border:1px solid rgba(173,255,47,0.12);background:transparent;color:var(--accent);resize:vertical;outline:none;}
-    .card-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;}
-    .share-btn{background:transparent;border:none;color:var(--accent);cursor:pointer;font-size:18px;padding:8px;border-radius:8px;display:flex;align-items:center;gap:8px;}
-    .submit-row{display:flex;gap:10px;align-items:center;justify-content:flex-end;margin-top:14px;}
-    .submit-btn{background:var(--accent);border:none;padding:12px 18px;border-radius:10px;font-weight:800;color:#000;cursor:pointer;}
-    .submit-btn[disabled]{opacity:0.6;cursor:not-allowed;}
-    #notify{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;background:rgba(0,0,0,0.8);color:var(--accent);border:1px solid rgba(173,255,47,0.12);padding:12px 16px;border-radius:10px;font-weight:700;box-shadow:0 8px 40px rgba(0,0,0,0.7);display:none;z-index:90;}
-    .mini{font-size:12px;color:#dfffa8;}
-    /* responsive grid */
-    @media(min-width:720px){
-      .surveys{grid-template-columns:1fr 1fr;gap:16px;}
-      .title{font-size:32px;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--accent);
+      display:flex;
+      justify-content:center;
+      padding:28px 12px;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
-    @media(max-width:420px){
-      .logo-box{width:46px;height:46px;}
-      .info-pill{min-width:72px;padding:6px 8px;font-size:12px;border-radius:8px;}
-      .title{font-size:22px;}
+
+    .wrap{
+      width:100%;
+      max-width:var(--max-width);
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:8px 4px;
+    }
+
+    .left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .logo {
+      width:56px;
+      height:56px;
+      border-radius:8px;
+      background:linear-gradient(180deg,#0b0b0b 0%, rgba(173,255,47,0.06) 100%);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:bold;
+      text-decoration:none;
+      color:var(--accent);
+      border:1px solid rgba(173,255,47,0.12);
+    }
+
+    /* small horizontal info boxes beside logo */
+    .info-boxes{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .info{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      background:var(--glass);
+      padding:6px 10px;
+      border-radius:8px;
+      border:1px solid rgba(173,255,47,0.08);
+      font-size:13px;
+      min-width:110px;
+      justify-content:center;
+      box-shadow:var(--card-shadow);
+    }
+    .info b{color:var(--accent); font-weight:700;}
+
+    /* top-right modal menu button */
+    .menu-btn{
+      background:transparent;
+      border:2px solid var(--accent);
+      color:var(--bg);
+      background-color:var(--accent);
+      padding:8px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:700;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    /* modal */
+    .modal{
+      position:fixed;
+      top:12px;
+      right:12px;
+      background:linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.85));
+      border:2px solid var(--accent);
+      border-radius:12px;
+      padding:12px;
+      min-width:220px;
+      box-shadow:0 10px 40px rgba(0,0,0,0.6);
+      display:none;
+      z-index:60;
+    }
+    .modal a{display:block; color:var(--accent); text-decoration:none; padding:8px 4px;}
+    .modal .close{font-size:12px; opacity:0.8; margin-top:6px; cursor:pointer;}
+
+    /* main heading */
+    main h1{
+      margin:0;
+      font-size:28px;
+      line-height:1.05;
+      font-weight:900;
+      color:var(--accent);
+      text-transform:none;
+    }
+    /* surveys grid */
+    .surveys{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.08));
+      border-radius:12px;
+      padding:14px;
+      border:1px solid rgba(173,255,47,0.06);
+      box-shadow:var(--card-shadow);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .card h3{
+      margin:0;
+      font-size:15px;
+      font-weight:800;
+      color:var(--accent);
+    }
+    .card p{
+      margin:0;
+      font-size:13px;
+      color:rgba(173,255,47,0.9);
+    }
+    .answer{
+      width:100%;
+      min-height:56px;
+      resize:vertical;
+      border-radius:8px;
+      padding:8px 10px;
+      border:1px solid rgba(173,255,47,0.08);
+      background:transparent;
+      color:var(--accent);
+      outline:none;
+      font-size:14px;
+    }
+    .card-footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+    }
+    .share-btn{
+      background:transparent;
+      border:none;
+      color:var(--accent);
+      cursor:pointer;
+      font-size:20px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    /* submit area */
+    .submit-area{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      margin-top:6px;
+    }
+    .submit-btn{
+      background:var(--accent);
+      color:black;
+      border:none;
+      padding:12px 16px;
+      border-radius:10px;
+      font-weight:800;
+      cursor:pointer;
+      min-width:160px;
+      box-shadow:0 8px 30px rgba(173,255,47,0.06);
+    }
+    .submit-btn[disabled]{opacity:0.5; cursor:not-allowed;}
+
+    /* toast notifications */
+    .toast{
+      position:fixed;
+      bottom:18px;
+      left:50%;
+      transform:translateX(-50%);
+      background:var(--toast-bg);
+      color:var(--accent);
+      padding:12px 16px;
+      border-radius:10px;
+      border:1px solid rgba(173,255,47,0.08);
+      box-shadow:0 8px 30px rgba(0,0,0,0.6);
+      display:none;
+      z-index:80;
+      font-weight:700;
+    }
+
+    /* responsive */
+    @media (max-width:880px){
+      .surveys{grid-template-columns:1fr;}
+      .info{min-width:90px; font-size:12px; padding:6px 8px;}
+      .logo{width:48px;height:48px;}
+      main h1{font-size:22px;}
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap" role="main">
+
     <header>
       <div class="left">
-        <a class="logo" href="#">
-          <div class="logo-box">DS</div>
-        </a>
+        <a class="logo" href="#" title="Dollarsurvey">DS</a>
 
-        <div class="small-info">
-          <div class="info-pill" id="userIdWrap">
-            <span class="info-label">User ID</span>
-            <span id="userId">guest-xxxxx</span>
-          </div>
-          <div class="info-pill" id="balanceWrap">
-            <span class="info-label">Balance</span>
-            <span id="balance">$0.00</span>
-          </div>
+        <div class="info-boxes" aria-hidden="false">
+          <div class="info" id="userIdBox"><span>ID:</span> <b id="userId">guest</b></div>
+          <div class="info" id="balanceBox"><span>Balance:</span> <b id="balance">$0.00</b></div>
         </div>
       </div>
 
       <div>
-        <button id="menuToggle" class="menu-btn">MENU</button>
-        <div id="menuModal" class="menu-modal" aria-hidden="true">
-          <a href="#">Home</a>
-          <a href="login.html">Login</a>
-          <a href="register.html">Register</a>
-          <a href="#">Terms & Privacy</a>
-        </div>
+        <button id="menuBtn" class="menu-btn" aria-expanded="false">Menu ▾</button>
       </div>
     </header>
 
+    <!-- modal menu -->
+    <div id="menuModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <a href="#" id="homeLink">Home</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <div class="close" id="closeModal">Close</div>
+    </div>
+
     <main>
-      <h1 class="title">We have got some surveys for you</h1>
+      <h1>We have got some surveys for you</h1>
 
       <section class="surveys" id="surveysContainer">
-        <!-- JS injects 10 questions here -->
+        <!-- generated survey cards go here -->
       </section>
 
-      <div class="submit-row">
-        <div class="mini" id="statusHint">All answers required (min 5 char each)</div>
-        <button id="submitBtn" class="submit-btn">Submit all</button>
+      <div class="submit-area">
+        <button id="submitBtn" class="submit-btn">Submit All Answers</button>
       </div>
     </main>
   </div>
 
-  <div id="notify"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <!-- Firebase -->
+  <!-- Firebase + App logic -->
   <script type="module">
-    // Firebase imports (v10)
+    // Firebase imports (same version pattern as your login/register)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
     import {
       getAuth,
       onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-    import { getDatabase, ref, push, set, update, get, child } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      push,
+      child,
+      get,
+      update
+    } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
 
-    // Provided config
+    // your provided config
     const firebaseConfig = {
       apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
       authDomain: "dollar-survey-60fe7.firebaseapp.com",
@@ -123,294 +301,305 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    try { getAnalytics(app); } catch(e){/* analytics may fail in some contexts */ }
+    try { getAnalytics(app); } catch(e) { /* analytics may fail in some envs */ }
+
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    // Questions array (10 questions ~50 words each, product preference + situation)
-    const questions = [
-      {
-        title: "Comfortable daily headphones",
-        text: "You often commute for 45 minutes each way and want headphones that are comfortable for long wear, block noise, and last a full day of listening. Which features and price range would you prefer when buying a new pair?"
-      },
-      {
-        title: "Home coffee solution",
-        text: "You want a coffee maker that fits a small kitchen and makes single-serve specialty drinks faster than a cafe. Would you choose a pod, espresso machine, or manual brewer? Mention ease-of-use and cost concerns."
-      },
-      {
-        title: "Smartwatch for health tracking",
-        text: "You’d like a wrist device to track workouts, sleep, and heart rate, and also show messages. How important are battery life, style, and third-party app support when choosing a smartwatch?"
-      },
-      {
-        title: "Portable power bank",
-        text: "On trips, you need a compact power bank able to charge phone and earbuds twice. Would you trade size for higher capacity or prioritize portability? Mention charger type and cost expectations."
-      },
-      {
-        title: "Eco-friendly cleaning supplies",
-        text: "You plan to switch cleaning products to greener alternatives. How much extra would you pay for biodegradable ingredients and recyclable packaging versus standard cleaners when shopping weekly?"
-      },
-      {
-        title: "Subscription streaming choices",
-        text: "You like movies and some niche documentaries. Would you pay for a smaller, specialized streaming service or stick with a large all-in-one platform? Explain preferences on price and content exclusivity."
-      },
-      {
-        title: "Ergonomic home office chair",
-        text: "You work from home and sit many hours. Would you invest in a pricey ergonomic chair that promises posture benefits or seek an affordable chair with lumbar support? Mention expected lifespan and comfort priorities."
-      },
-      {
-        title: "Meal kit delivery for busy nights",
-        text: "On weekdays you have limited time but value home-cooked meals. Would you subscribe to meal kits that save prep time even if more expensive? Describe convenience vs cost trade-offs."
-      },
-      {
-        title: "Compact camera for travel",
-        text: "When traveling, you want a camera that beats phone quality but fits in a backpack. Would you choose mirrorless, compact point-and-shoot, or high-end phone upgrades? Mention weight, lens options, and budget."
-      },
-      {
-        title: "Noise-reducing window solutions",
-        text: "Living near a busy road, you are considering window upgrades to reduce noise. Would you choose triple-pane windows, secondary glazing, or specialized curtains? Mention installation disruption and relative costs."
-      }
-    ];
-
-    // Elements
+    // UI refs
     const surveysContainer = document.getElementById('surveysContainer');
     const submitBtn = document.getElementById('submitBtn');
-    const notifyEl = document.getElementById('notify');
-    const userIdSpan = document.getElementById('userId');
-    const balanceSpan = document.getElementById('balance');
-    const menuBtn = document.getElementById('menuToggle');
+    const toast = document.getElementById('toast');
+    const userIdEl = document.getElementById('userId');
+    const balanceEl = document.getElementById('balance');
+
+    // menu
+    const menuBtn = document.getElementById('menuBtn');
     const menuModal = document.getElementById('menuModal');
-
-    // Utilities
-    function showNotify(msg, duration = 3000){
-      notifyEl.innerText = msg;
-      notifyEl.style.display = 'block';
-      setTimeout(()=> notifyEl.style.display = 'none', duration);
-    }
-
-    // Create survey cards
-    function renderSurveys(){
-      surveysContainer.innerHTML = '';
-      questions.forEach((q, idx) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <div class="qtitle">${escapeHtml(q.title)}</div>
-          <div class="qtext">${escapeHtml(q.text)}</div>
-          <textarea placeholder="Write your answer (min 5 chars)" data-qi="${idx}" minlength="5"></textarea>
-          <div class="card-row">
-            <div class="mini">Min 5 characters</div>
-            <div>
-              <button class="share-btn" data-qi="${idx}" title="Share">↗ Share</button>
-            </div>
-          </div>
-        `;
-        surveysContainer.appendChild(card);
-      });
-
-      // Attach share handlers
-      document.querySelectorAll('.share-btn').forEach(btn=>{
-        btn.addEventListener('click', async (e)=>{
-          const url = window.location.href.split('#')[0];
-          try{
-            if(navigator.share){
-              await navigator.share({title:'Dollarsurvey', text:'Check out this survey', url});
-              showNotify('Shared successfully');
-            } else {
-              await navigator.clipboard.writeText(url);
-              showNotify('Link copied to clipboard');
-            }
-          } catch(err){
-            console.warn(err);
-            showNotify('Unable to share',2000);
-          }
-        });
-      });
-    }
-
-    // Basic XSS escape for texts we insert
-    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
-
-    // Generate stable guest id (stored in localStorage)
-    function getGuestId(){
-      let gid = localStorage.getItem('ds_guest_id');
-      if(!gid){
-        gid = 'guest-' + Math.random().toString(36).slice(2,8);
-        localStorage.setItem('ds_guest_id', gid);
-      }
-      return gid;
-    }
-
-    // Balance logic
-    let balance = 0.00;
-    let currentUser = null; // firebase user or null
-    let currentUserId = getGuestId(); // displayed id (guest or first5 of email)
-    function setBalanceUI(){
-      balanceSpan.innerText = `$${Number(balance).toFixed(2)}`;
-    }
-
-    // Attempt to load balance from firebase or localStorage
-    async function loadBalance() {
-      // priority: firebase user balance -> localStorage -> default 0
-      if(currentUser && currentUser.uid){
-        try {
-          const snap = await get(ref(db, `users/${currentUser.uid}/balance`));
-          if (snap && snap.exists && !isNaN(snap.val())) {
-            balance = Number(snap.val());
-            localStorage.setItem('ds_balance', balance.toFixed(2));
-          } else {
-            // if no balance on server but local storage exists, sync server with local
-            const localBal = parseFloat(localStorage.getItem('ds_balance') || '0');
-            if(localBal>0){
-              balance = localBal;
-              await set(ref(db, `users/${currentUser.uid}/balance`), balance);
-            } else {
-              balance = 0;
-            }
-          }
-        } catch(e){
-          console.warn('Could not load balance from firebase', e);
-          balance = parseFloat(localStorage.getItem('ds_balance') || '0');
-        }
-      } else {
-        // guest
-        balance = parseFloat(localStorage.getItem('ds_balance') || '0');
-      }
-      setBalanceUI();
-    }
-
-    // Increase balance by $0.5 (UI + firebase attempt)
-    async function addBalanceIncrement(){
-      const increment = 0.5;
-      balance = Number((Number(balance) + increment).toFixed(2));
-      setBalanceUI();
-      localStorage.setItem('ds_balance', balance.toFixed(2));
-
-      // try updating firebase; succeed or fail, UI already updated (per requirement)
-      if(currentUser && currentUser.uid){
-        try {
-          await set(ref(db, `users/${currentUser.uid}/balance`), balance);
-        } catch(e){
-          console.warn('Failed to write balance to firebase for user', e);
-          // optionally push a pending update to localStorage
-          let pend = JSON.parse(localStorage.getItem('ds_pending') || '[]');
-          pend.push({type:'balance', uid: currentUser.uid, balance, ts:Date.now()});
-          localStorage.setItem('ds_pending', JSON.stringify(pend));
-        }
-      } else {
-        // guest store under guests/<guestId>/balance
-        try {
-          const guestId = currentUserId;
-          await set(ref(db, `guests/${guestId}/balance`), balance);
-        } catch(e){
-          console.warn('Failed to write guest balance to firebase', e);
-          let pend = JSON.parse(localStorage.getItem('ds_pending') || '[]');
-          pend.push({type:'guest-balance', guestId: currentUserId, balance, ts:Date.now()});
-          localStorage.setItem('ds_pending', JSON.stringify(pend));
-        }
-      }
-    }
-
-    // Submit handler
-    submitBtn.addEventListener('click', async ()=>{
-      const textareas = Array.from(document.querySelectorAll('textarea'));
-      // validate all >=5 chars (trim)
-      for(const ta of textareas){
-        if((ta.value||'').trim().length < 5){
-          showNotify('All answers must be at least 5 characters', 3000);
-          return;
-        }
-      }
-
-      // Gather answers
-      const payload = {
-        userId: currentUser && currentUser.uid ? currentUser.uid : currentUserId,
-        displayId: currentUser && currentUser.email ? (currentUser.email.slice(0,5)) : currentUserId,
-        ts: Date.now(),
-        answers: questions.map((q, i) => ({title: q.title, answer: (document.querySelector(`textarea[data-qi="${i}"]`).value||'').trim()}))
-      };
-
-      // disable submit and show feedback
-      submitBtn.disabled = true;
-      showNotify('Submitting answers...');
-
-      // Wait 3 seconds and then treat as success (per requirement)
-      await new Promise(r => setTimeout(r, 3000));
-
-      // Update UI balance immediately
-      await addBalanceIncrement();
-
-      // Attempt to store submission to firebase, but treat success regardless
-      try {
-        if(currentUser && currentUser.uid){
-          // push to users/<uid>/submissions
-          await push(ref(db, `users/${currentUser.uid}/submissions`), payload);
-        } else {
-          // guests/<guestId>/submissions
-          await push(ref(db, `guests/${currentUserId}/submissions`), payload);
-        }
-      } catch(e){
-        console.warn('Failed to push submission to firebase', e);
-        // save pending locally so developer might re-sync later
-        let pend = JSON.parse(localStorage.getItem('ds_pending') || '[]');
-        pend.push({type:'submission', payload, ts:Date.now()});
-        localStorage.setItem('ds_pending', JSON.stringify(pend));
-      }
-
-      // success UX
-      showNotify('Submission successful! +$0.50 added', 3500);
-
-      // clear all answer bars
-      document.querySelectorAll('textarea').forEach(ta => ta.value = '');
-
-      // re-enable after short delay
-      setTimeout(()=> submitBtn.disabled = false, 1000);
-    });
-
-    // Menu toggle
-    menuBtn.addEventListener('click', ()=>{
+    const closeModal = document.getElementById('closeModal');
+    menuBtn.addEventListener('click', ()=> {
       const open = menuModal.style.display === 'block';
       menuModal.style.display = open ? 'none' : 'block';
-      menuModal.setAttribute('aria-hidden', open ? 'true' : 'false');
+      menuBtn.setAttribute('aria-expanded', String(!open));
+      menuModal.setAttribute('aria-hidden', String(open));
     });
-    // close menu clicking outside
-    document.addEventListener('click', (e)=>{
-      if(!menuModal.contains(e.target) && !menuBtn.contains(e.target)) menuModal.style.display = 'none';
-    });
+    closeModal.addEventListener('click', ()=> { menuModal.style.display = 'none'; menuBtn.setAttribute('aria-expanded','false'); });
 
-    // On load render questions
+    // guest id (persistent)
+    let currentUser = null;
+    const guestIdKey = 'ds_guest_id_v1';
+    function ensureGuestId(){
+      let g = localStorage.getItem(guestIdKey);
+      if(!g){
+        g = 'g-' + Math.random().toString(36).slice(2,9);
+        localStorage.setItem(guestIdKey, g);
+      }
+      return g;
+    }
+    const guestId = ensureGuestId();
+
+    // UI helpers
+    function showToast(message, ms=3000){
+      toast.textContent = message;
+      toast.style.display='block';
+      setTimeout(()=> { toast.style.display='none'; }, ms);
+    }
+
+    function currency(amount){
+      return '$' + amount.toFixed(2);
+    }
+
+    // initial UI values
+    let localBalance = 0.00;
+    function updateBalanceUI(){
+      balanceEl.textContent = currency(localBalance);
+    }
+    updateBalanceUI();
+    userIdEl.textContent = 'guest';
+
+    // survey prompts (~50 words each). Kept concise but ~50 words each.
+    const prompts = [
+`When shopping for mobile headphones, which factors matter most? Consider sound clarity, noise cancellation, battery life, comfort for long-term wear, brand trust, and price. Describe your preference with an example scenario where you would choose one model over another and why that tradeoff wins for you.`,
+`Imagine choosing a morning beverage subscription. Describe whether you prefer strong roast or mild blends, frequency of delivery, eco-friendly packaging, price sensitivity, and special add-ons (e.g., syrups). Explain a scenario where subscription convenience outweighs variety for you.`,
+`Think about household cleaning products. Rate importance of natural ingredients, packaging size, scent strength, cost per use, and multi-surface compatibility. Give an example of when you’d pay a premium for a trusted brand versus trying a cheaper alternative.`,
+`Consider buying a basic smart watch. Explain your priorities: accurate fitness tracking, battery life, display clarity, ecosystem compatibility, or low cost. Describe a situation when style or battery life decides your purchase more than advanced features.`,
+`Choose a streaming music service — what convinces you to subscribe? Consider exclusive playlists, audio quality, family plans, offline listening, price, and device compatibility. Describe a scenario where switching services would be worth your hassle.`,
+`Think about snack bars or healthy bars. Which matters more: ingredients list, taste variety, price, portability, or brand reputation? Describe a weekday scenario where you pick a bar for work versus one for travel and why.`,
+`When selecting a budget laptop, which tradeoffs matter? Prioritize CPU, RAM, screen quality, battery life, and brand warranty. Explain a case where battery life or screen clarity would sway you to pay more for one model.`,
+`Think about eco-friendly grocery choices: reusable packaging, organic certification, price premium, local sourcing, or brand transparency. Describe a family shopping trip where those factors alter what you put in the cart.`,
+`Consider home coffee machines: ease of use, maintenance, pod vs grounds, brew quality, and upfront cost. Give an example of when you’d pick a simple drip machine over a premium espresso maker and why.`,
+`When buying athletic shoes, describe how you balance comfort, performance, durability, style, and cost. Explain a situation where durability or brand trust matters more than appearance and when you’d prioritize style instead.`
+    ];
+
+    // generate survey cards
+    function renderSurveys(){
+      surveysContainer.innerHTML = '';
+      prompts.forEach((txt, idx) => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        const h3 = document.createElement('h3');
+        h3.textContent = txt.slice(0, Math.min(80, txt.length)); // heading as bold extract
+        const p = document.createElement('p');
+        p.textContent = txt; // full ~50-word prompt
+
+        const textarea = document.createElement('textarea');
+        textarea.className = 'answer';
+        textarea.placeholder = 'Write your answer (min 5 characters)...';
+        textarea.minLength = 5;
+        textarea.dataset.index = idx;
+
+        const footer = document.createElement('div');
+        footer.className = 'card-footer';
+
+        const shareBtn = document.createElement('button');
+        shareBtn.className = 'share-btn';
+        shareBtn.title = 'Share homepage';
+        shareBtn.innerHTML = '⇪';
+        shareBtn.addEventListener('click', ()=> shareHomepage());
+
+        footer.appendChild(shareBtn);
+
+        card.appendChild(h3);
+        card.appendChild(p);
+        card.appendChild(textarea);
+        card.appendChild(footer);
+
+        surveysContainer.appendChild(card);
+      });
+    }
     renderSurveys();
 
-    // Auth state: update user id display and load balance
-    onAuthStateChanged(auth, async (user) => {
-      currentUser = user;
-      if(user && user.email){
-        const id = String(user.email).slice(0,5);
-        currentUserId = id;
-        userIdSpan.innerText = id;
-        // attempt to create user record if not exists
-        try {
-          const snap = await get(ref(db, `users/${user.uid}`));
-          if(!snap.exists()){
-            await set(ref(db, `users/${user.uid}`), { email: user.email, createdAt: Date.now(), provider: 'email' });
-          } else {
-            // if email changed on server, update minimal info
-            await update(ref(db, `users/${user.uid}`), { email: user.email });
+    // share helper
+    function shareHomepage(){
+      const url = window.location.origin + window.location.pathname;
+      if(navigator.share){
+        navigator.share({ title: 'Dollarsurvey', text: 'Check surveys on Dollarsurvey', url }).catch(()=>{ copyToClipboard(url); showToast('Link copied'); });
+      } else {
+        copyToClipboard(url);
+        showToast('Link copied to clipboard', 1800);
+      }
+    }
+    function copyToClipboard(text){
+      try {
+        navigator.clipboard.writeText(text);
+      } catch(e){
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+    }
+
+    // fetch balance from firebase (if user logged in)
+    async function fetchBalanceFromFirebase(uid){
+      try {
+        const snap = await get(ref(db, 'users/' + uid + '/balance'));
+        if(snap && snap.exists && typeof snap.val === 'function'){
+          const val = snap.val();
+          if(!isNaN(Number(val))) {
+            localBalance = Number(val);
+            updateBalanceUI();
           }
-        } catch(e){
-          console.warn('Could not ensure user record', e);
+        }
+      } catch(e){
+        // ignore; keep localBalance as-is
+      }
+    }
+
+    // update balance both locally and in firebase (attempt)
+    async function increaseBalance(amount=0.5){
+      localBalance = +(localBalance + amount).toFixed(2);
+      updateBalanceUI();
+
+      // optimistic: update UI first, then attempt firebase write
+      if(currentUser && currentUser.uid){
+        const uid = currentUser.uid;
+        try {
+          // get current DB balance, compute new (to avoid clobbering)
+          const snap = await get(ref(db, 'users/' + uid + '/balance'));
+          let dbBal = 0;
+          if(snap && snap.exists && typeof snap.val === 'function') dbBal = Number(snap.val()) || 0;
+          const newBal = +(dbBal + amount).toFixed(2);
+          await set(ref(db, 'users/' + uid + '/balance'), newBal);
+        } catch(err){
+          // firebase failed, but UI already updated
+          console.warn('balance write failed', err);
         }
       } else {
-        // guest
-        currentUserId = getGuestId();
-        userIdSpan.innerText = currentUserId;
+        // store guest balances under guests/<guestId>/balance
+        try {
+          const snap = await get(ref(db, 'guests/' + guestId + '/balance'));
+          let dbBal = 0;
+          if(snap && snap.exists && typeof snap.val === 'function') dbBal = Number(snap.val()) || 0;
+          const newBal = +(dbBal + amount).toFixed(2);
+          await set(ref(db, 'guests/' + guestId + '/balance'), newBal);
+        } catch(err){
+          console.warn('guest balance write failed', err);
+        }
       }
-      // load balance (firebase preferred)
-      await loadBalance();
+    }
+
+    // store answers to firebase: path submissions/users/<uid>/<ts> or submissions/guests/<guestId>/<ts>
+    async function storeSubmissionToFirebase(payload){
+      try {
+        const base = currentUser && currentUser.uid ? `submissions/users/${currentUser.uid}` : `submissions/guests/${guestId}`;
+        const ts = Date.now();
+        await set(ref(db, `${base}/${ts}`), payload);
+        return true;
+      } catch(err){
+        console.warn('submission write failed', err);
+        return false;
+      }
+    }
+
+    // gather answers and validate
+    function gatherAnswers(){
+      const textareas = Array.from(document.querySelectorAll('.answer'));
+      const answers = textareas.map(t => t.value.trim());
+      // ensure all filled with min 5 chars
+      for(const a of answers){
+        if(a.length < 5) return null;
+      }
+      return answers;
+    }
+
+    // submit flow
+    submitBtn.addEventListener('click', async ()=>{
+      const answers = gatherAnswers();
+      if(!answers){
+        showToast('Please answer every survey with at least 5 characters', 3000);
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      // Build payload
+      const payload = {
+        userId: currentUser && currentUser.email ? (currentUser.email.slice(0,5).toLowerCase()) : guestId,
+        timestamp: Date.now(),
+        answers,
+        page: window.location.pathname
+      };
+
+      // Always succeed after 3 seconds (optimistic). Attempt firebase writes too.
+      setTimeout(async ()=> {
+        // optimistic UI success
+        showToast('Submission successful! +$0.50 added', 3000);
+
+        // clear answers
+        document.querySelectorAll('.answer').forEach(a => a.value = '');
+
+        // refresh surveys (re-render to simulate refresh)
+        renderSurveys();
+
+        // update balance locally and attempt firebase writes
+        await increaseBalance(0.5);
+
+        // attempt to store answers to firebase (best-effort)
+        storeSubmissionToFirebase(payload).then(success => {
+          if(!success){
+            // attempted but failed; still show notification (already optimistic success)
+            console.warn('Could not save submission to firebase');
+          }
+        });
+
+        // final UI updates
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit All Answers';
+      }, 3000);
     });
 
-    // Provide initial UI values right away
-    userIdSpan.innerText = currentUserId;
-    balanceSpan.innerText = `$${(parseFloat(localStorage.getItem('ds_balance')||'0')).toFixed(2)}`;
+    // auth state tracking to set user id & fetch balance
+    onAuthStateChanged(auth, (user) => {
+      currentUser = user;
+      if(user && user.email){
+        const id = user.email.slice(0,5).toLowerCase();
+        userIdEl.textContent = id;
+        // try to get balance stored in firebase for this user
+        fetchBalanceFromFirebase(user.uid).then(()=> {
+          // if db had nothing, ensure UI uses stored or zero
+          updateBalanceUI();
+        });
+      } else {
+        // guest
+        userIdEl.textContent = guestId.slice(0,5);
+        // try to fetch guest balance
+        (async ()=>{
+          try {
+            const snap = await get(ref(db, 'guests/' + guestId + '/balance'));
+            if(snap && snap.exists && typeof snap.val === 'function'){
+              localBalance = Number(snap.val()) || localBalance;
+              updateBalanceUI();
+            }
+          } catch(e){}
+        })();
+      }
+    });
+
+    // ensure balance loads if previously stored in localStorage
+    (function initLocalBalance(){
+      const saved = localStorage.getItem('ds_local_balance_v1');
+      if(saved && !isNaN(Number(saved))){
+        localBalance = Number(saved);
+        updateBalanceUI();
+      }
+      // persist balance update locally whenever it changes through the increaseBalance function
+      // override increaseBalance to write to localStorage as well
+      const origIncrease = increaseBalance;
+      increaseBalance = async function(amount=0.5){
+        // call original behavior
+        await origIncrease(amount);
+        localStorage.setItem('ds_local_balance_v1', String(localBalance));
+      };
+    })();
+
+    // keep localBalance persisted on unload
+    window.addEventListener('beforeunload', ()=> {
+      localStorage.setItem('ds_local_balance_v1', String(localBalance));
+    });
 
   </script>
 </body>
