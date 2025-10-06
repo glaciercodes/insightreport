@@ -145,116 +145,7 @@
     let showAll = false;
 
     // Guest ID support (same as homepage)
-    const guestIdKey = 'ds_guest_id_v1';
-    function ensureGuestId(){
-      let g = localStorage.getItem(guestIdKey);
-      if(!g){
-        g = 'g-' + Math.random().toString(36).slice(2,9);
-        localStorage.setItem(guestIdKey, g);
-      }
-      return g;
-    }
-    const guestId = ensureGuestId();
-
-    // Load user data
-    onAuthStateChanged(auth, async (user) => {
-      userId = user ? user.uid : guestId;
-      userIdEl.textContent = userId;
-
-      const balRef = ref(db, `users/${userId}/balance`);
-      const balSnap = await get(balRef);
-      currentBalance = balSnap.exists() ? balSnap.val() : 0;
-      updateBalanceUI();
-      loadWithdrawals();
-    });
-
-    function currency(amount){
-      return '$' + amount.toFixed(2);
-    }
-
-    function updateBalanceUI(){
-      balanceEl.textContent = currency(currentBalance);
-    }
-
-    // Show method fields
-    window.showMethodFields = function() {
-      document.querySelectorAll('.method-fields').forEach(div => div.style.display = 'none');
-      const method = document.getElementById('withdrawMethod').value;
-      if(method) document.getElementById(method + 'Fields').style.display = 'block';
-    }
-
-    // Submit withdraw
-    window.submitWithdraw = async function(){
-      const amount = parseFloat(document.getElementById('withdrawAmount').value);
-      const method = document.getElementById('withdrawMethod').value;
-      if(!amount || amount <= 0 || !method){
-        msg.textContent = "Please enter valid amount and method.";
-        msg.style.color = "red";
-        return;
-      }
-
-      if(amount < 100){
-        msg.textContent = "Minimum withdrawal is $100.";
-        msg.style.color = "red";
-        await logWithdrawal(amount, method, "Failed (Below Minimum)");
-        return;
-      }
-
-      if(amount > currentBalance){
-        msg.textContent = "Insufficient balance!";
-        msg.style.color = "red";
-        await logWithdrawal(amount, method, "Failed (Insufficient Funds)");
-        return;
-      }
-
-      // Success — deduct
-      currentBalance -= amount;
-      await update(ref(db, `users/${userId}`), { balance: currentBalance });
-      await logWithdrawal(amount, method, "Successful");
-      updateBalanceUI();
-      msg.textContent = "Withdrawal submitted successfully!";
-      msg.style.color = "#0f0";
-      loadWithdrawals();
-    }
-
-    // Log withdrawal
-    async function logWithdrawal(amount, method, status){
-      const logRef = push(ref(db, `users/${userId}/withdrawals`));
-      await set(logRef, {
-        amount,
-        method,
-        status,
-        date: new Date().toLocaleString()
-      });
-    }
-
-    // Load withdrawals
-    async function loadWithdrawals(){
-      const snap = await get(ref(db, `users/${userId}/withdrawals`));
-      if(!snap.exists()){
-        recentDiv.innerHTML = "<p>No withdrawals yet.</p>";
-        return;
-      }
-
-      const data = Object.values(snap.val());
-      const displayData = showAll ? data : data.slice(-5);
-      recentDiv.innerHTML = displayData.reverse().map(w => `
-        <div class="withdraw-item">
-          <strong>${currency(w.amount)}</strong> via ${w.method}<br>
-          <em>${w.status}</em> — ${w.date}
-        </div>
-      `).join('');
-    }
-
-    // Toggle all
-    window.toggleAllWithdrawals = function(){
-      showAll = !showAll;
-      document.getElementById('view-all-btn').textContent = showAll ? "View Less" : "View All";
-      loadWithdrawals();
-    }
-  </script>
-<script>
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
     import {
       getAuth,
@@ -337,10 +228,89 @@
     }
     updateBalanceUI();
     userIdEl.textContent = 'guest';
+    // Load user data
     
-</script>
+
+    // Show method fields
+    window.showMethodFields = function() {
+      document.querySelectorAll('.method-fields').forEach(div => div.style.display = 'none');
+      const method = document.getElementById('withdrawMethod').value;
+      if(method) document.getElementById(method + 'Fields').style.display = 'block';
+    }
+
+    // Submit withdraw
+    window.submitWithdraw = async function(){
+      const amount = parseFloat(document.getElementById('withdrawAmount').value);
+      const method = document.getElementById('withdrawMethod').value;
+      if(!amount || amount <= 0 || !method){
+        msg.textContent = "Please enter valid amount and method.";
+        msg.style.color = "red";
+        return;
+      }
+
+      if(amount < 100){
+        msg.textContent = "Minimum withdrawal is $100.";
+        msg.style.color = "red";
+        await logWithdrawal(amount, method, "Failed (Below Minimum)");
+        return;
+      }
+
+      if(amount > currentBalance){
+        msg.textContent = "Insufficient balance!";
+        msg.style.color = "red";
+        await logWithdrawal(amount, method, "Failed (Insufficient Funds)");
+        return;
+      }
+
+      // Success — deduct
+      currentBalance -= amount;
+      await update(ref(db, `users/${userId}`), { balance: currentBalance });
+      await logWithdrawal(amount, method, "Successful");
+      updateBalanceUI();
+      msg.textContent = "Withdrawal submitted successfully!";
+      msg.style.color = "#0f0";
+      loadWithdrawals();
+    }
+
+    // Log withdrawal
+    async function logWithdrawal(amount, method, status){
+      const logRef = push(ref(db, `users/${userId}/withdrawals`));
+      await set(logRef, {
+        amount,
+        method,
+        status,
+        date: new Date().toLocaleString()
+      });
+    }
+
+    // Load withdrawals
+    async function loadWithdrawals(){
+      const snap = await get(ref(db, `users/${userId}/withdrawals`));
+      if(!snap.exists()){
+        recentDiv.innerHTML = "<p>No withdrawals yet.</p>";
+        return;
+      }
+
+      const data = Object.values(snap.val());
+      const displayData = showAll ? data : data.slice(-5);
+      recentDiv.innerHTML = displayData.reverse().map(w => `
+        <div class="withdraw-item">
+          <strong>${currency(w.amount)}</strong> via ${w.method}<br>
+          <em>${w.status}</em> — ${w.date}
+        </div>
+      `).join('');
+    }
+
+    // Toggle all
+    window.toggleAllWithdrawals = function(){
+      showAll = !showAll;
+      document.getElementById('view-all-btn').textContent = showAll ? "View Less" : "View All";
+      loadWithdrawals();
+    }
+  </script>
 
 </body>
 </html>
+
 
 
