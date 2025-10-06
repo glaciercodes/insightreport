@@ -63,9 +63,13 @@
 <body>
 
   <h1>Withdrawal Page</h1>
-  <h3>User ID: <span id="userId"></span></h3>
-  <h3>Balance: <span id="balance"></span></h3>
+      <a class="logo" href="images/a6ee2559-b2a4-46be-a0ca-e71a28189c82.png" title="Dollarsurvey"></a>
 
+        <div class="info-boxes" aria-hidden="false">
+          <div class="info" id="userIdBox"><span>ID:</span> <b id="userId">guest</b></div>
+          <div class="info" id="balanceBox"><span>Balance:</span> <b id="balance">$0.00</b></div>
+        </div>
+</div>
   <div class="withdraw-form">
     <h3>Submit Withdrawal</h3>
 
@@ -249,9 +253,8 @@
       loadWithdrawals();
     }
   </script>
-  <script type="module">
-    // Firebase imports (same version pattern as your login/register)
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+<script>
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
     import {
       getAuth,
@@ -334,7 +337,10 @@
     }
     updateBalanceUI();
     userIdEl.textContent = 'guest';
+    
+</script>
 
 </body>
 </html>
+
 
