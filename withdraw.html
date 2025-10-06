@@ -249,6 +249,92 @@
       loadWithdrawals();
     }
   </script>
+  <script type="module">
+    // Firebase imports (same version pattern as your login/register)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
+    import {
+      getAuth,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      push,
+      child,
+      get,
+      update
+    } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
+
+    // your provided config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
+      authDomain: "dollar-survey-60fe7.firebaseapp.com",
+      projectId: "dollar-survey-60fe7",
+      storageBucket: "dollar-survey-60fe7.firebasestorage.app",
+      messagingSenderId: "293471697208",
+      appId: "1:293471697208:web:664863f09e830e420c69cd",
+      measurementId: "G-RCZ7SQJHPZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    try { getAnalytics(app); } catch(e) { /* analytics may fail in some envs */ }
+
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    // UI refs
+    const surveysContainer = document.getElementById('surveysContainer');
+    const submitBtn = document.getElementById('submitBtn');
+    const toast = document.getElementById('toast');
+    const userIdEl = document.getElementById('userId');
+    const balanceEl = document.getElementById('balance');
+
+    // menu
+    const menuBtn = document.getElementById('menuBtn');
+    const menuModal = document.getElementById('menuModal');
+    const closeModal = document.getElementById('closeModal');
+    menuBtn.addEventListener('click', ()=> {
+      const open = menuModal.style.display === 'block';
+      menuModal.style.display = open ? 'none' : 'block';
+      menuBtn.setAttribute('aria-expanded', String(!open));
+      menuModal.setAttribute('aria-hidden', String(open));
+    });
+    closeModal.addEventListener('click', ()=> { menuModal.style.display = 'none'; menuBtn.setAttribute('aria-expanded','false'); });
+
+    // guest id (persistent)
+    let currentUser = null;
+    const guestIdKey = 'ds_guest_id_v1';
+    function ensureGuestId(){
+      let g = localStorage.getItem(guestIdKey);
+      if(!g){
+        g = 'g-' + Math.random().toString(36).slice(2,9);
+        localStorage.setItem(guestIdKey, g);
+      }
+      return g;
+    }
+    const guestId = ensureGuestId();
+
+    // UI helpers
+    function showToast(message, ms=3000){
+      toast.textContent = message;
+      toast.style.display='block';
+      setTimeout(()=> { toast.style.display='none'; }, ms);
+    }
+
+    function currency(amount){
+      return '$' + amount.toFixed(2);
+    }
+
+    // initial UI values
+    let localBalance = 0.00;
+    function updateBalanceUI(){
+      balanceEl.textContent = currency(localBalance);
+    }
+    updateBalanceUI();
+    userIdEl.textContent = 'guest';
 
 </body>
 </html>
+
