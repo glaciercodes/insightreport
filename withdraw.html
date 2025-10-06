@@ -1,259 +1,354 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DollarSurvey | Withdraw</title>
-<style>
-  body {
-    margin:0;
-    font-family:'Segoe UI', sans-serif;
-    background:#000;
-    color:#adff2f;
-  }
-  header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 20px;
-    border-bottom:1px solid #adff2f;
-  }
-  .logo {
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    background:#adff2f;
-    text-align:center;
-    line-height:60px;
-    font-weight:bold;
-    color:black;
-    text-decoration:none;
-  }
-  .user-info {
-    display:flex;
-    gap:20px;
-    padding:15px 20px;
-  }
-  .info-box {
-    background: rgba(173,255,47,0.05);
-    padding:10px 15px;
-    border:1px solid #adff2f;
-    border-radius:8px;
-    min-width:140px;
-    text-align:center;
-  }
-  .withdraw-form, .withdrawal-history {
-    max-width: 500px;
-    margin:20px auto;
-    padding:15px;
-    border:1px solid #adff2f;
-    border-radius:10px;
-    background: rgba(173,255,47,0.05);
-  }
-  input, select {
-    width:100%;
-    padding:10px;
-    margin:5px 0;
-    border-radius:6px;
-    border:1px solid #adff2f;
-    background:transparent;
-    color:#adff2f;
-    outline:none;
-  }
-  button {
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    border:none;
-    border-radius:8px;
-    background:#adff2f;
-    color:black;
-    font-weight:bold;
-    cursor:pointer;
-  }
-  button:hover { background:#cfff70; }
-  .method-fields { display:none; margin-top:5px; }
-  .withdrawal-card { margin-bottom:10px; padding:5px 10px; border-bottom:1px solid #adff2f; }
-  .status.pending { color:orange; }
-  .status.completed { color:#2ff303; }
-  #withdraw-msg { margin-top:10px; font-weight:bold; text-align:center; opacity:0; transition:opacity 0.5s; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Withdraw</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1947981398780941" crossorigin="anonymous"></script>
+  
+  <!-- 🌑 Black & Neon Green Theme -->
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #000;
+      color: #0f0;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .go-back-btn {
+      background: #0f0;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 15px;
+      transition: 0.3s;
+    }
+    .go-back-btn:hover {
+      background: #00ff88;
+    }
+
+    .user-info {
+      margin-top: 10px;
+      padding: 15px;
+      background: #111;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 10px #0f0;
+    }
+
+    .withdraw-form {
+      background: #111;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 10px #0f0;
+    }
+
+    input, select {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 2px solid #0f0;
+      background: #000;
+      color: #0f0;
+      font-size: 16px;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 10px #00ff66;
+    }
+
+    button {
+      background: #0f0;
+      color: #000;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:disabled {
+      background: #333;
+      color: #555;
+      cursor: not-allowed;
+    }
+
+    .withdrawal-history {
+      margin: 30px auto;
+      padding: 20px;
+      background: #111;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 10px #0f0;
+    }
+
+    .withdrawal-card {
+      border: 1px solid #0f0;
+      border-radius: 10px;
+      margin: 10px 0;
+      padding: 10px;
+      background: #000;
+    }
+
+    .status.pending {
+      color: yellow;
+    }
+    .status.success {
+      color: lime;
+    }
+    .status.failed {
+      color: red;
+    }
+
+    h2, h3, h4 {
+      color: #00ff66;
+    }
+
+    #withdraw-msg {
+      margin-top: 10px;
+      color: #0f0;
+      font-weight: bold;
+    }
+  </style>
 </head>
+
 <body>
+  <button class="go-back-btn" onclick="goBack()">⬅ Back</button>
 
-<header>
-  <a href="#" class="logo">Logo</a>
-</header>
-
-<div class="user-info">
-  <div class="info-box" id="user-id">ID: ...</div>
-  <div class="info-box" id="user-balance">Balance: $0.00</div>
-</div>
-
-<div class="withdraw-form">
-  <h3>Submit Withdrawal</h3>
-  <input type="number" placeholder="Enter amount ($)" id="withdrawAmount" />
-  <select id="withdrawMethod" onchange="showMethodFields()">
-    <option value="">Select Method</option>
-    <option value="bank">Bank</option>
-    <option value="crypto">Crypto Wallet</option>
-    <option value="giftcard">Gift Card</option>
-  </select>
-
-  <div id="bankFields" class="method-fields">
-    <input type="text" placeholder="Account Holder Name" />
-    <input type="text" placeholder="Bank Name" />
-    <input type="text" placeholder="Account Number" />
-    <input type="text" placeholder="Country" />
-  </div>
-  <div id="cryptoFields" class="method-fields">
-    <input type="text" placeholder="Wallet Address" />
-    <input type="text" placeholder="Coin Type (e.g., USDT, BTC)" />
-  </div>
-  <div id="giftcardFields" class="method-fields">
-    <input type="email" placeholder="Your Email Address" />
-    <input type="text" placeholder="Type of Gift Card (e.g., Amazon, iTunes)" />
+  <div class="user-info">
+    <div id="user-id">ID: ...</div>
+    <div id="user-email">User: ...</div>
+    <div id="user-balance">Balance: $0.00</div>
   </div>
 
-  <button onclick="submitWithdraw()">Withdraw</button>
-  <p id="withdraw-msg"></p>
-</div>
+  <!-- Withdraw Form -->
+  <div class="withdraw-form">
+    <h3>Submit Withdrawal</h3>
 
-<div class="withdrawal-history">
-  <h3>Recent Withdrawals</h3>
-  <div id="recent-withdrawals"></div>
-  <button onclick="toggleAllWithdrawals()" id="view-all-btn">View All</button>
-</div>
+    <input type="number" id="withdrawAmount" placeholder="Enter amount ($)" />
+    <select id="withdrawMethod" onchange="showMethodFields()">
+      <option value="">Select Method</option>
+      <option value="bank">Bank</option>
+      <option value="crypto">Crypto Wallet</option>
+      <option value="giftcard">Gift Card</option>
+    </select>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    <!-- Bank Fields -->
+    <div id="bankFields" class="method-fields" style="display: none;">
+      <input type="text" placeholder="Account Holder Name" />
+      <input type="text" placeholder="Bank Name" />
+      <input type="text" placeholder="Account Number" />
+      <input type="text" placeholder="Country" />
+    </div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
-  authDomain: "dollar-survey-60fe7.firebaseapp.com",
-  projectId: "dollar-survey-60fe7",
-  storageBucket: "dollar-survey-60fe7.appspot.com",
-  messagingSenderId: "293471697208",
-  appId: "1:293471697208:web:664863f09e830e420c69cd"
-};
+    <!-- Crypto Fields -->
+    <div id="cryptoFields" class="method-fields" style="display: none;">
+      <input type="text" placeholder="Wallet Address" />
+      <input type="text" placeholder="Coin Type (e.g., USDT, BTC)" />
+    </div>
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+    <!-- Gift Card Fields -->
+    <div id="giftcardFields" class="method-fields" style="display: none;">
+      <input type="email" placeholder="Your Email Address" />
+      <input type="text" placeholder="Type of Gift Card (e.g., Amazon, iTunes)" />
+    </div>
 
-function notify(msg,color="lime"){
-  const el = document.getElementById("withdraw-msg");
-  el.textContent = msg;
-  el.style.color=color;
-  el.style.opacity=1;
-  setTimeout(()=>el.style.opacity=0,3000);
-}
+    <button id="withdrawBtn" onclick="submitWithdraw()" disabled>Withdraw</button>
+    <p id="withdraw-msg"></p>
+  </div>
 
-// Show/hide method fields
-window.showMethodFields = function(){
-  const m = document.getElementById("withdrawMethod").value;
-  document.getElementById("bankFields").style.display="none";
-  document.getElementById("cryptoFields").style.display="none";
-  document.getElementById("giftcardFields").style.display="none";
-  if(m==="bank") document.getElementById("bankFields").style.display="block";
-  if(m==="crypto") document.getElementById("cryptoFields").style.display="block";
-  if(m==="giftcard") document.getElementById("giftcardFields").style.display="block";
-}
+  <!-- Withdrawal History -->
+  <div class="withdrawal-history">
+    <h3>Recent Withdrawals</h3>
+    <div id="recent-withdrawals"></div>
+    <button onclick="toggleAllWithdrawals()" id="view-all-btn">View All</button>
+  </div>
 
-// Sync user info
-let currentUser=null;
-onAuthStateChanged(auth, async user=>{
-  if(user){
-    currentUser=user;
-    const uid=user.uid;
-    const email=user.email || "anonymous";
-    document.getElementById("user-id").textContent="ID: "+email.slice(0,5);
-    const refDoc=doc(db,"users",uid);
-    const snap=await getDoc(refDoc);
-    const balance=snap.exists()?snap.data().balance||0:0;
-    document.getElementById("user-balance").textContent="Balance: $"+balance.toFixed(2);
-  }
-});
+  <h2>Note: Withdrawal updates are sent to your email.</h2>
+  <h4>Need help? Contact us at: <br><a href="mailto:dollarsurveyus@gmail.com" style="color:#0f0;">dollarsurveyus@gmail.com</a></h4>
 
-// LocalStorage withdrawals
-function saveWithdrawalToLocal(data){
-  let history=JSON.parse(localStorage.getItem("withdrawalHistory"))||[];
-  history.unshift({...data,date:new Date().toLocaleString()});
-  localStorage.setItem("withdrawalHistory",JSON.stringify(history));
-}
+  <!-- Firebase + App Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-function displayWithdrawals(limit=3){
-  const container=document.getElementById("recent-withdrawals");
-  const history=JSON.parse(localStorage.getItem("withdrawalHistory"))||[];
-  container.innerHTML="";
-  history.slice(0,limit).forEach(item=>{
-    const div=document.createElement("div");
-    div.className="withdrawal-card";
-    div.innerHTML=`
-      <p><strong>Amount:</strong> $${item.amount}</p>
-      <p><strong>Method:</strong> ${item.method}</p>
-      <p><strong>Status:</strong> <span class="status ${item.status||'pending'}">${item.status||'Pending'}</span></p>
-      <p><strong>Date:</strong> ${item.date}</p>
-    `;
-    container.appendChild(div);
-  });
-}
-window.toggleAllWithdrawals=()=>{
-  const btn=document.getElementById("view-all-btn");
-  if(btn.textContent.includes("Hide")){
-    displayWithdrawals(3);
-    btn.textContent="View All";
-  }else{
-    displayWithdrawals(Infinity);
-    btn.textContent="Hide All";
-  }
-}
-window.addEventListener("DOMContentLoaded",()=>displayWithdrawals());
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
+      authDomain: "dollar-survey-60fe7.firebaseapp.com",
+      projectId: "dollar-survey-60fe7",
+      storageBucket: "dollar-survey-60fe7.appspot.com",
+      messagingSenderId: "293471697208",
+      appId: "1:293471697208:web:664863f09e830e420c69cd"
+    };
 
-// Withdraw submission
-window.submitWithdraw=async ()=>{
-  const amount=parseFloat(document.getElementById("withdrawAmount").value.trim());
-  const method=document.getElementById("withdrawMethod").value;
-  if(!amount||!method){ notify("Fill all fields!","red"); return;}
-  if(amount<100){ notify("Minimum withdrawal $100","red"); return;}
-  if(!currentUser){ notify("Login first","red"); return;}
-  
-  const uid=currentUser.uid;
-  const userRef=doc(db,"users",uid);
-  const userSnap=await getDoc(userRef);
-  let balance=userSnap.exists()?userSnap.data().balance||0:0;
-  if(amount>balance){ notify("Insufficient balance","red"); return;}
-  
-  const data={amount,method,userEmail:currentUser.email,userId:currentUser.email.slice(0,5),status:"pending"};
-  
-  try{
-    // Subtract balance immediately
-    balance-=amount;
-    document.getElementById("user-balance").textContent="Balance: $"+balance.toFixed(2);
-    updateDoc(userRef,{balance});
-    
-    // Save withdrawal
-    await addDoc(collection(db,"withdrawals"),data);
-    saveWithdrawalToLocal(data);
-    displayWithdrawals();
-    
-    notify("Withdrawal submitted!","lime");
-    
-    // Reset form
-    document.getElementById("withdrawAmount").value="";
-    document.getElementById("withdrawMethod").value="";
-    document.getElementById("bankFields").style.display="none";
-    document.getElementById("cryptoFields").style.display="none";
-    document.getElementById("giftcardFields").style.display="none";
-    
-  }catch(e){
-    console.error(e);
-    notify("Error submitting withdrawal","red");
-  }
-}
-</script>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
 
+    const withdrawBtn = document.getElementById("withdrawBtn");
+
+    // Display method fields
+    window.showMethodFields = function () {
+      const method = document.getElementById("withdrawMethod").value;
+      document.querySelectorAll(".method-fields").forEach(f => f.style.display = "none");
+      if (method === "bank") document.getElementById("bankFields").style.display = "block";
+      if (method === "crypto") document.getElementById("cryptoFields").style.display = "block";
+      if (method === "giftcard") document.getElementById("giftcardFields").style.display = "block";
+    };
+
+    // Go Back
+    window.goBack = function () {
+      window.history.back();
+    };
+
+    let userData = null;
+
+    // Sync user info
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const uid = user.uid;
+        document.getElementById("user-email").textContent = "User: " + (user.email || "Anonymous");
+        document.getElementById("user-id").textContent = "ID: " + uid;
+
+        const userRef = doc(db, "users", uid);
+        const snap = await getDoc(userRef);
+
+        if (snap.exists()) {
+          const balance = snap.data().balance || 0;
+          userData = { uid, balance };
+          document.getElementById("user-balance").textContent = "Balance: $" + balance.toFixed(2);
+          withdrawBtn.disabled = balance < 100; // Only enable if $100+
+        }
+      } else {
+        document.getElementById("withdraw-msg").textContent = "Please log in to continue.";
+      }
+    });
+
+    // Submit withdrawal
+    window.submitWithdraw = async function () {
+      const msg = document.getElementById("withdraw-msg");
+      msg.textContent = "";
+
+      const method = document.getElementById("withdrawMethod").value;
+      const amount = parseFloat(document.getElementById("withdrawAmount").value);
+      if (!amount || !method) {
+        msg.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      if (amount < 100) {
+        msg.textContent = "Minimum withdrawal is $100.";
+        return;
+      }
+
+      const currentBalance = userData.balance;
+      if (currentBalance < amount) {
+        msg.textContent = "Insufficient balance.";
+        return;
+      }
+
+      const uid = userData.uid;
+      const userRef = doc(db, "users", uid);
+
+      const data = {
+        method,
+        amount,
+        userId: uid,
+        timestamp: serverTimestamp(),
+        status: "Pending"
+      };
+
+      // collect extra fields
+      if (method === "bank") {
+        data.accountHolder = document.querySelector("#bankFields input[placeholder='Account Holder Name']").value;
+        data.bankName = document.querySelector("#bankFields input[placeholder='Bank Name']").value;
+        data.accountNumber = document.querySelector("#bankFields input[placeholder='Account Number']").value;
+        data.country = document.querySelector("#bankFields input[placeholder='Country']").value;
+      } else if (method === "crypto") {
+        data.walletAddress = document.querySelector("#cryptoFields input[placeholder='Wallet Address']").value;
+        data.coinType = document.querySelector("#cryptoFields input[placeholder='Coin Type (e.g., USDT, BTC)']").value;
+      } else if (method === "giftcard") {
+        data.email = document.querySelector("#giftcardFields input[placeholder='Your Email Address']").value;
+        data.cardType = document.querySelector("#giftcardFields input[placeholder='Type of Gift Card (e.g., Amazon, iTunes)']").value;
+      }
+
+      try {
+        // Deduct from Firebase
+        await updateDoc(userRef, { balance: currentBalance - amount });
+
+        // Save withdrawal record
+        await addDoc(collection(db, "withdrawals"), data);
+
+        userData.balance -= amount;
+        document.getElementById("user-balance").textContent = "Balance: $" + userData.balance.toFixed(2);
+        withdrawBtn.disabled = userData.balance < 100;
+
+        msg.textContent = `✅ Withdrawal of $${amount.toFixed(2)} submitted successfully via ${method}.`;
+
+        saveWithdrawalToLocal({ ...data, date: new Date().toLocaleString() });
+        displayWithdrawals();
+      } catch (e) {
+        console.error(e);
+        msg.textContent = "Error submitting withdrawal.";
+      }
+    };
+
+    // Local Storage
+    function saveWithdrawalToLocal(data) {
+      const history = JSON.parse(localStorage.getItem("withdrawalHistory")) || [];
+      history.unshift(data);
+      localStorage.setItem("withdrawalHistory", JSON.stringify(history));
+    }
+
+    function displayWithdrawals(limit = 3) {
+      const container = document.getElementById("recent-withdrawals");
+      const history = JSON.parse(localStorage.getItem("withdrawalHistory")) || [];
+      container.innerHTML = "";
+
+      history.slice(0, limit).forEach(item => {
+        const div = document.createElement("div");
+        div.className = "withdrawal-card";
+        div.innerHTML = `
+          <p><strong>Amount:</strong> $${item.amount}</p>
+          <p><strong>Method:</strong> ${item.method}</p>
+          <p><strong>Status:</strong> <span class="status pending">${item.status}</span></p>
+          <p><strong>Date:</strong> ${item.date}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    window.toggleAllWithdrawals = function () {
+      const btn = document.getElementById("view-all-btn");
+      const showAll = btn.textContent.includes("Hide");
+      if (showAll) {
+        displayWithdrawals(3);
+        btn.textContent = "View All";
+      } else {
+        displayWithdrawals(Infinity);
+        btn.textContent = "Hide All";
+      }
+    };
+
+    window.addEventListener("DOMContentLoaded", displayWithdrawals);
+  </script>
 </body>
 </html>
