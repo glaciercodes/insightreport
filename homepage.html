@@ -1,371 +1,321 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Dollarsurvey | Home</title>
-<style>
-  :root{
-    --bg:#000;
-    --accent:#adff2f;
-    --muted:rgba(173,255,47,0.08);
-    --glass: rgba(173,255,47,0.06);
-    --card-shadow: 0 6px 20px rgba(173,255,47,0.06);
-    --radius:12px;
-    --maxw:1000px;
-  }
-  html,body{height:100%;margin:0;background:var(--bg);color:var(--accent);font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;}
-  .page{max-width:var(--maxw);margin:28px auto;padding:18px;box-sizing:border-box;}
-  header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 4px;}
-  .brand{display:flex;align-items:center;gap:12px;}
-  .logo{width:56px;height:56px;border-radius:10px;display:inline-block;background:linear-gradient(0deg,#0b0 10%, #111 90%);border:1px solid rgba(173,255,47,0.16);text-align:center;line-height:56px;font-weight:700}
-  .title{font-size:20px;font-weight:700;margin:0}
-  .sub-title{font-size:13px;color:var(--accent);opacity:0.9;margin:0}
-  .top-right{display:flex;align-items:center;gap:14px}
-  .info-card{display:flex;gap:14px;align-items:center;background:var(--glass);padding:10px;border-radius:10px;border:1px solid rgba(173,255,47,0.06);box-shadow:var(--card-shadow)}
-  .info-item{font-size:13px}
-  .big-balance{font-size:18px;font-weight:800;color:var(--accent)}
-  button.btn{background:var(--accent);color:#000;padding:8px 12px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
-  button.ghost{background:transparent;border:1px solid rgba(173,255,47,0.12);color:var(--accent);padding:8px 10px;border-radius:8px}
-  main{margin-top:16px}
-  h1.main-heading{font-size:22px;font-weight:900;margin:12px 0 6px 0}
-  h2.section-title{font-size:18px;font-weight:900;margin:18px 0 8px 0}
-  .surveys{display:grid;grid-template-columns:1fr;gap:14px}
-  .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:14px;border-radius:12px;border:1px solid rgba(173,255,47,0.04);box-shadow:0 8px 20px rgba(0,0,0,0.6)}
-  .q-text{font-size:14px;color:var(--accent);line-height:1.4;margin-bottom:8px}
-  .answer{width:100%;padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(173,255,47,0.12);color:var(--accent);outline:none;min-height:44px;resize:vertical}
-  .card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:10px}
-  .share-btn{background:transparent;border:none;color:var(--accent);cursor:pointer;font-weight:700}
-  .submit-row{display:flex;gap:12px;align-items:center;margin-top:18px}
-  .notify{position:fixed;left:50%;transform:translateX(-50%);top:18px;background:rgba(0,0,0,0.8);padding:10px 14px;border-radius:10px;border:1px solid rgba(173,255,47,0.12);color:var(--accent);font-weight:700;opacity:0;pointer-events:none;transition:all .28s}
-  .notify.show{opacity:1;top:34px;pointer-events:auto}
-  @media(min-width:720px){
-    .surveys{grid-template-columns:1fr 1fr}
-  }
-  @media(max-width:420px){
-    .logo{width:48px;height:48px;line-height:48px}
-    .title{font-size:16px}
-    .main-heading{font-size:18px}
-    header{padding:8px}
-  }
-  /* menu modal */
-  .menu-btn{background:transparent;border:1px solid rgba(173,255,47,0.08);padding:8px;border-radius:8px;color:var(--accent);cursor:pointer}
-  .menu-panel{position:fixed;right:10px;top:72px;background:#070707;padding:12px;border-radius:10px;border:1px solid rgba(173,255,47,0.06);display:none;min-width:200px}
-  .menu-panel a{display:block;color:var(--accent);text-decoration:none;padding:8px 6px;border-radius:6px}
-  .menu-panel.show{display:block}
-  .small-muted{color:rgba(173,255,47,0.7);font-size:12px}
-  .share-arrow{font-weight:900}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dollarsurvey | Home</title>
+  <style>
+    :root{
+      --bg:#000;
+      --accent:#adff2f;
+      --accent-dim: rgba(173,255,47,0.12);
+      --card-bg: rgba(10,10,10,0.6);
+      --glass: rgba(255,255,255,0.02);
+      --radius:12px;
+      --max-width:980px;
+      --gap:14px;
+    }
+    html,body{height:100%; margin:0; background:var(--bg); color:var(--accent); font-family: "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;}
+    .page{max-width:var(--max-width); margin:28px auto; padding:18px; box-sizing:border-box;}
+    header{display:flex; align-items:center; gap:12px; padding:12px; border-radius:10px; background:linear-gradient(180deg, rgba(173,255,47,0.02), transparent); box-shadow:0 6px 30px rgba(173,255,47,0.02);}
+    .logo { width:56px; height:56px; border-radius:10px; background:var(--glass); display:inline-flex; align-items:center; justify-content:center; border:1px solid rgba(173,255,47,0.08); }
+    .logo a{ color:var(--accent); text-decoration:none; font-weight:700; display:inline-block; width:100%; height:100%; align-items:center; justify-content:center; display:flex; }
+    .title { font-size:18px; font-weight:700; margin-left:6px; }
+    .top-right { margin-left:auto; display:flex; gap:8px; align-items:center; }
+    .user-card{ display:flex; gap:10px; align-items:center; background:var(--card-bg); padding:8px 12px; border-radius:10px; border:1px solid rgba(173,255,47,0.06); }
+    .uid { font-weight:700; letter-spacing:1px; }
+    .balance { font-weight:800; color:#000; background:var(--accent); padding:6px 10px; border-radius:8px; }
+    .menu-btn { background:transparent; border:1px solid rgba(173,255,47,0.12); color:var(--accent); padding:8px 10px; border-radius:10px; cursor:pointer; }
+    .hero{ margin-top:18px; display:flex; flex-direction:column; gap:8px; padding:16px; border-radius:12px; background:linear-gradient(180deg, rgba(173,255,47,0.02), transparent); }
+    .surveys-heading { font-size:26px; font-weight:900; margin:8px 0; color:var(--accent); letter-spacing:0.6px; }
+    .surveys-intro { font-size:14px; color: rgba(173,255,47,0.85); }
+    .survey-list{ margin-top:16px; display:grid; grid-template-columns:1fr; gap:12px; }
+    .survey { background:rgba(255,255,255,0.02); border:1px solid rgba(173,255,47,0.06); padding:12px; border-radius:10px; }
+    .q{ font-weight:700; margin-bottom:8px; color:var(--accent); }
+    textarea{ width:100%; min-height:86px; resize:vertical; padding:10px; box-sizing:border-box; background:transparent; color:var(--accent); border:1px dashed rgba(173,255,47,0.08); border-radius:8px; outline:none; font-size:14px; }
+    .survey-footer{ display:flex; justify-content:space-between; align-items:center; margin-top:8px; gap:8px; }
+    .share-btn{ background:transparent; border:none; color:var(--accent); cursor:pointer; font-size:18px; display:flex; gap:8px; align-items:center;}
+    .submit-row{ display:flex; gap:10px; margin-top:18px; align-items:center; }
+    .submit-btn{ background:var(--accent); color:#000; padding:12px 16px; border-radius:10px; border:none; font-weight:800; cursor:pointer; flex:1; }
+    .reset-btn{ background:transparent; color:var(--accent); border:1px solid rgba(173,255,47,0.08); padding:10px 12px; border-radius:10px; cursor:pointer; }
+    .notify{ position:fixed; left:50%; transform:translateX(-50%); bottom:24px; background:rgba(0,0,0,0.8); padding:10px 16px; color:var(--accent); border-radius:10px; border:1px solid rgba(173,255,47,0.06); box-shadow:0 8px 30px rgba(0,0,0,0.6); opacity:0; transition:all .28s; pointer-events:none; z-index:999; }
+    .notify.show{ opacity:1; transform:translateX(-50%) translateY(-6px); pointer-events:auto; }
+    /* menu modal */
+    .menu-modal{ position:fixed; right:16px; top:70px; background:rgba(0,0,0,0.95); border:1px solid rgba(173,255,47,0.06); padding:12px; border-radius:10px; display:none; min-width:180px; z-index:1000; }
+    .menu-modal a{ display:block; color:var(--accent); text-decoration:none; padding:8px 6px; border-radius:6px; }
+    .menu-modal a:hover{ background:rgba(173,255,47,0.02); }
+    .grid-two{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    /* responsive */
+    @media (max-width:720px){
+      .page{ padding:12px; }
+      header{ flex-direction:row; gap:8px; align-items:center; padding:10px; }
+      .title{ font-size:16px; }
+      .surveys-heading{ font-size:20px; }
+      .grid-two{ grid-template-columns:1fr; }
+    }
+  </style>
 </head>
 <body>
-<div class="page">
-  <header>
-    <div class="brand" role="banner">
-      <a href="#" aria-label="Dollarsurvey logo" style="text-decoration:none">
-        <div class="logo">#</div>
-      </a>
+  <div class="page">
+    <header>
+      <div class="logo"><a href="#" aria-label="Dollarsurvey logo">DS</a></div>
       <div>
-        <p class="title">Welcome to Dollarsurvey</p>
-        <p class="sub-title">Quick surveys, real rewards</p>
-      </div>
-    </div>
-
-    <div class="top-right">
-      <div class="info-card" aria-live="polite">
-        <div class="info-item"><span class="small-muted">User ID</span><div id="userId" class="small-muted" style="font-weight:800">—</div></div>
-        <div style="width:1px;background:rgba(173,255,47,0.06);height:34px"></div>
-        <div class="info-item"><span class="small-muted">Balance</span><div id="balance" class="big-balance">$0.00</div></div>
+        <div class="title">Welcome to Dollarsurvey</div>
       </div>
 
-      <button class="menu-btn" id="openMenuBtn" aria-haspopup="true" aria-expanded="false">☰ Menu</button>
-    </div>
-  </header>
+      <div class="top-right">
+        <div class="user-card" id="userCard" aria-live="polite">
+          <div class="uid" id="userId">UID: —</div>
+          <div class="balance" id="balance">$0.00</div>
+        </div>
+        <button class="menu-btn" id="menuBtn" aria-haspopup="true" aria-expanded="false">☰ Menu</button>
+      </div>
+    </header>
 
-  <div id="menuPanel" class="menu-panel" role="menu" aria-hidden="true">
-    <a href="homepage.html">Home</a>
-    <a href="profile.html">Profile</a>
-    <a href="terms&privacy.html">Terms & Privacy</a>
-    <a href="#" id="logoutBtn">Logout</a>
+    <div class="menu-modal" id="menuModal" role="dialog" aria-modal="false">
+      <a href="#" id="profileLink">Profile</a>
+      <a href="#" id="historyLink">My Surveys</a>
+      <a href="#" id="helpLink">Help</a>
+      <a href="#" id="logoutBtn" style="color:#ff9a9a;">Logout</a>
+    </div>
+
+    <main class="hero" id="mainArea">
+      <div class="surveys-heading">We have got some surveys for you</div>
+      <div class="surveys-intro">Answer a few quick preference questions to earn rewards. Each submission adds <strong>+$0.50</strong> to your balance.</div>
+
+      <form id="surveyForm" class="survey-list" autocomplete="off" novalidate>
+        <!-- 10 surveys inserted by JS for clarity -->
+      </form>
+
+      <div class="submit-row">
+        <button type="button" class="submit-btn" id="submitBtn">Submit all answers</button>
+        <button type="button" class="reset-btn" id="resetBtn">Reset</button>
+      </div>
+    </main>
   </div>
 
-  <main>
-    <h1 class="main-heading">We have got some surveys for you</h1>
+  <div class="notify" id="notify"></div>
 
-    <h2 class="section-title">Surveys</h2>
+  <!-- Firebase SDKs (modular) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      push,
+      runTransaction,
+      get,
+      child
+    } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
 
-    <form id="surveyForm" class="surveys" autocomplete="off" novalidate>
-      <!-- 10 survey cards inserted by JS -->
-      <div id="surveyContainer"></div>
+    // --- firebase config (from your snippet) ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
+      authDomain: "dollar-survey-60fe7.firebaseapp.com",
+      projectId: "dollar-survey-60fe7",
+      storageBucket: "dollar-survey-60fe7.firebasestorage.app",
+      messagingSenderId: "293471697208",
+      appId: "1:293471697208:web:664863f09e830e420c69cd",
+      measurementId: "G-RCZ7SQJHPZ"
+    };
 
-      <div style="grid-column:1/-1" class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-          <div class="small-muted">Complete all surveys to earn <strong>+$0.50</strong></div>
-          <div>
-            <button type="button" class="ghost" id="resetBtn">Reset answers</button>
-            <button type="submit" class="btn" id="submitBtn">Submit answers</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </main>
-</div>
+    const app = initializeApp(firebaseConfig);
+    getAnalytics(app);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
 
-<div id="notify" class="notify" role="status" aria-live="polite"></div>
-
-<!-- Firebase v10 module SDKs -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
-  import {
-    getAuth,
-    onAuthStateChanged,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-  import {
-    getDatabase,
-    ref,
-    set,
-    get,
-    child,
-    push,
-    runTransaction
-  } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
-
-  // Use firebaseConfig provided (keeps consistency with your login/register)
-  const firebaseConfig = {
-    apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
-    authDomain: "dollar-survey-60fe7.firebaseapp.com",
-    projectId: "dollar-survey-60fe7",
-    storageBucket: "dollar-survey-60fe7.firebasestorage.app",
-    messagingSenderId: "293471697208",
-    appId: "1:293471697208:web:664863f09e830e420c69cd",
-    measurementId: "G-RCZ7SQJHPZ"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  getAnalytics(app);
-  const auth = getAuth(app);
-  const db = getDatabase(app);
-
-  // UI refs
-  const notifyEl = document.getElementById('notify');
-  const userIdEl = document.getElementById('userId');
-  const balanceEl = document.getElementById('balance');
-  const surveyContainer = document.getElementById('surveyContainer');
-  const surveyForm = document.getElementById('surveyForm');
-  const logoutBtn = document.getElementById('logoutBtn');
-  const menuBtn = document.getElementById('openMenuBtn');
-  const menuPanel = document.getElementById('menuPanel');
-  const resetBtn = document.getElementById('resetBtn');
-
-  function showNotification(msg, success = true, ms = 2800) {
-    notifyEl.textContent = msg;
-    notifyEl.style.borderColor = success ? 'rgba(173,255,47,0.12)' : 'rgba(255,0,0,0.12)';
-    notifyEl.classList.add('show');
-    setTimeout(()=> notifyEl.classList.remove('show'), ms);
-  }
-
-  // Toggle menu
-  menuBtn.addEventListener('click', ()=>{
-    const show = !menuPanel.classList.contains('show');
-    menuPanel.classList.toggle('show', show);
-    menuBtn.setAttribute('aria-expanded', show);
-  });
-  document.addEventListener('click', (e)=>{
-    if (!menuPanel.contains(e.target) && e.target !== menuBtn) {
-      menuPanel.classList.remove('show');
-      menuBtn.setAttribute('aria-expanded','false');
-    }
-  });
-
-  logoutBtn.addEventListener('click', async (e)=>{
-    e.preventDefault();
-    try {
-      await signOut(auth);
-      showNotification('Signed out', true, 1500);
-      setTimeout(()=> window.location.href = 'login.html', 800);
-    } catch(err) {
-      showNotification('Unable to sign out', false, 1800);
-    }
-  });
-
-  // Survey question templates (~50 words; product preference, benign)
-  const questions = [
-    `You’re buying a new portable Bluetooth speaker for weekend trips. Which brand features (sound quality, battery life, ruggedness) are most important to you and why? Describe a typical use-case where those features matter.`,
-    `When choosing a morning coffee maker for home, which factors (speed, taste consistency, size, maintenance) influence your choice? Describe how your morning routine shapes that decision.`,
-    `Imagine replacing your phone charging cables. What qualities (durability, speed, length, price) make a cable your top pick? Describe a situation when a cable failed you previously.`,
-    `Selecting a pair of running shoes: which attributes (comfort, cushioning, grip, weight) do you prioritize? Describe a recent run or terrain where those attributes would change your choice.`,
-    `For a home office chair, which factors (lumbar support, adjustability, material, size) matter most? Describe a typical workday posture or problem you want the chair to solve.`,
-    `Choosing a streaming service subscription: which features (catalog, price, device support, offline viewing) tip the scales for you? Describe a use-case that would make you cancel or keep the service.`,
-    `Buying a new backpack for commuting: which aspects (capacity, weather resistance, compartments, weight) are essential? Describe the items you carry daily and how that affects the decision.`,
-    `When shopping for kitchen cookware, which qualities (heat distribution, non-stick, durability, price) are most important? Describe a meal or cooking style that reveals what you need.`,
-    `Choosing a smartwatch: which features (battery life, health tracking, notifications, app ecosystem) matter most? Describe how you would use the watch during a busy day or workout.`,
-    `Selecting noise-cancelling headphones for travel: which attributes (ANC quality, comfort, battery, portability) do you value most? Describe a travel scenario where those matter.`
-  ];
-
-  // Create survey cards
-  function renderSurveys() {
-    surveyContainer.innerHTML = '';
-    questions.forEach((q, idx) => {
-      const id = `q${idx+1}`;
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <div class="q-text"><strong>Q${idx+1}.</strong> ${q}</div>
-        <textarea id="${id}" name="${id}" class="answer" placeholder="Type your answer (min 5 characters)" minlength="5" required></textarea>
-        <div class="card-footer">
-          <div class="small-muted">Answer must be at least 5 characters</div>
-          <div>
-            <button type="button" class="share-btn" data-idx="${idx}" title="Share this survey">↗︎ <span class="share-arrow">Share</span></button>
-          </div>
-        </div>
-      `;
-      surveyContainer.appendChild(card);
-    });
-  }
-
-  renderSurveys();
-
-  // Share handler (share homepage link)
-  surveyContainer.addEventListener('click', async (e)=>{
-    const btn = e.target.closest('.share-btn');
-    if (!btn) return;
-    const url = window.location.origin + window.location.pathname; // homepage url
-    try {
-      if (navigator.share) {
-        await navigator.share({title: 'Dollarsurvey', text: 'Take quick surveys on Dollarsurvey', url});
-        showNotification('Share dialog opened');
-      } else {
-        await navigator.clipboard.writeText(url);
-        showNotification('Homepage link copied to clipboard');
-      }
-    } catch (err) {
-      showNotification('Unable to share link', false);
-    }
-  });
-
-  // Reset answers quickly
-  resetBtn.addEventListener('click', ()=>{
-    document.querySelectorAll('.answer').forEach(a=> a.value = '');
-    showNotification('Answers reset');
-  });
-
-  // Helper: safe path reference for current user
-  let currentUser = null;
-
-  // When auth state changes
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-      // not signed in - go to login
-      showNotification('Please sign in first', false, 1600);
-      setTimeout(()=> window.location.href = 'login.html', 800);
-      return;
-    }
-
-    currentUser = user;
-    const email = user.email || '';
-    const uid = user.uid;
-    // User ID: first 5 characters of their email (before or including @)
-    const userIdValue = email.substring(0,5) || uid.substring(0,5);
-    userIdEl.textContent = userIdValue;
-
-    // Fetch user record in DB and gift if new
-    try {
-      const userRef = ref(db, `users/${uid}`);
-      const snapshot = await get(userRef);
-      const data = snapshot.exists() ? snapshot.val() : null;
-
-      // If there's no balance field, gift $1.00
-      if (!data || data.balance === undefined || data.balance === null) {
-        // initialize user record safely (do not store passwords)
-        await set(userRef, { email: email, provider: (user.providerData[0] && user.providerData[0].providerId) || 'unknown', balance: 1.00 });
-        balanceEl.textContent = `$1.00`;
-        showNotification(`Welcome! Gifted $1.00 for joining 🎉`);
-      } else {
-        // display existing balance (two decimals)
-        balanceEl.textContent = `$${(Number(data.balance) || 0).toFixed(2)}`;
-        // Also ensure DB record has email stored
-        await set(userRef, Object.assign({}, data, { email: email }));
-      }
-    } catch (err) {
-      console.error('DB fetch error', err);
-      showNotification('Unable to load account data', false);
-    }
-  });
-
-  // Validate all answers are present and at least 5 chars each
-  function collectAnswers() {
-    const answers = {};
-    let ok = true;
-    questions.forEach((_, idx) => {
-      const id = `q${idx+1}`;
-      const el = document.getElementById(id);
-      const val = el.value.trim();
-      if (val.length < 5) {
-        ok = false;
-        el.style.borderColor = 'rgba(255,0,0,0.6)';
-      } else {
-        el.style.borderColor = 'rgba(173,255,47,0.12)';
-        answers[id] = val;
-      }
-    });
-    return { ok, answers };
-  }
-
-  // Submission: store answers and increment balance
-  surveyForm.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    if (!currentUser) {
-      showNotification('Please sign in first', false);
-      return;
-    }
-    const { ok, answers } = collectAnswers();
-    if (!ok) {
-      showNotification('Please fill all answers (min 5 chars each)', false);
-      return;
-    }
-
-    // disable submit while processing
+    // UI refs
+    const userIdEl = document.getElementById('userId');
+    const balanceEl = document.getElementById('balance');
+    const notifyEl = document.getElementById('notify');
+    const surveyForm = document.getElementById('surveyForm');
     const submitBtn = document.getElementById('submitBtn');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting...';
+    const resetBtn = document.getElementById('resetBtn');
+    const menuBtn = document.getElementById('menuBtn');
+    const menuModal = document.getElementById('menuModal');
+    const logoutBtn = document.getElementById('logoutBtn');
 
-    try {
-      const uid = currentUser.uid;
-      // store answers under responses/{uid}/{timestamp}
-      const ts = Date.now();
-      const respRef = ref(db, `responses/${uid}/${ts}`);
-      await set(respRef, {
-        answers,
-        submittedAt: ts,
-        userEmail: currentUser.email || null
-      });
-
-      // increment balance by 0.5 using transaction on users/{uid}/balance
-      const balanceRef = ref(db, `users/${uid}/balance`);
-      await runTransaction(balanceRef, (current) => {
-        if (current === null || current === undefined) return 0.5; // just set to 0.5 if missing
-        return Number(current) + 0.5;
-      });
-
-      // fetch new balance to display
-      const userSnapshot = await get(ref(db, `users/${uid}`));
-      const newBalance = (userSnapshot.exists() && Number(userSnapshot.val().balance)) ? Number(userSnapshot.val().balance) : 0;
-      balanceEl.textContent = `$${newBalance.toFixed(2)}`;
-
-      showNotification('Thanks — answers submitted. +$0.50 added!', true, 3000);
-
-      // optionally clear inputs
-      document.querySelectorAll('.answer').forEach(a=> a.value = '');
-
-    } catch (err) {
-      console.error(err);
-      showNotification('Submission failed — try again', false, 3000);
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit answers';
+    // custom notify
+    function notify(msg, type = 'info') {
+      notifyEl.textContent = msg;
+      if(type === 'error') notifyEl.style.borderColor = 'rgba(255,50,50,0.12)';
+      else notifyEl.style.borderColor = 'rgba(173,255,47,0.06)';
+      notifyEl.classList.add('show');
+      clearTimeout(notify._t);
+      notify._t = setTimeout(()=> notifyEl.classList.remove('show'), 3500);
     }
-  });
-</script>
+
+    // menu toggle
+    menuBtn.addEventListener('click', ()=> {
+      const open = menuModal.style.display === 'block';
+      menuModal.style.display = open ? 'none' : 'block';
+      menuBtn.setAttribute('aria-expanded', String(!open));
+    });
+    // click outside to close
+    window.addEventListener('click', (e)=> {
+      if(!menuModal.contains(e.target) && e.target !== menuBtn) menuModal.style.display = 'none';
+    });
+
+    // surveys content (10 AdSense-safe product preference survey prompts, each ~50 words)
+    const surveyPrompts = [
+`A reliable daily-carry backpack: describe which features matter most (pockets, water resistance, laptop pocket, comfort). Which material and color would you prefer for everyday commuting?`,
+`Home coffee options: imagine choosing a coffee maker — would you prioritize speed, taste, low upkeep, or price? Describe your ideal machine and why it fits your morning routine.`,
+`Smartwatch features: when comparing models, do you value fitness tracking, battery life, style, or app integrations the most? Explain which one you would choose and why.`,
+`Kitchen blender choices: for smoothies and sauces do you prefer high-power, compact design, easy-clean parts, or low noise? Explain what matters most in daily use.`,
+`Phone case priorities: when buying a phone case, do you prefer slim design, heavy protection, eco-friendly materials, or aesthetics? Describe what you would choose and why.`,
+`Streaming headphones: do you choose audio quality, comfort for long sessions, wireless convenience, noise cancellation, or price? Explain how you use them and which feature wins.`,
+`Desk lamp for work: would you pick adjustable brightness, color temperature controls, compact size, or eco-friendly LEDs? Describe which lamp features improve your workspace the most.`,
+`Sustainable water bottle: when selecting a reusable bottle, do you prioritize insulation, material, capacity, weight, or lid type? Describe the features you’d pay more for.`,
+`Home cleaning gadgets: for vacuum or sweepers do you prioritize suction power, battery life, size, smart features, or price? Explain the main reason you’d pick one device.`,
+`Outdoor sneakers: are comfort, breathability, waterproofing, sole grip, or style most important when choosing shoes for long walks? Describe which matters most and why.`
+    ];
+
+    // populate form with 10 surveys
+    function buildSurveys(){
+      surveyForm.innerHTML = '';
+      surveyPrompts.forEach((q, i) => {
+        const idx = i+1;
+        const container = document.createElement('div');
+        container.className = 'survey';
+        container.innerHTML = `
+          <div class="q">Q${idx}. ${q}</div>
+          <textarea id="ans${idx}" name="ans${idx}" minlength="5" placeholder="Type your answer (min 5 chars)" required></textarea>
+          <div class="survey-footer">
+            <small>Answer must be at least 5 characters.</small>
+            <div>
+              <button type="button" class="share-btn" data-idx="${idx}" title="Share this survey">↗ Share</button>
+            </div>
+          </div>
+        `;
+        surveyForm.appendChild(container);
+      });
+    }
+    buildSurveys();
+
+    // share handling
+    surveyForm.addEventListener('click', async (e)=>{
+      const btn = e.target.closest('.share-btn');
+      if(!btn) return;
+      const url = window.location.origin + window.location.pathname; // homepage link
+      try {
+        if(navigator.share){
+          await navigator.share({ title: 'Dollarsurvey', text: 'Check out this survey site', url });
+          notify('Shared via native share.');
+        } else {
+          await navigator.clipboard.writeText(url);
+          notify('Homepage link copied to clipboard.');
+        }
+      } catch(err){
+        await navigator.clipboard.writeText(url);
+        notify('Link copied to clipboard.');
+      }
+    });
+
+    // reset
+    resetBtn.addEventListener('click', ()=> {
+      if(!confirm('Clear all answers?')) return;
+      const areas = surveyForm.querySelectorAll('textarea');
+      areas.forEach(t=> t.value = '');
+      notify('All answers cleared.');
+    });
+
+    // auth & db wiring
+    let currentUser = null;
+
+    onAuthStateChanged(auth, async (user) => {
+      if(!user){
+        // not signed in -> redirect to login
+        notify('Not signed in. Redirecting to login...', 'error');
+        setTimeout(()=> window.location.href = 'login.html', 900);
+        return;
+      }
+      currentUser = user;
+      const email = user.email || '';
+      const uidFromEmail = (email.split('@')[0] || '').slice(0,5).toLowerCase() || 'user';
+      userIdEl.textContent = 'ID: ' + uidFromEmail;
+      // ensure user record exists
+      const userRef = ref(db, 'users/' + user.uid);
+      // check existing balance
+      try{
+        const snap = await get(child(ref(db), `users/${user.uid}`));
+        if(!snap.exists()){
+          await set(userRef, { email: user.email, provider: (user.providerData[0]?.providerId || 'unknown'), balance: 0 });
+          balanceEl.textContent = '$0.00';
+        } else {
+          const data = snap.val();
+          const bal = parseFloat(data.balance) || 0;
+          balanceEl.textContent = '$' + bal.toFixed(2);
+        }
+      }catch(err){
+        console.error(err);
+        notify('Failed to fetch user data', 'error');
+      }
+    });
+
+    // logout
+    logoutBtn.addEventListener('click', async (e)=> {
+      try {
+        await signOut(auth);
+        notify('Signed out. Redirecting to login...');
+        setTimeout(()=> window.location.href = 'login.html', 800);
+      } catch(err){ notify('Sign out failed', 'error'); }
+    });
+
+    // submit handling
+    submitBtn.addEventListener('click', async ()=>{
+      if(!currentUser) { notify('User not available. Please login again.', 'error'); return; }
+      const answers = [];
+      let ok = true;
+      for(let i=1;i<=10;i++){
+        const ta = document.getElementById('ans'+i);
+        const v = (ta?.value || '').trim();
+        if(!v || v.length < 5){ ok = false; ta?.classList.add('invalid'); }
+        answers.push({ q: surveyPrompts[i-1], answer: v });
+      }
+      if(!ok){ notify('Please answer all surveys (each at least 5 characters).', 'error'); return; }
+
+      // disable UI while submitting
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+      try {
+        // push response
+        const responsesRef = ref(db, 'responses/' + currentUser.uid);
+        const newRef = await push(responsesRef, {
+          submittedAt: Date.now(),
+          answers
+        });
+
+        // increment balance by 0.5 with transaction
+        const userBalRef = ref(db, 'users/' + currentUser.uid + '/balance');
+        await runTransaction(userBalRef, (current) => {
+          current = (current === null) ? 0 : Number(current);
+          return +(current + 0.5).toFixed(2);
+        });
+
+        // read updated balance and show
+        const userSnap = await get(ref(db, 'users/' + currentUser.uid));
+        const newBal = (userSnap.exists() && parseFloat(userSnap.val().balance)) ? parseFloat(userSnap.val().balance) : 0;
+        balanceEl.textContent = '$' + newBal.toFixed(2);
+
+        // clear answers
+        surveyForm.querySelectorAll('textarea').forEach(t=> t.value = '');
+        notify('Submission successful — +$0.50 added to your balance.');
+      } catch(err){
+        console.error(err);
+        notify('Submission failed. Try again.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit all answers';
+      }
+    });
+
+  </script>
 </body>
 </html>
