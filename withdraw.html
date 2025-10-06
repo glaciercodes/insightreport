@@ -2,200 +2,120 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Dollarsurvey | Withdraw</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Withdraw Funds</title>
   <style>
-    :root {
-      --bg: #000;
-      --accent: #adff2f;
-      --accent-darker: #7fff00;
-      --muted: rgba(173, 255, 47, 0.08);
-      --glass: rgba(0, 255, 0, 0.03);
-      --shadow: 0 6px 24px rgba(173, 255, 47, 0.08);
-    }
-
     body {
-      background: var(--bg);
-      color: var(--accent);
-      font-family: "Segoe UI", system-ui, sans-serif;
-      margin: 0;
+      background-color: #000;
+      color: #0f0;
+      font-family: 'Poppins', sans-serif;
       padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 480px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.4));
-      border: 1px solid var(--muted);
-      box-shadow: var(--shadow);
-      border-radius: 16px;
-      padding: 24px;
-    }
-
-    h3, h2, h4 {
       text-align: center;
-      color: var(--accent);
     }
 
-    .withdraw-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
+    .withdraw-form, .withdrawal-history {
+      background-color: #111;
+      border: 1px solid #0f0;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 400px;
+      box-shadow: 0 0 15px #0f0;
     }
 
-    input, select {
+    input, select, button {
       width: 100%;
+      margin: 10px 0;
       padding: 10px;
-      background: transparent;
-      border: 1px solid var(--muted);
-      color: var(--accent);
-      border-radius: 8px;
-      font-size: 15px;
-      outline: none;
-    }
-
-    input::placeholder {
-      color: rgba(173,255,47,0.6);
+      background: #000;
+      border: 1px solid #0f0;
+      color: #0f0;
+      border-radius: 5px;
     }
 
     button {
-      background: var(--accent);
+      background: #0f0;
       color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 10px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: 0.3s;
     }
 
-    button:hover:enabled {
-      background: var(--accent-darker);
+    button:hover {
+      background: #1aff1a;
     }
 
-    button[disabled] {
-      opacity: 0.4;
-      cursor: not-allowed;
+    h3, h2, h4 {
+      color: #0f0;
     }
 
     #withdraw-msg {
-      text-align: center;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-
-    .withdrawal-history {
-      margin-top: 20px;
-      background: var(--glass);
-      border-radius: 12px;
-      border: 1px solid var(--muted);
-      padding: 16px;
-    }
-
-    .withdrawal-card {
-      border-bottom: 1px solid var(--muted);
-      padding: 8px 0;
-    }
-
-    .withdrawal-card:last-child {
-      border-bottom: none;
-    }
-
-    .status {
-      font-weight: bold;
-    }
-
-    .status.pending {
-      color: #ffa500;
-    }
-
-    .status.success {
-      color: #00ff00;
-    }
-
-    .status.failed {
-      color: #ff4040;
-    }
-
-    #view-all-btn {
       margin-top: 10px;
-      width: 100%;
     }
 
-    a {
-      color: var(--accent);
-    }
-
-    .user-info {
-      text-align: center;
-      margin-bottom: 20px;
-      font-weight: bold;
+    .withdraw-item {
+      border-bottom: 1px solid #0f0;
+      padding: 5px 0;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="user-info">
-      <div>ID: <span id="userId">guest</span></div>
-      <div>Balance: <span id="userBalance">$0.00</span></div>
+
+  <h1>Withdrawal Page</h1>
+  <h3>User ID: <span id="userId"></span></h3>
+  <h3>Balance: <span id="balance"></span></h3>
+
+  <div class="withdraw-form">
+    <h3>Submit Withdrawal</h3>
+
+    <input type="number" id="withdrawAmount" placeholder="Enter amount ($)" />
+    <select id="withdrawMethod" onchange="showMethodFields()">
+      <option value="">Select Method</option>
+      <option value="bank">Bank</option>
+      <option value="crypto">Crypto Wallet</option>
+      <option value="giftcard">Gift Card</option>
+    </select>
+
+    <!-- Bank Fields -->
+    <div id="bankFields" class="method-fields" style="display: none;">
+      <input type="text" placeholder="Account Holder Name" id="bankHolder"/>
+      <input type="text" placeholder="Bank Name" id="bankName"/>
+      <input type="text" placeholder="Account Number" id="bankAccount"/>
+      <input type="text" placeholder="Country" id="bankCountry"/>
     </div>
 
-    <div class="withdraw-form">
-      <h3>Submit Withdrawal</h3>
-
-      <input type="number" id="withdrawAmount" placeholder="Enter amount ($)" />
-      <select id="withdrawMethod" onchange="showMethodFields()">
-        <option value="">Select Method</option>
-        <option value="bank">Bank</option>
-        <option value="crypto">Crypto Wallet</option>
-        <option value="giftcard">Gift Card</option>
-      </select>
-
-      <!-- Bank Fields -->
-      <div id="bankFields" class="method-fields" style="display: none;">
-        <input type="text" placeholder="Account Holder Name" />
-        <input type="text" placeholder="Bank Name" />
-        <input type="text" placeholder="Account Number" />
-        <input type="text" placeholder="Country" />
-      </div>
-
-      <!-- Crypto Fields -->
-      <div id="cryptoFields" class="method-fields" style="display: none;">
-        <input type="text" placeholder="Wallet Address" />
-        <input type="text" placeholder="Coin Type (e.g., USDT, BTC)" />
-      </div>
-
-      <!-- Gift Card Fields -->
-      <div id="giftcardFields" class="method-fields" style="display: none;">
-        <input type="email" placeholder="Your Email Address" />
-        <input type="text" placeholder="Type of Gift Card (e.g., Amazon, iTunes)" />
-      </div>
-
-      <button id="withdrawBtn" onclick="submitWithdraw()" disabled>Withdraw</button>
-      <p id="withdraw-msg"></p>
+    <!-- Crypto Fields -->
+    <div id="cryptoFields" class="method-fields" style="display: none;">
+      <input type="text" placeholder="Wallet Address" id="cryptoAddress"/>
+      <input type="text" placeholder="Coin Type (e.g., USDT, BTC)" id="cryptoCoin"/>
     </div>
 
-    <!-- Withdrawal History -->
-    <div class="withdrawal-history">
-      <h3>Recent Withdrawals</h3>
-      <div id="recent-withdrawals"></div>
-      <button onclick="toggleAllWithdrawals()" id="view-all-btn">View All</button>
+    <!-- Gift Card Fields -->
+    <div id="giftcardFields" class="method-fields" style="display: none;">
+      <input type="email" placeholder="Your Email Address" id="giftEmail"/>
+      <input type="text" placeholder="Type of Gift Card (e.g., Amazon, iTunes)" id="giftType"/>
     </div>
 
-    <h2>Note: Withdrawal updates are sent to your email.</h2>
-    <h4>Need help? Contact us at: <br><a href="mailto:dollarsurveyus@gmail.com">dollarsurveyus@gmail.com</a></h4>
+    <button id="withdrawBtn" onclick="submitWithdraw()">Withdraw</button>
+    <p id="withdraw-msg"></p>
   </div>
 
+  <!-- Withdrawal History -->
+  <div class="withdrawal-history">
+    <h3>Recent Withdrawals</h3>
+    <div id="recent-withdrawals"></div>
+    <button onclick="toggleAllWithdrawals()" id="view-all-btn">View All</button>
+  </div>
+
+  <h2>Note: Withdrawal updates are sent to your email.</h2>
+  <h4>Need help? Contact us at: <br><a href="mailto:dollarsurveyus@gmail.com" style="color:#0f0;">dollarsurveyus@gmail.com</a></h4>
+
+  <!-- JS LOGIC -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-    import { getDatabase, ref, get, set, update, push } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
+    import { getDatabase, ref, get, update, push, child, set } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
@@ -203,135 +123,132 @@
       projectId: "dollar-survey-60fe7",
       storageBucket: "dollar-survey-60fe7.firebasestorage.app",
       messagingSenderId: "293471697208",
-      appId: "1:293471697208:web:664863f09e830e420c69cd"
+      appId: "1:293471697208:web:664863f09e830e420c69cd",
+      measurementId: "G-RCZ7SQJHPZ"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    const userIdEl = document.getElementById("userId");
-    const balanceEl = document.getElementById("userBalance");
-    const withdrawBtn = document.getElementById("withdrawBtn");
-    const withdrawMsg = document.getElementById("withdraw-msg");
-    let currentUser = null;
-    let localBalance = 0.00;
-    let guestId = localStorage.getItem("ds_guest_id_v1") || "guest";
+    const userIdEl = document.getElementById('userId');
+    const balanceEl = document.getElementById('balance');
+    const msg = document.getElementById('withdraw-msg');
+    const recentDiv = document.getElementById('recent-withdrawals');
+
+    let userId = null;
+    let currentBalance = 0;
+    let showAll = false;
+
+    // Guest ID support (same as homepage)
+    const guestIdKey = 'ds_guest_id_v1';
+    function ensureGuestId(){
+      let g = localStorage.getItem(guestIdKey);
+      if(!g){
+        g = 'g-' + Math.random().toString(36).slice(2,9);
+        localStorage.setItem(guestIdKey, g);
+      }
+      return g;
+    }
+    const guestId = ensureGuestId();
+
+    // Load user data
+    onAuthStateChanged(auth, async (user) => {
+      userId = user ? user.uid : guestId;
+      userIdEl.textContent = userId;
+
+      const balRef = ref(db, `users/${userId}/balance`);
+      const balSnap = await get(balRef);
+      currentBalance = balSnap.exists() ? balSnap.val() : 0;
+      updateBalanceUI();
+      loadWithdrawals();
+    });
+
+    function currency(amount){
+      return '$' + amount.toFixed(2);
+    }
+
+    function updateBalanceUI(){
+      balanceEl.textContent = currency(currentBalance);
+    }
 
     // Show method fields
     window.showMethodFields = function() {
-      document.querySelectorAll(".method-fields").forEach(f => f.style.display = "none");
-      const method = document.getElementById("withdrawMethod").value;
-      if (method) document.getElementById(method + "Fields").style.display = "block";
-    };
+      document.querySelectorAll('.method-fields').forEach(div => div.style.display = 'none');
+      const method = document.getElementById('withdrawMethod').value;
+      if(method) document.getElementById(method + 'Fields').style.display = 'block';
+    }
 
-    // Display withdrawals
-    function displayWithdrawals(limit = 3) {
-      const container = document.getElementById("recent-withdrawals");
-      const history = JSON.parse(localStorage.getItem("withdrawHistory")) || [];
-      container.innerHTML = "";
-      history.slice(0, limit).forEach(item => {
-        const div = document.createElement("div");
-        div.className = "withdrawal-card";
-        div.innerHTML = `
-          <p><strong>Amount:</strong> $${item.amount}</p>
-          <p><strong>Method:</strong> ${item.method}</p>
-          <p><strong>Status:</strong> <span class="status ${item.status.toLowerCase()}">${item.status}</span></p>
-          <p><strong>Date:</strong> ${item.date}</p>
-        `;
-        container.appendChild(div);
+    // Submit withdraw
+    window.submitWithdraw = async function(){
+      const amount = parseFloat(document.getElementById('withdrawAmount').value);
+      const method = document.getElementById('withdrawMethod').value;
+      if(!amount || amount <= 0 || !method){
+        msg.textContent = "Please enter valid amount and method.";
+        msg.style.color = "red";
+        return;
+      }
+
+      if(amount < 100){
+        msg.textContent = "Minimum withdrawal is $100.";
+        msg.style.color = "red";
+        await logWithdrawal(amount, method, "Failed (Below Minimum)");
+        return;
+      }
+
+      if(amount > currentBalance){
+        msg.textContent = "Insufficient balance!";
+        msg.style.color = "red";
+        await logWithdrawal(amount, method, "Failed (Insufficient Funds)");
+        return;
+      }
+
+      // Success — deduct
+      currentBalance -= amount;
+      await update(ref(db, `users/${userId}`), { balance: currentBalance });
+      await logWithdrawal(amount, method, "Successful");
+      updateBalanceUI();
+      msg.textContent = "Withdrawal submitted successfully!";
+      msg.style.color = "#0f0";
+      loadWithdrawals();
+    }
+
+    // Log withdrawal
+    async function logWithdrawal(amount, method, status){
+      const logRef = push(ref(db, `users/${userId}/withdrawals`));
+      await set(logRef, {
+        amount,
+        method,
+        status,
+        date: new Date().toLocaleString()
       });
     }
 
-    window.toggleAllWithdrawals = function() {
-      const btn = document.getElementById("view-all-btn");
-      if (btn.textContent.includes("Hide")) {
-        displayWithdrawals(3);
-        btn.textContent = "View All";
-      } else {
-        displayWithdrawals(Infinity);
-        btn.textContent = "Hide All";
-      }
-    };
-
-    // Submit withdrawal
-    window.submitWithdraw = async function() {
-      const amount = parseFloat(document.getElementById("withdrawAmount").value);
-      const method = document.getElementById("withdrawMethod").value;
-      if (!amount || !method) {
-        withdrawMsg.textContent = "Please fill out all fields.";
+    // Load withdrawals
+    async function loadWithdrawals(){
+      const snap = await get(ref(db, `users/${userId}/withdrawals`));
+      if(!snap.exists()){
+        recentDiv.innerHTML = "<p>No withdrawals yet.</p>";
         return;
       }
 
-      if (amount < 100) {
-        withdrawMsg.textContent = "Minimum withdrawal is $100.";
-        return;
-      }
-
-      if (amount > localBalance) {
-        withdrawMsg.textContent = "Insufficient balance.";
-        return;
-      }
-
-      const data = {
-        method,
-        amount,
-        userId: currentUser ? currentUser.uid : guestId,
-        status: "Pending",
-        date: new Date().toLocaleString()
-      };
-
-      try {
-        const newBal = +(localBalance - amount).toFixed(2);
-        localBalance = newBal;
-        balanceEl.textContent = "$" + newBal.toFixed(2);
-
-        // Update DB balance
-        if (currentUser) {
-          await set(ref(db, "users/" + currentUser.uid + "/balance"), newBal);
-          await push(ref(db, "withdrawals/" + currentUser.uid), data);
-        } else {
-          await set(ref(db, "guests/" + guestId + "/balance"), newBal);
-          await push(ref(db, "withdrawals/guests/" + guestId), data);
-        }
-
-        saveWithdrawalLocal({ ...data, status: "Success" });
-        withdrawMsg.textContent = "Withdrawal submitted successfully!";
-      } catch (e) {
-        console.error(e);
-        saveWithdrawalLocal({ ...data, status: "Failed" });
-        withdrawMsg.textContent = "Error processing withdrawal.";
-      }
-
-      displayWithdrawals();
-    };
-
-    function saveWithdrawalLocal(data) {
-      let history = JSON.parse(localStorage.getItem("withdrawHistory")) || [];
-      history.unshift(data);
-      localStorage.setItem("withdrawHistory", JSON.stringify(history));
+      const data = Object.values(snap.val());
+      const displayData = showAll ? data : data.slice(-5);
+      recentDiv.innerHTML = displayData.reverse().map(w => `
+        <div class="withdraw-item">
+          <strong>${currency(w.amount)}</strong> via ${w.method}<br>
+          <em>${w.status}</em> — ${w.date}
+        </div>
+      `).join('');
     }
 
-    // Fetch user and balance
-    onAuthStateChanged(auth, async (user) => {
-      currentUser = user;
-      if (user) {
-        userIdEl.textContent = user.email.split("@")[0];
-        const snap = await get(ref(db, "users/" + user.uid + "/balance"));
-        if (snap.exists()) {
-          localBalance = parseFloat(snap.val()) || 0;
-        }
-      } else {
-        userIdEl.textContent = guestId;
-        const snap = await get(ref(db, "guests/" + guestId + "/balance"));
-        if (snap.exists()) localBalance = parseFloat(snap.val()) || 0;
-      }
-
-      balanceEl.textContent = "$" + localBalance.toFixed(2);
-      withdrawBtn.disabled = localBalance < 100;
-    });
-
-    displayWithdrawals();
+    // Toggle all
+    window.toggleAllWithdrawals = function(){
+      showAll = !showAll;
+      document.getElementById('view-all-btn').textContent = showAll ? "View Less" : "View All";
+      loadWithdrawals();
+    }
   </script>
+
 </body>
 </html>
