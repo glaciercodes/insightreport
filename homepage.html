@@ -4,124 +4,114 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dollarsurvey | Home</title>
+
   <style>
     :root{
-      --green:#adff2f;
       --bg:#000;
-      --panel: rgba(0,255,0,0.05);
-      --glass: rgba(173,255,47,0.06);
-      --muted: #9fbf5f;
+      --accent:#adff2f;
+      --accent-dark:#7bbf1a;
+      --card-bg: rgba(13,13,13,0.8);
+      --glass: rgba(173,255,47,0.04);
     }
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--green);font-family:Inter, "Segoe UI", system-ui, -apple-system, sans-serif;-webkit-font-smoothing:antialiased}
-    .wrap{max-width:980px;margin:28px auto;padding:18px;display:flex;flex-direction:column;gap:16px}
-    /* header */
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:64px;height:64px;border-radius:10px;background:linear-gradient(180deg,#081,#020);display:flex;align-items:center;justify-content:center;text-decoration:none;color:#000;font-weight:700}
-    .title{font-size:20px;font-weight:700}
-    .sub{font-size:13px;color:var(--muted);margin-top:3px}
-    /* top-right menu */
-    .menu-btn{background:var(--green);color:#000;padding:8px 12px;border-radius:10px;font-weight:700;border:none;cursor:pointer}
-    .menu-panel{position:fixed;top:16px;right:16px;background:var(--panel);border:1px solid var(--green);padding:12px;border-radius:8px;display:none;min-width:160px;box-shadow:0 8px 30px rgba(0,255,0,0.06)}
-    .menu-panel a{display:block;color:var(--green);text-decoration:none;padding:8px 6px;border-radius:6px}
-    .menu-panel a:hover{background:var(--glass)}
-    /* user info row */
-    .info{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-    .chip{padding:8px 12px;border-radius:999px;border:1px solid var(--green);background:transparent;font-weight:600}
-    .id-chip{letter-spacing:1px}
-    .balance{font-weight:800;background:linear-gradient(90deg,rgba(173,255,47,0.06),transparent);padding:8px 12px;border-radius:10px;border:1px solid var(--green)}
-    .signout{background:transparent;border:1px solid var(--green);padding:8px 10px;border-radius:8px;color:var(--green);cursor:pointer}
-    /* surveys area */
-    .surveys{background:rgba(0,0,0,0.35);padding:18px;border-radius:12px;border:1px solid rgba(173,255,47,0.06);box-shadow:0 8px 30px rgba(0,0,0,0.6)}
-    .surveys h1{font-size:24px;margin:0 0 14px 0;font-weight:900}
-    .question{padding:14px;border-radius:10px;border:1px solid rgba(173,255,47,0.06);margin-bottom:12px;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.55))}
-    .q-text{font-size:15px;line-height:1.4;margin-bottom:8px;color:var(--green)}
-    textarea{width:100%;min-height:64px;padding:10px;border-radius:8px;border:1px solid var(--green);background:transparent;color:var(--green);resize:vertical;outline:none;font-size:14px}
-    .q-actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
-    .share{background:transparent;border:1px solid var(--green);padding:6px 10px;border-radius:8px;cursor:pointer}
-    .share:active{transform:translateY(1px)}
-    /* submit */
-    .submit-row{display:flex;gap:12px;align-items:center;justify-content:flex-end;margin-top:10px}
-    .submit-btn{background:var(--green);border:none;padding:12px 18px;border-radius:12px;font-weight:800;color:#000;cursor:pointer}
-    .submit-btn[disabled]{opacity:0.35;cursor:not-allowed}
-    /* notification */
-    #notify{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;padding:12px 18px;border-radius:10px;background:rgba(0,0,0,0.9);border:1px solid var(--green);color:var(--green);font-weight:700;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
-    #notify.show{opacity:1;transform:translate(-50%,-6px);pointer-events:auto}
-    /* responsive */
-    @media (max-width:600px){
-      .wrap{padding:12px}
-      .logo{width:52px;height:52px}
-      .title{font-size:18px}
-      .surveys h1{font-size:20px}
-      textarea{min-height:72px}
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--accent);font-family:Inter, "Segoe UI",system-ui, -apple-system, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased;}
+    .wrap{max-width:980px;margin:32px auto;padding:18px;box-sizing:border-box;}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+    .left{display:flex;align-items:center;gap:12px;}
+    a.logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--accent);}
+    .logo-box{width:56px;height:56px;border-radius:8px;background:linear-gradient(180deg, rgba(173,255,47,0.08), rgba(173,255,47,0.02));display:flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(173,255,47,0.14);}
+    .small-info{display:flex;gap:8px;align-items:center;}
+    .info-pill{background:var(--glass);border:1px solid rgba(173,255,47,0.12);padding:6px 10px;border-radius:10px;font-size:13px;min-width:86px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.6);}
+    .info-label{display:block;font-size:11px;color:#bff789;opacity:0.9;margin-bottom:3px;}
+    .menu-btn{background:var(--accent);border:none;color:#000;padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer;}
+    /* Modal menu */
+    .menu-modal{position:fixed;top:12px;right:12px;background:linear-gradient(180deg, rgba(173,255,47,0.98), var(--accent));color:#000;border-radius:12px;padding:14px;box-shadow:0 10px 40px rgba(0,0,0,0.6);display:none;z-index:80;}
+    .menu-modal a{display:block;color:#000;text-decoration:none;padding:8px 0;font-weight:600;}
+    /* Heading */
+    .title{margin:28px 0 14px;font-size:28px;font-weight:800;line-height:1.05;color:var(--accent);text-shadow:0 2px 12px rgba(173,255,47,0.06);}
+    /* Surveys grid */
+    .surveys{display:grid;grid-template-columns:1fr;gap:14px;}
+    .card{background:var(--card-bg);padding:14px;border-radius:12px;border:1px solid rgba(173,255,47,0.06);box-shadow:0 6px 30px rgba(0,0,0,0.6);}
+    .qtitle{font-weight:800;color:var(--accent);margin-bottom:8px;}
+    .qtext{font-size:14px;color:#cfffa0;margin-bottom:10px;line-height:1.35;}
+    textarea{width:100%;min-height:64px;padding:10px;font-size:15px;border-radius:8px;border:1px solid rgba(173,255,47,0.12);background:transparent;color:var(--accent);resize:vertical;outline:none;}
+    .card-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;}
+    .share-btn{background:transparent;border:none;color:var(--accent);cursor:pointer;font-size:18px;padding:8px;border-radius:8px;display:flex;align-items:center;gap:8px;}
+    .submit-row{display:flex;gap:10px;align-items:center;justify-content:flex-end;margin-top:14px;}
+    .submit-btn{background:var(--accent);border:none;padding:12px 18px;border-radius:10px;font-weight:800;color:#000;cursor:pointer;}
+    .submit-btn[disabled]{opacity:0.6;cursor:not-allowed;}
+    #notify{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;background:rgba(0,0,0,0.8);color:var(--accent);border:1px solid rgba(173,255,47,0.12);padding:12px 16px;border-radius:10px;font-weight:700;box-shadow:0 8px 40px rgba(0,0,0,0.7);display:none;z-index:90;}
+    .mini{font-size:12px;color:#dfffa8;}
+    /* responsive grid */
+    @media(min-width:720px){
+      .surveys{grid-template-columns:1fr 1fr;gap:16px;}
+      .title{font-size:32px;}
+    }
+    @media(max-width:420px){
+      .logo-box{width:46px;height:46px;}
+      .info-pill{min-width:72px;padding:6px 8px;font-size:12px;border-radius:8px;}
+      .title{font-size:22px;}
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <div class="brand">
-        <a class="logo" href="#" aria-label="Dollarsurvey logo">DS</a>
-        <div>
-          <div class="title">Welcome to Dollarsurvey</div>
-          <div class="sub">Earn by sharing short opinions</div>
+      <div class="left">
+        <a class="logo" href="#">
+          <div class="logo-box">DS</div>
+        </a>
+
+        <div class="small-info">
+          <div class="info-pill" id="userIdWrap">
+            <span class="info-label">User ID</span>
+            <span id="userId">guest-xxxxx</span>
+          </div>
+          <div class="info-pill" id="balanceWrap">
+            <span class="info-label">Balance</span>
+            <span id="balance">$0.00</span>
+          </div>
         </div>
       </div>
 
-      <div style="display:flex;align-items:center;gap:12px">
-        <div class="menu-btn" id="menuBtn">Menu</div>
-        <div class="menu-panel" id="menuPanel" role="menu" aria-hidden="true">
-          <a href="#" id="gotoHome">Home</a>
-          <a href="#" id="gotoProfile">Profile</a>
-          <a href="#" id="gotoFAQ">FAQ</a>
-          <a href="#" id="logoutBtn">Sign out</a>
+      <div>
+        <button id="menuToggle" class="menu-btn">MENU</button>
+        <div id="menuModal" class="menu-modal" aria-hidden="true">
+          <a href="#">Home</a>
+          <a href="login.html">Login</a>
+          <a href="register.html">Register</a>
+          <a href="#">Terms & Privacy</a>
         </div>
       </div>
     </header>
 
-    <section class="info" aria-live="polite">
-      <div class="chip id-chip">User ID: <span id="userId">—</span></div>
-      <div class="balance">Balance: <span id="balanceVal">$0.00</span></div>
-      <button class="signout" id="signOutSmall">Sign out</button>
-    </section>
+    <main>
+      <h1 class="title">We have got some surveys for you</h1>
 
-    <section class="surveys" id="surveysSection">
-      <h1>We have got some surveys for you</h1>
+      <section class="surveys" id="surveysContainer">
+        <!-- JS injects 10 questions here -->
+      </section>
 
-      <form id="surveyForm">
-        <!-- questions injected here -->
-        <div id="questionsWrap"></div>
-
-        <div class="submit-row">
-          <div style="flex:1;color:var(--muted);font-size:13px;padding-left:6px">All fields required. Min 5 characters per answer.</div>
-          <button class="submit-btn" id="submitBtn" type="submit" disabled>Submit & Earn +$0.50</button>
-        </div>
-      </form>
-    </section>
+      <div class="submit-row">
+        <div class="mini" id="statusHint">All answers required (min 5 char each)</div>
+        <button id="submitBtn" class="submit-btn">Submit all</button>
+      </div>
+    </main>
   </div>
 
-  <div id="notify" role="status"></div>
+  <div id="notify"></div>
 
-  <!-- Firebase + App logic -->
+  <!-- Firebase -->
   <script type="module">
+    // Firebase imports (v10)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
     import {
       getAuth,
-      onAuthStateChanged,
-      signOut
+      onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-    import {
-      getDatabase,
-      ref,
-      set,
-      push,
-      runTransaction,
-      get,
-      child
-    } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
+    import { getDatabase, ref, push, set, update, get, child } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
 
-    // ---- your firebase config (kept from your snippet) ----
+    // Provided config
     const firebaseConfig = {
       apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
       authDomain: "dollar-survey-60fe7.firebaseapp.com",
@@ -133,225 +123,294 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    try { getAnalytics(app); } catch(e){ /* analytics may fail in some envs */ }
+    try { getAnalytics(app); } catch(e){/* analytics may fail in some contexts */ }
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    // ------ UI helpers ------
-    const notifyEl = document.getElementById('notify');
-    function notify(msg, ms = 3000){
-      notifyEl.textContent = msg;
-      notifyEl.classList.add('show');
-      setTimeout(()=> notifyEl.classList.remove('show'), ms);
-    }
-
-    // menu toggle
-    const menuBtn = document.getElementById('menuBtn');
-    const menuPanel = document.getElementById('menuPanel');
-    menuBtn.addEventListener('click', ()=> {
-      const open = menuPanel.style.display === 'block';
-      menuPanel.style.display = open ? 'none' : 'block';
-      menuPanel.setAttribute('aria-hidden', open ? 'true' : 'false');
-    });
-    document.addEventListener('click', (e)=>{
-      if (!menuPanel.contains(e.target) && e.target !== menuBtn) menuPanel.style.display = 'none';
-    });
-
-    // sign out handlers
-    const logoutBtn = document.getElementById('logoutBtn');
-    const signOutSmall = document.getElementById('signOutSmall');
-    async function doSignOut(){
-      try {
-        await signOut(auth);
-        notify('Signed out — redirecting to login', 1800);
-        setTimeout(()=> location.href = 'login.html', 1200);
-      } catch(e){ notify('Sign out failed', 2200); }
-    }
-    logoutBtn.addEventListener('click', doSignOut);
-    signOutSmall.addEventListener('click', doSignOut);
-
-    // ---- survey questions (Adsense-safe, ~50 words each) ----
-    const SURVEYS = [
-`When shopping for a new smartphone, think about the last time you replaced yours. Describe which three features mattered most (battery life, camera, price, brand support, durability) and why. Which of these would you pay a small premium for if it significantly improved daily use?`,
-`Imagine buying a pair of everyday headphones. Describe what you expect in sound, fit, durability, and connectivity. Would you trade some sound fidelity for longer battery life or better build quality? Explain which attribute influences repeat purchases for you in typical daily listening situations.`,
-`When choosing household cleaning products, describe the top concerns you have (scent, eco-friendliness, effectiveness, price, packaging). Tell us how you decide between a known brand and a cheaper store brand. Which label or claim makes you more likely to try a new product?`,
-`Think about buying coffee or tea beverages on the go. Describe the factors that influence where you buy (taste, convenience, price, loyalty programs). How often do promotions or app rewards make you switch from your usual choice? Tell us how you pick a new beverage to try.`,
-`When picking casual shoes for daily wear, describe the balance you look for among comfort, style, price, and durability. Would you pay more for sustainable materials or recognized brand names? Explain how often you replace shoes and what design choices make you keep a pair longer.`,
-`Consider subscription services (entertainment, fitness, or meals). Describe what convinces you to subscribe or cancel (content, cost, flexibility, recommendations). Which features in an app or plan make you value the service most, and under what circumstances would you recommend it to friends?`,
-`When buying kitchen appliances, describe which aspects matter most (energy efficiency, warranty, size, ease of cleaning). How do you research options and balance brand reputation with price? Explain a recent appliance purchase and what made you choose that model over others.`,
-`Think about personal care items (skincare, shampoo, toothpaste). Describe how you assess new products: ingredient lists, reviews, brand trust, or price. Which type of claim (organic, dermatologist-tested, cruelty-free) most influences your decision to try or regularly buy a product?`,
-`Imagine choosing a travel backpack or daypack. Describe what features you prioritize (size, comfort, weather resistance, pockets, laptop protection). How much does brand reputation influence your choice versus firsthand reviews or product features? Share one must-have pocket or function.`,
-`When deciding where to buy groceries, describe the priorities that guide you (price, freshness, selection, convenience, online pickup). Would you be willing to pay extra for same-day delivery or specialty items? Describe one recent grocery decision and what influenced it the most.`
+    // Questions array (10 questions ~50 words each, product preference + situation)
+    const questions = [
+      {
+        title: "Comfortable daily headphones",
+        text: "You often commute for 45 minutes each way and want headphones that are comfortable for long wear, block noise, and last a full day of listening. Which features and price range would you prefer when buying a new pair?"
+      },
+      {
+        title: "Home coffee solution",
+        text: "You want a coffee maker that fits a small kitchen and makes single-serve specialty drinks faster than a cafe. Would you choose a pod, espresso machine, or manual brewer? Mention ease-of-use and cost concerns."
+      },
+      {
+        title: "Smartwatch for health tracking",
+        text: "You’d like a wrist device to track workouts, sleep, and heart rate, and also show messages. How important are battery life, style, and third-party app support when choosing a smartwatch?"
+      },
+      {
+        title: "Portable power bank",
+        text: "On trips, you need a compact power bank able to charge phone and earbuds twice. Would you trade size for higher capacity or prioritize portability? Mention charger type and cost expectations."
+      },
+      {
+        title: "Eco-friendly cleaning supplies",
+        text: "You plan to switch cleaning products to greener alternatives. How much extra would you pay for biodegradable ingredients and recyclable packaging versus standard cleaners when shopping weekly?"
+      },
+      {
+        title: "Subscription streaming choices",
+        text: "You like movies and some niche documentaries. Would you pay for a smaller, specialized streaming service or stick with a large all-in-one platform? Explain preferences on price and content exclusivity."
+      },
+      {
+        title: "Ergonomic home office chair",
+        text: "You work from home and sit many hours. Would you invest in a pricey ergonomic chair that promises posture benefits or seek an affordable chair with lumbar support? Mention expected lifespan and comfort priorities."
+      },
+      {
+        title: "Meal kit delivery for busy nights",
+        text: "On weekdays you have limited time but value home-cooked meals. Would you subscribe to meal kits that save prep time even if more expensive? Describe convenience vs cost trade-offs."
+      },
+      {
+        title: "Compact camera for travel",
+        text: "When traveling, you want a camera that beats phone quality but fits in a backpack. Would you choose mirrorless, compact point-and-shoot, or high-end phone upgrades? Mention weight, lens options, and budget."
+      },
+      {
+        title: "Noise-reducing window solutions",
+        text: "Living near a busy road, you are considering window upgrades to reduce noise. Would you choose triple-pane windows, secondary glazing, or specialized curtains? Mention installation disruption and relative costs."
+      }
     ];
 
-    // ensure each survey is roughly ~50 words; these were written to be ~45-60 words and remain Adsense-safe.
+    // Elements
+    const surveysContainer = document.getElementById('surveysContainer');
+    const submitBtn = document.getElementById('submitBtn');
+    const notifyEl = document.getElementById('notify');
+    const userIdSpan = document.getElementById('userId');
+    const balanceSpan = document.getElementById('balance');
+    const menuBtn = document.getElementById('menuToggle');
+    const menuModal = document.getElementById('menuModal');
 
-    // create question blocks
-    const qWrap = document.getElementById('questionsWrap');
-    function renderQuestions(){
-      qWrap.innerHTML = '';
-      SURVEYS.forEach((txt, i) => {
-        const q = document.createElement('div');
-        q.className = 'question';
-        q.innerHTML = `
-          <div class="q-text"><strong>Q${i+1}.</strong> ${escapeHtml(txt)}</div>
-          <textarea name="q${i}" id="q${i}" placeholder="Write your answer (min 5 chars)"></textarea>
-          <div class="q-actions">
-            <div style="font-size:12px;color:var(--muted)">Answer must be at least 5 characters</div>
-            <button type="button" class="share" data-i="${i}" title="Share this survey">🔗 Share</button>
+    // Utilities
+    function showNotify(msg, duration = 3000){
+      notifyEl.innerText = msg;
+      notifyEl.style.display = 'block';
+      setTimeout(()=> notifyEl.style.display = 'none', duration);
+    }
+
+    // Create survey cards
+    function renderSurveys(){
+      surveysContainer.innerHTML = '';
+      questions.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="qtitle">${escapeHtml(q.title)}</div>
+          <div class="qtext">${escapeHtml(q.text)}</div>
+          <textarea placeholder="Write your answer (min 5 chars)" data-qi="${idx}" minlength="5"></textarea>
+          <div class="card-row">
+            <div class="mini">Min 5 characters</div>
+            <div>
+              <button class="share-btn" data-qi="${idx}" title="Share">↗ Share</button>
+            </div>
           </div>
         `;
-        qWrap.appendChild(q);
+        surveysContainer.appendChild(card);
       });
 
-      // attach share handlers and textarea input listeners
-      document.querySelectorAll('.share').forEach(btn=>{
+      // Attach share handlers
+      document.querySelectorAll('.share-btn').forEach(btn=>{
         btn.addEventListener('click', async (e)=>{
-          const url = location.origin + location.pathname; // homepage link
-          try {
-            await navigator.clipboard.writeText(url);
-            notify('Homepage link copied to clipboard');
+          const url = window.location.href.split('#')[0];
+          try{
+            if(navigator.share){
+              await navigator.share({title:'Dollarsurvey', text:'Check out this survey', url});
+              showNotify('Shared successfully');
+            } else {
+              await navigator.clipboard.writeText(url);
+              showNotify('Link copied to clipboard');
+            }
           } catch(err){
-            // fallback copy by prompt
-            prompt('Copy this link', url);
+            console.warn(err);
+            showNotify('Unable to share',2000);
           }
         });
       });
-
-      document.querySelectorAll('textarea').forEach(el=>{
-        el.addEventListener('input', validateForm);
-      });
-
-      validateForm();
     }
 
-    function escapeHtml(s){
-      return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
-    }
+    // Basic XSS escape for texts we insert
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
 
-    // form validation: ensure all textareas >=5 chars
-    const submitBtn = document.getElementById('submitBtn');
-    function validateForm(){
-      const areas = Array.from(document.querySelectorAll('textarea'));
-      const ok = areas.every(a => a.value.trim().length >= 5);
-      submitBtn.disabled = !ok;
-      return ok;
-    }
-
-    // on submit: store answers, increment balance by $0.5, clear inputs, then refresh questions (we'll reload to ensure consistency)
-    const surveyForm = document.getElementById('surveyForm');
-    surveyForm.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      if (!validateForm()) { notify('Please answer all surveys (min 5 chars)', 2600); return; }
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting...';
-
-      const user = auth.currentUser;
-      if (!user) {
-        notify('Not signed in. Redirecting to login...', 1800);
-        setTimeout(()=> location.href = 'login.html', 1200);
-        return;
+    // Generate stable guest id (stored in localStorage)
+    function getGuestId(){
+      let gid = localStorage.getItem('ds_guest_id');
+      if(!gid){
+        gid = 'guest-' + Math.random().toString(36).slice(2,8);
+        localStorage.setItem('ds_guest_id', gid);
       }
-      const uid = user.uid;
-      const email = user.email || '';
-      // gather answers
-      const answers = {};
-      SURVEYS.forEach((_, i) => {
-        answers['q'+(i+1)] = document.getElementById('q'+i).value.trim();
-      });
+      return gid;
+    }
 
-      try{
-        // push a submission record
-        const submissionsRef = ref(db, `users/${uid}/submissions`);
-        const newSubmissionRef = push(submissionsRef);
-        await set(newSubmissionRef, {
-          answers,
-          timestamp: Date.now(),
-          email: email
-        });
+    // Balance logic
+    let balance = 0.00;
+    let currentUser = null; // firebase user or null
+    let currentUserId = getGuestId(); // displayed id (guest or first5 of email)
+    function setBalanceUI(){
+      balanceSpan.innerText = `$${Number(balance).toFixed(2)}`;
+    }
 
-        // increment balance atomically by 0.5
-        const balRef = ref(db, `users/${uid}/balance`);
-        await runTransaction(balRef, (current)=>{
-          return (current || 0) + 0.5;
-        });
-
-        // update local displayed balance immediately
-        const b = await get(child(ref(db), `users/${uid}/balance`));
-        if (b.exists()) {
-          updateBalanceDisplay(Number(b.val()));
+    // Attempt to load balance from firebase or localStorage
+    async function loadBalance() {
+      // priority: firebase user balance -> localStorage -> default 0
+      if(currentUser && currentUser.uid){
+        try {
+          const snap = await get(ref(db, `users/${currentUser.uid}/balance`));
+          if (snap && snap.exists && !isNaN(snap.val())) {
+            balance = Number(snap.val());
+            localStorage.setItem('ds_balance', balance.toFixed(2));
+          } else {
+            // if no balance on server but local storage exists, sync server with local
+            const localBal = parseFloat(localStorage.getItem('ds_balance') || '0');
+            if(localBal>0){
+              balance = localBal;
+              await set(ref(db, `users/${currentUser.uid}/balance`), balance);
+            } else {
+              balance = 0;
+            }
+          }
+        } catch(e){
+          console.warn('Could not load balance from firebase', e);
+          balance = parseFloat(localStorage.getItem('ds_balance') || '0');
         }
-
-        // clear textareas
-        document.querySelectorAll('textarea').forEach(t=> t.value = '');
-        validateForm();
-
-        notify('Submission successful — +$0.50 added to your balance', 2600);
-        // refresh questions (spec says automatically refreshes) — we'll reload to ensure freshness
-        setTimeout(()=> location.reload(), 1200);
-
-      } catch(err){
-        console.error(err);
-        notify('Submission failed. Try again.', 2600);
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit & Earn +$0.50';
+      } else {
+        // guest
+        balance = parseFloat(localStorage.getItem('ds_balance') || '0');
       }
-    });
-
-    // update balance UI
-    function updateBalanceDisplay(n){
-      const el = document.getElementById('balanceVal');
-      el.textContent = `$${Number(n).toFixed(2)}`;
+      setBalanceUI();
     }
 
-    // update user id UI (first 5 letters of email)
-    function updateUserId(email){
-      const idEl = document.getElementById('userId');
-      const clean = (email || '').split('@')[0] || '';
-      idEl.textContent = clean.slice(0,5) || 'guest';
+    // Increase balance by $0.5 (UI + firebase attempt)
+    async function addBalanceIncrement(){
+      const increment = 0.5;
+      balance = Number((Number(balance) + increment).toFixed(2));
+      setBalanceUI();
+      localStorage.setItem('ds_balance', balance.toFixed(2));
+
+      // try updating firebase; succeed or fail, UI already updated (per requirement)
+      if(currentUser && currentUser.uid){
+        try {
+          await set(ref(db, `users/${currentUser.uid}/balance`), balance);
+        } catch(e){
+          console.warn('Failed to write balance to firebase for user', e);
+          // optionally push a pending update to localStorage
+          let pend = JSON.parse(localStorage.getItem('ds_pending') || '[]');
+          pend.push({type:'balance', uid: currentUser.uid, balance, ts:Date.now()});
+          localStorage.setItem('ds_pending', JSON.stringify(pend));
+        }
+      } else {
+        // guest store under guests/<guestId>/balance
+        try {
+          const guestId = currentUserId;
+          await set(ref(db, `guests/${guestId}/balance`), balance);
+        } catch(e){
+          console.warn('Failed to write guest balance to firebase', e);
+          let pend = JSON.parse(localStorage.getItem('ds_pending') || '[]');
+          pend.push({type:'guest-balance', guestId: currentUserId, balance, ts:Date.now()});
+          localStorage.setItem('ds_pending', JSON.stringify(pend));
+        }
+      }
     }
 
-    // load user data from db: balance if exists, otherwise create default user node
-    async function ensureUserNode(user){
-      const uid = user.uid;
-      const email = user.email || '';
-      updateUserId(email);
-      const userRef = ref(db, `users/${uid}`);
+    // Submit handler
+    submitBtn.addEventListener('click', async ()=>{
+      const textareas = Array.from(document.querySelectorAll('textarea'));
+      // validate all >=5 chars (trim)
+      for(const ta of textareas){
+        if((ta.value||'').trim().length < 5){
+          showNotify('All answers must be at least 5 characters', 3000);
+          return;
+        }
+      }
+
+      // Gather answers
+      const payload = {
+        userId: currentUser && currentUser.uid ? currentUser.uid : currentUserId,
+        displayId: currentUser && currentUser.email ? (currentUser.email.slice(0,5)) : currentUserId,
+        ts: Date.now(),
+        answers: questions.map((q, i) => ({title: q.title, answer: (document.querySelector(`textarea[data-qi="${i}"]`).value||'').trim()}))
+      };
+
+      // disable submit and show feedback
+      submitBtn.disabled = true;
+      showNotify('Submitting answers...');
+
+      // Wait 3 seconds and then treat as success (per requirement)
+      await new Promise(r => setTimeout(r, 3000));
+
+      // Update UI balance immediately
+      await addBalanceIncrement();
+
+      // Attempt to store submission to firebase, but treat success regardless
       try {
-        const snap = await get(userRef);
-        if (!snap.exists()) {
-          // create minimal profile (do not store passwords)
-          await set(userRef, { email, createdAt: Date.now(), balance: 0 });
-          updateBalanceDisplay(0);
+        if(currentUser && currentUser.uid){
+          // push to users/<uid>/submissions
+          await push(ref(db, `users/${currentUser.uid}/submissions`), payload);
         } else {
-          const data = snap.val();
-          updateBalanceDisplay(Number(data.balance || 0));
+          // guests/<guestId>/submissions
+          await push(ref(db, `guests/${currentUserId}/submissions`), payload);
         }
       } catch(e){
-        console.error('read user', e);
-        notify('Could not load profile',2000);
+        console.warn('Failed to push submission to firebase', e);
+        // save pending locally so developer might re-sync later
+        let pend = JSON.parse(localStorage.getItem('ds_pending') || '[]');
+        pend.push({type:'submission', payload, ts:Date.now()});
+        localStorage.setItem('ds_pending', JSON.stringify(pend));
       }
-    }
 
-    // auth state handling
-    onAuthStateChanged(auth, user=>{
-      if (!user) {
-        notify('Not signed in — redirecting',1600);
-        setTimeout(()=> location.href = 'login.html',1100);
-        return;
-      }
-      // user present: render questions and load profile
-      renderQuestions();
-      ensureUserNode(user);
+      // success UX
+      showNotify('Submission successful! +$0.50 added', 3500);
+
+      // clear all answer bars
+      document.querySelectorAll('textarea').forEach(ta => ta.value = '');
+
+      // re-enable after short delay
+      setTimeout(()=> submitBtn.disabled = false, 1000);
     });
 
-    // initial render (if not logged in yet, questions still render)
-    renderQuestions();
+    // Menu toggle
+    menuBtn.addEventListener('click', ()=>{
+      const open = menuModal.style.display === 'block';
+      menuModal.style.display = open ? 'none' : 'block';
+      menuModal.setAttribute('aria-hidden', open ? 'true' : 'false');
+    });
+    // close menu clicking outside
+    document.addEventListener('click', (e)=>{
+      if(!menuModal.contains(e.target) && !menuBtn.contains(e.target)) menuModal.style.display = 'none';
+    });
 
-    // small accessibility: allow Enter in menus etc
-    document.getElementById('gotoHome').addEventListener('click', (e)=> { e.preventDefault(); notify('You are on Home'); });
-    document.getElementById('gotoProfile').addEventListener('click', (e)=> { e.preventDefault(); notify('Profile coming soon'); });
-    document.getElementById('gotoFAQ').addEventListener('click', (e)=> { e.preventDefault(); notify('FAQ coming soon'); });
+    // On load render questions
+    renderSurveys();
+
+    // Auth state: update user id display and load balance
+    onAuthStateChanged(auth, async (user) => {
+      currentUser = user;
+      if(user && user.email){
+        const id = String(user.email).slice(0,5);
+        currentUserId = id;
+        userIdSpan.innerText = id;
+        // attempt to create user record if not exists
+        try {
+          const snap = await get(ref(db, `users/${user.uid}`));
+          if(!snap.exists()){
+            await set(ref(db, `users/${user.uid}`), { email: user.email, createdAt: Date.now(), provider: 'email' });
+          } else {
+            // if email changed on server, update minimal info
+            await update(ref(db, `users/${user.uid}`), { email: user.email });
+          }
+        } catch(e){
+          console.warn('Could not ensure user record', e);
+        }
+      } else {
+        // guest
+        currentUserId = getGuestId();
+        userIdSpan.innerText = currentUserId;
+      }
+      // load balance (firebase preferred)
+      await loadBalance();
+    });
+
+    // Provide initial UI values right away
+    userIdSpan.innerText = currentUserId;
+    balanceSpan.innerText = `$${(parseFloat(localStorage.getItem('ds_balance')||'0')).toFixed(2)}`;
 
   </script>
 </body>
