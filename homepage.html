@@ -1,386 +1,371 @@
+<!doctype html>
 <html lang="en">
-
 <head>
-  
-  <meta charset="UTF-8" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>DOLLAR SURVEY</title>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8734298068341555"
-     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="homepage-style.css" />
-
-  <style>
-
-  </style>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dollarsurvey | Home</title>
+<style>
+  :root{
+    --bg:#000;
+    --accent:#adff2f;
+    --muted:rgba(173,255,47,0.08);
+    --glass: rgba(173,255,47,0.06);
+    --card-shadow: 0 6px 20px rgba(173,255,47,0.06);
+    --radius:12px;
+    --maxw:1000px;
+  }
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--accent);font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;}
+  .page{max-width:var(--maxw);margin:28px auto;padding:18px;box-sizing:border-box;}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 4px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .logo{width:56px;height:56px;border-radius:10px;display:inline-block;background:linear-gradient(0deg,#0b0 10%, #111 90%);border:1px solid rgba(173,255,47,0.16);text-align:center;line-height:56px;font-weight:700}
+  .title{font-size:20px;font-weight:700;margin:0}
+  .sub-title{font-size:13px;color:var(--accent);opacity:0.9;margin:0}
+  .top-right{display:flex;align-items:center;gap:14px}
+  .info-card{display:flex;gap:14px;align-items:center;background:var(--glass);padding:10px;border-radius:10px;border:1px solid rgba(173,255,47,0.06);box-shadow:var(--card-shadow)}
+  .info-item{font-size:13px}
+  .big-balance{font-size:18px;font-weight:800;color:var(--accent)}
+  button.btn{background:var(--accent);color:#000;padding:8px 12px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+  button.ghost{background:transparent;border:1px solid rgba(173,255,47,0.12);color:var(--accent);padding:8px 10px;border-radius:8px}
+  main{margin-top:16px}
+  h1.main-heading{font-size:22px;font-weight:900;margin:12px 0 6px 0}
+  h2.section-title{font-size:18px;font-weight:900;margin:18px 0 8px 0}
+  .surveys{display:grid;grid-template-columns:1fr;gap:14px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:14px;border-radius:12px;border:1px solid rgba(173,255,47,0.04);box-shadow:0 8px 20px rgba(0,0,0,0.6)}
+  .q-text{font-size:14px;color:var(--accent);line-height:1.4;margin-bottom:8px}
+  .answer{width:100%;padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(173,255,47,0.12);color:var(--accent);outline:none;min-height:44px;resize:vertical}
+  .card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:10px}
+  .share-btn{background:transparent;border:none;color:var(--accent);cursor:pointer;font-weight:700}
+  .submit-row{display:flex;gap:12px;align-items:center;margin-top:18px}
+  .notify{position:fixed;left:50%;transform:translateX(-50%);top:18px;background:rgba(0,0,0,0.8);padding:10px 14px;border-radius:10px;border:1px solid rgba(173,255,47,0.12);color:var(--accent);font-weight:700;opacity:0;pointer-events:none;transition:all .28s}
+  .notify.show{opacity:1;top:34px;pointer-events:auto}
+  @media(min-width:720px){
+    .surveys{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:420px){
+    .logo{width:48px;height:48px;line-height:48px}
+    .title{font-size:16px}
+    .main-heading{font-size:18px}
+    header{padding:8px}
+  }
+  /* menu modal */
+  .menu-btn{background:transparent;border:1px solid rgba(173,255,47,0.08);padding:8px;border-radius:8px;color:var(--accent);cursor:pointer}
+  .menu-panel{position:fixed;right:10px;top:72px;background:#070707;padding:12px;border-radius:10px;border:1px solid rgba(173,255,47,0.06);display:none;min-width:200px}
+  .menu-panel a{display:block;color:var(--accent);text-decoration:none;padding:8px 6px;border-radius:6px}
+  .menu-panel.show{display:block}
+  .small-muted{color:rgba(173,255,47,0.7);font-size:12px}
+  .share-arrow{font-weight:900}
+</style>
 </head>
-
 <body>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8734298068341555"
-     crossorigin="anonymous"></script>
-<!-- gold 1 -->
-  <script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-8734298068341555"
-     data-ad-slot="3641802817"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
-  <div class="user-info">
-  <div id="user-email" class="tab tab--green">User: …</div>
-  <div id="user-balance" class="tab tab--orange">Balance: $0.00</div>
-</div>
-
-
-    <div class="hamburger" onclick="toggleMenu()">
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
-
-
+<div class="page">
   <header>
-    <div class="menu-container">
-  
-  <div id="menu-dropdown" class="menu-dropdown">
-    <a href="profile.html">profile</a>
-    <a href="withdraw.html">Withdraw</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact-Us</a>
-    <a href="faqs.html">FAQs</a>
-    <a href="index.html">Logout</a>
-  </div>
-</div>
-
-
-    <div id="title"><h4>DOLLAR SURVEY</h4></div>
-    <div class="logo-container">
-  <img src="images/a6ee2559-b2a4-46be-a0ca-e71a28189c82.png" alt="Dollar Survey Logo" class="logo-image" />
-</div>
-
-    
-    <div id="subtitle"><h2>Welcome to Dollar Survey</h2></div>
-<h4>Begin By Answering Surveys Below</h4>
-
+    <div class="brand" role="banner">
+      <a href="#" aria-label="Dollarsurvey logo" style="text-decoration:none">
+        <div class="logo">#</div>
+      </a>
+      <div>
+        <p class="title">Welcome to Dollarsurvey</p>
+        <p class="sub-title">Quick surveys, real rewards</p>
+      </div>
     </div>
-    
 
+    <div class="top-right">
+      <div class="info-card" aria-live="polite">
+        <div class="info-item"><span class="small-muted">User ID</span><div id="userId" class="small-muted" style="font-weight:800">—</div></div>
+        <div style="width:1px;background:rgba(173,255,47,0.06);height:34px"></div>
+        <div class="info-item"><span class="small-muted">Balance</span><div id="balance" class="big-balance">$0.00</div></div>
+      </div>
+
+      <button class="menu-btn" id="openMenuBtn" aria-haspopup="true" aria-expanded="false">☰ Menu</button>
+    </div>
   </header>
-  <div class="referral-section">
-  <span id="referral-link">https://dollarsurveys.netlify.app</span>
-  <button onclick="shareReferral()">Invite Others</button>
-  
+
+  <div id="menuPanel" class="menu-panel" role="menu" aria-hidden="true">
+    <a href="homepage.html">Home</a>
+    <a href="profile.html">Profile</a>
+    <a href="terms&privacy.html">Terms & Privacy</a>
+    <a href="#" id="logoutBtn">Logout</a>
+  </div>
+
+  <main>
+    <h1 class="main-heading">We have got some surveys for you</h1>
+
+    <h2 class="section-title">Surveys</h2>
+
+    <form id="surveyForm" class="surveys" autocomplete="off" novalidate>
+      <!-- 10 survey cards inserted by JS -->
+      <div id="surveyContainer"></div>
+
+      <div style="grid-column:1/-1" class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+          <div class="small-muted">Complete all surveys to earn <strong>+$0.50</strong></div>
+          <div>
+            <button type="button" class="ghost" id="resetBtn">Reset answers</button>
+            <button type="submit" class="btn" id="submitBtn">Submit answers</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
 </div>
 
-</div>
+<div id="notify" class="notify" role="status" aria-live="polite"></div>
 
-<script>
-function shareReferral() {
-  const referralUrl = document.getElementById('referral-link').textContent;
-
-  if (navigator.share) {
-    navigator.share({
-      title: 'Join Dollar Survey',
-      text: 'Sign up using my referral link and earn money from surveys:',
-      url: referralUrl
-    }).catch((err) => {
-      console.error('Share failed:', err);
-      fallbackCopy(referralUrl);
-    });
-  } else {
-    fallbackCopy(referralUrl);
-  }
-}
-
-function fallbackCopy(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    alert("Referral link copied to clipboard!");
-  }).catch(err => {
-    console.error('Clipboard copy failed:', err);
-    alert("Failed to copy link. Please copy it manually.");
-  });
-}
-
-  function toggleMenu() {
-    var menu = document.getElementById("menu-dropdown");
-    menu.classList.toggle("show");
-  }
-</script>
-<div>
-  <p class="survey-question">1. What do you think about Dollar Survey?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">2. How did you hear about Dollar Survey?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">3. Would you recommend Dollar Survey to a friend?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">4. How often do you take surveys online?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">5. What motivates you to complete a survey?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">6. Do you prefer short or long surveys?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">7. What time of day do you usually take surveys?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">8. How do you rate your experience with our platform?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">9. What feature would you like to see next?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">10. Do you find the site easy to navigate?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">11. How satisfied are you with the questions asked?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">12. What strategy do you mostly use for surveys?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">13. Have you used any other survey platforms before?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">14. What is your favorite feature on Dollar Survey?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">15. What kind of surveys do you enjoy most?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">16. How would you describe Dollar Survey in one word?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">17. How much time do you spend on Dollar Survey daily?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">18. Do you experience any technical issues?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">19. How would you rate our customer support?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">20. Is the reply section clear and easy to use?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">21. Do you trust Dollar Survey with your time?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">22. Would you like to see a mobile app version?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">23. What would make you use Dollar Survey more often?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">24. Do you enjoy the look and feel of the website?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">25. How likely are you to inform others about us?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">26. Have you ever had issues logging in?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">27. What method do you use in answering questions?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">28. How fast do you expect withdrawals to be processed?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">29. Have you ever recommended Dollar Survey to someone?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">30. Do you think the time match the effort?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">31. Have you completed today's survey?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">32. What is your favorite way to earn online?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-  <h2>Exhausted?, u can Take a Break..😅</h2>
-
-<p class="survey-question">33. What topics do you enjoy answering surveys about?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">34. What country are you taking this survey from?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">35. Enjoing the time spent here?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">36. Do you prefer image-based questions or text?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">37. Do you prefer tapping or typing for answers?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">38. Would you like more game-like features?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">39. What do you do when you're not online?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">40. Do you think surveys should be shorter?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">41. Do you find the color theme appealing?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">42. Have you contacted us before?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">43. How many friends have you referred?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">44. What do your friends think about Dollar Survey?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">45. How would you improve this platform?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">46. Do you like answering daily questions?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">47. How fast is the site on your device?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">48. Have you tried our anonymous mode?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">49. Do you have suggestions for more features?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-
-<p class="survey-question">50. Would you like weekly bonuses for streaks?</p>
-<input type="text" class="survey-answer" placeholder="required" />
-<br><br>
-  <button onclick="submitFullSurvey()">Submit Survey</button>
-</div>
-
-
+<!-- Firebase v10 module SDKs -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, doc, setDoc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+  import {
+    getDatabase,
+    ref,
+    set,
+    get,
+    child,
+    push,
+    runTransaction
+  } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
 
+  // Use firebaseConfig provided (keeps consistency with your login/register)
   const firebaseConfig = {
     apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
     authDomain: "dollar-survey-60fe7.firebaseapp.com",
     projectId: "dollar-survey-60fe7",
-    storageBucket: "dollar-survey-60fe7.appspot.com",
+    storageBucket: "dollar-survey-60fe7.firebasestorage.app",
     messagingSenderId: "293471697208",
-    appId: "1:293471697208:web:664863f09e830e420c69cd"
+    appId: "1:293471697208:web:664863f09e830e420c69cd",
+    measurementId: "G-RCZ7SQJHPZ"
   };
 
   const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  getAnalytics(app);
   const auth = getAuth(app);
+  const db = getDatabase(app);
 
-  let userCountry = "Unknown";
+  // UI refs
+  const notifyEl = document.getElementById('notify');
+  const userIdEl = document.getElementById('userId');
+  const balanceEl = document.getElementById('balance');
+  const surveyContainer = document.getElementById('surveyContainer');
+  const surveyForm = document.getElementById('surveyForm');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const menuBtn = document.getElementById('openMenuBtn');
+  const menuPanel = document.getElementById('menuPanel');
+  const resetBtn = document.getElementById('resetBtn');
 
-  fetch("https://ipapi.co/json")
-    .then(res => res.json())
-    .then(data => {
-      userCountry = data.country_name || "Unknown";
-    });
+  function showNotification(msg, success = true, ms = 2800) {
+    notifyEl.textContent = msg;
+    notifyEl.style.borderColor = success ? 'rgba(173,255,47,0.12)' : 'rgba(255,0,0,0.12)';
+    notifyEl.classList.add('show');
+    setTimeout(()=> notifyEl.classList.remove('show'), ms);
+  }
 
-  // Show user info live
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      document.getElementById("user-email").textContent = `User: ${user.email || 'Anonymous'}`;
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
-      const balance = userSnap.exists() ? userSnap.data().balance || 0 : 0;
-      document.getElementById("user-balance").textContent = `Balance: $${balance.toFixed(2)}`;
+  // Toggle menu
+  menuBtn.addEventListener('click', ()=>{
+    const show = !menuPanel.classList.contains('show');
+    menuPanel.classList.toggle('show', show);
+    menuBtn.setAttribute('aria-expanded', show);
+  });
+  document.addEventListener('click', (e)=>{
+    if (!menuPanel.contains(e.target) && e.target !== menuBtn) {
+      menuPanel.classList.remove('show');
+      menuBtn.setAttribute('aria-expanded','false');
     }
   });
 
-  // Survey submission
-  window.submitFullSurvey = async function () {
-    const answerEls = document.querySelectorAll(".survey-answer");
-    const questionEls = document.querySelectorAll(".survey-question");
+  logoutBtn.addEventListener('click', async (e)=>{
+    e.preventDefault();
+    try {
+      await signOut(auth);
+      showNotification('Signed out', true, 1500);
+      setTimeout(()=> window.location.href = 'login.html', 800);
+    } catch(err) {
+      showNotification('Unable to sign out', false, 1800);
+    }
+  });
 
-    const allAnswered = Array.from(answerEls).every(el => el.value.trim() !== "");
-    if (!allAnswered) {
-      alert("Please answer all questions before submitting.");
+  // Survey question templates (~50 words; product preference, benign)
+  const questions = [
+    `You’re buying a new portable Bluetooth speaker for weekend trips. Which brand features (sound quality, battery life, ruggedness) are most important to you and why? Describe a typical use-case where those features matter.`,
+    `When choosing a morning coffee maker for home, which factors (speed, taste consistency, size, maintenance) influence your choice? Describe how your morning routine shapes that decision.`,
+    `Imagine replacing your phone charging cables. What qualities (durability, speed, length, price) make a cable your top pick? Describe a situation when a cable failed you previously.`,
+    `Selecting a pair of running shoes: which attributes (comfort, cushioning, grip, weight) do you prioritize? Describe a recent run or terrain where those attributes would change your choice.`,
+    `For a home office chair, which factors (lumbar support, adjustability, material, size) matter most? Describe a typical workday posture or problem you want the chair to solve.`,
+    `Choosing a streaming service subscription: which features (catalog, price, device support, offline viewing) tip the scales for you? Describe a use-case that would make you cancel or keep the service.`,
+    `Buying a new backpack for commuting: which aspects (capacity, weather resistance, compartments, weight) are essential? Describe the items you carry daily and how that affects the decision.`,
+    `When shopping for kitchen cookware, which qualities (heat distribution, non-stick, durability, price) are most important? Describe a meal or cooking style that reveals what you need.`,
+    `Choosing a smartwatch: which features (battery life, health tracking, notifications, app ecosystem) matter most? Describe how you would use the watch during a busy day or workout.`,
+    `Selecting noise-cancelling headphones for travel: which attributes (ANC quality, comfort, battery, portability) do you value most? Describe a travel scenario where those matter.`
+  ];
+
+  // Create survey cards
+  function renderSurveys() {
+    surveyContainer.innerHTML = '';
+    questions.forEach((q, idx) => {
+      const id = `q${idx+1}`;
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="q-text"><strong>Q${idx+1}.</strong> ${q}</div>
+        <textarea id="${id}" name="${id}" class="answer" placeholder="Type your answer (min 5 characters)" minlength="5" required></textarea>
+        <div class="card-footer">
+          <div class="small-muted">Answer must be at least 5 characters</div>
+          <div>
+            <button type="button" class="share-btn" data-idx="${idx}" title="Share this survey">↗︎ <span class="share-arrow">Share</span></button>
+          </div>
+        </div>
+      `;
+      surveyContainer.appendChild(card);
+    });
+  }
+
+  renderSurveys();
+
+  // Share handler (share homepage link)
+  surveyContainer.addEventListener('click', async (e)=>{
+    const btn = e.target.closest('.share-btn');
+    if (!btn) return;
+    const url = window.location.origin + window.location.pathname; // homepage url
+    try {
+      if (navigator.share) {
+        await navigator.share({title: 'Dollarsurvey', text: 'Take quick surveys on Dollarsurvey', url});
+        showNotification('Share dialog opened');
+      } else {
+        await navigator.clipboard.writeText(url);
+        showNotification('Homepage link copied to clipboard');
+      }
+    } catch (err) {
+      showNotification('Unable to share link', false);
+    }
+  });
+
+  // Reset answers quickly
+  resetBtn.addEventListener('click', ()=>{
+    document.querySelectorAll('.answer').forEach(a=> a.value = '');
+    showNotification('Answers reset');
+  });
+
+  // Helper: safe path reference for current user
+  let currentUser = null;
+
+  // When auth state changes
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      // not signed in - go to login
+      showNotification('Please sign in first', false, 1600);
+      setTimeout(()=> window.location.href = 'login.html', 800);
       return;
     }
 
-    const responses = {};
-    questionEls.forEach((qEl, idx) => {
-      responses[qEl.innerText] = answerEls[idx].value.trim();
-    });
+    currentUser = user;
+    const email = user.email || '';
+    const uid = user.uid;
+    // User ID: first 5 characters of their email (before or including @)
+    const userIdValue = email.substring(0,5) || uid.substring(0,5);
+    userIdEl.textContent = userIdValue;
 
-    const user = auth.currentUser;
-    const uid = user?.uid || "anonymous";
-    const email = user?.email || "anonymous@user.com";
+    // Fetch user record in DB and gift if new
+    try {
+      const userRef = ref(db, `users/${uid}`);
+      const snapshot = await get(userRef);
+      const data = snapshot.exists() ? snapshot.val() : null;
+
+      // If there's no balance field, gift $1.00
+      if (!data || data.balance === undefined || data.balance === null) {
+        // initialize user record safely (do not store passwords)
+        await set(userRef, { email: email, provider: (user.providerData[0] && user.providerData[0].providerId) || 'unknown', balance: 1.00 });
+        balanceEl.textContent = `$1.00`;
+        showNotification(`Welcome! Gifted $1.00 for joining 🎉`);
+      } else {
+        // display existing balance (two decimals)
+        balanceEl.textContent = `$${(Number(data.balance) || 0).toFixed(2)}`;
+        // Also ensure DB record has email stored
+        await set(userRef, Object.assign({}, data, { email: email }));
+      }
+    } catch (err) {
+      console.error('DB fetch error', err);
+      showNotification('Unable to load account data', false);
+    }
+  });
+
+  // Validate all answers are present and at least 5 chars each
+  function collectAnswers() {
+    const answers = {};
+    let ok = true;
+    questions.forEach((_, idx) => {
+      const id = `q${idx+1}`;
+      const el = document.getElementById(id);
+      const val = el.value.trim();
+      if (val.length < 5) {
+        ok = false;
+        el.style.borderColor = 'rgba(255,0,0,0.6)';
+      } else {
+        el.style.borderColor = 'rgba(173,255,47,0.12)';
+        answers[id] = val;
+      }
+    });
+    return { ok, answers };
+  }
+
+  // Submission: store answers and increment balance
+  surveyForm.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    if (!currentUser) {
+      showNotification('Please sign in first', false);
+      return;
+    }
+    const { ok, answers } = collectAnswers();
+    if (!ok) {
+      showNotification('Please fill all answers (min 5 chars each)', false);
+      return;
+    }
+
+    // disable submit while processing
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
 
     try {
-      // Save survey response
-      await addDoc(collection(db, "submittedSurveys"), {
-        userId: uid,
-        email: email,
-        responses: responses,
-        country: userCountry,
-        timestamp: serverTimestamp()
+      const uid = currentUser.uid;
+      // store answers under responses/{uid}/{timestamp}
+      const ts = Date.now();
+      const respRef = ref(db, `responses/${uid}/${ts}`);
+      await set(respRef, {
+        answers,
+        submittedAt: ts,
+        userEmail: currentUser.email || null
       });
 
-      // Update balance
-      const userRef = doc(db, "users", uid);
-      const userSnap = await getDoc(userRef);
-      const currentBalance = userSnap.exists() ? userSnap.data().balance || 0 : 0;
-      const newBalance = currentBalance + 0.5;
+      // increment balance by 0.5 using transaction on users/{uid}/balance
+      const balanceRef = ref(db, `users/${uid}/balance`);
+      await runTransaction(balanceRef, (current) => {
+        if (current === null || current === undefined) return 0.5; // just set to 0.5 if missing
+        return Number(current) + 0.5;
+      });
 
-      await setDoc(userRef, { balance: newBalance }, { merge: true });
+      // fetch new balance to display
+      const userSnapshot = await get(ref(db, `users/${uid}`));
+      const newBalance = (userSnapshot.exists() && Number(userSnapshot.val().balance)) ? Number(userSnapshot.val().balance) : 0;
+      balanceEl.textContent = `$${newBalance.toFixed(2)}`;
 
-      document.getElementById("user-balance").textContent = `Balance: $${newBalance.toFixed(2)}`;
+      showNotification('Thanks — answers submitted. +$0.50 added!', true, 3000);
 
-      alert("Survey submitted. Balance updated!");
-      answerEls.forEach(el => el.value = "");
+      // optionally clear inputs
+      document.querySelectorAll('.answer').forEach(a=> a.value = '');
 
     } catch (err) {
-      console.error("Error:", err);
-      alert("Survey submission failed.");
+      console.error(err);
+      showNotification('Submission failed — try again', false, 3000);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit answers';
     }
-  };
+  });
 </script>
-  
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8734298068341555"
-     crossorigin="anonymous"></script>
-  
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
