@@ -1,261 +1,283 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Withdraw | Dollar Survey</title>
-<style>
-  body {
-    background: #000;
-    color: #39FF14;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    padding: 20px;
-    text-align: center;
-    background: #111;
-    border-bottom: 1px solid #39FF14;
-  }
-  h1 { font-size: 24px; margin: 0; }
-  .container {
-    max-width: 500px;
-    margin: 30px auto;
-    background: rgba(57,255,20,0.05);
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #39FF14;
-  }
-  .info-box {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: #111;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
-  select, input, button {
-    width: 100%;
-    margin-top: 10px;
-    padding: 12px;
-    border: 1px solid #39FF14;
-    background: #000;
-    color: #39FF14;
-    border-radius: 8px;
-    outline: none;
-    font-size: 16px;
-  }
-  button {
-    background: #39FF14;
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  button:hover {
-    background: #00ff66;
-  }
-  .method-section {
-    display: none;
-    margin-top: 15px;
-  }
-  .history {
-    margin-top: 30px;
-  }
-  .history-entry {
-    border-top: 1px solid #39FF14;
-    padding: 10px 0;
-    font-size: 14px;
-  }
-  #toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #39FF14;
-    color: #000;
-    padding: 12px 20px;
-    border-radius: 8px;
-    display: none;
-    font-weight: bold;
-    z-index: 999;
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dollarsurvey | Withdraw</title>
+  <style>
+    :root{
+      --bg:#000;
+      --accent:#adff2f;
+      --muted:rgba(175,255,90,0.06);
+      --glass: rgba(0,255,0,0.03);
+      --card-shadow: 0 6px 24px rgba(173,255,47,0.06);
+      --toast-bg: rgba(10,10,10,0.95);
+    }
+    body{
+      margin:0;
+      font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--accent);
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding:30px 12px;
+      min-height:100vh;
+    }
+    .wrap{
+      width:100%;
+      max-width:600px;
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .info{
+      background:var(--glass);
+      padding:8px 12px;
+      border-radius:8px;
+      border:1px solid rgba(173,255,47,0.1);
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      font-weight:bold;
+      box-shadow:var(--card-shadow);
+    }
+    h1{
+      font-size:26px;
+      margin:0;
+      font-weight:900;
+      text-align:center;
+    }
+    form{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.08));
+      padding:20px;
+      border-radius:12px;
+      border:1px solid rgba(173,255,47,0.06);
+      box-shadow:var(--card-shadow);
+    }
+    label{
+      font-weight:700;
+      font-size:14px;
+    }
+    select, input{
+      width:100%;
+      padding:10px;
+      border-radius:8px;
+      border:1px solid rgba(173,255,47,0.15);
+      background:transparent;
+      color:var(--accent);
+      font-size:14px;
+      outline:none;
+    }
+    input::placeholder{color:rgba(173,255,47,0.5);}
+    .hidden{display:none;}
+    button{
+      background:var(--accent);
+      color:#000;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:16px;
+      box-shadow:0 6px 30px rgba(173,255,47,0.2);
+    }
+    .toast{
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      background:var(--toast-bg);
+      color:var(--accent);
+      padding:12px 18px;
+      border-radius:10px;
+      border:1px solid rgba(173,255,47,0.08);
+      font-weight:700;
+      display:none;
+      z-index:100;
+    }
+    a.back-link{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:bold;
+    }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <header>
+      <a href="index.html" class="back-link">← Back</a>
+      <div class="info">ID: <span id="userId">guest</span></div>
+      <div class="info">Balance: <span id="balance">$0.00</span></div>
+    </header>
 
-<header>
-  <h1>Withdraw Funds</h1>
-</header>
+    <h1>Withdraw Funds</h1>
 
-<div class="container">
-  <div class="info-box">
-    <div>User ID: <span id="userId">Loading...</span></div>
-    <div>Balance: <span id="userBalance">$0.00</span></div>
-  </div>
+    <form id="withdrawForm">
+      <label for="method">Select Withdrawal Method:</label>
+      <select id="method" required>
+        <option value="">-- Choose Method --</option>
+        <option value="bank">🏦 Local Bank</option>
+        <option value="crypto">💰 Crypto</option>
+        <option value="giftcard">🎁 Giftcard</option>
+      </select>
 
-  <select id="method" onchange="switchMethod()">
-    <option value="">Select Withdrawal Method</option>
-    <option value="bank">Local Bank</option>
-    <option value="crypto">Crypto</option>
-    <option value="giftcard">Gift Card</option>
-  </select>
-
-  <!-- Local Bank -->
-  <div id="bankFields" class="method-section">
-    <input type="text" id="bankName" placeholder="Bank Name" />
-    <input type="text" id="bankCountry" placeholder="Country" />
-    <input type="text" id="bankUser" placeholder="Account Holder Name" />
-    <input type="number" id="bankAmount" placeholder="Amount" />
-  </div>
-
-  <!-- Crypto -->
-  <div id="cryptoFields" class="method-section">
-    <input type="text" id="cryptoCurrency" placeholder="Currency (e.g. USDT, BTC)" />
-    <input type="text" id="cryptoAddress" placeholder="Wallet Address" />
-    <input type="number" id="cryptoAmount" placeholder="Amount" />
-  </div>
-
-  <!-- Gift Card -->
-  <div id="giftcardFields" class="method-section">
-    <input type="email" id="giftEmail" placeholder="Your Email" />
-    <input type="number" id="giftAmount" placeholder="Amount" />
-  </div>
-
-  <button onclick="submitWithdrawal()">Submit Withdrawal</button>
-
-  <div class="history">
-    <h3>Withdrawal History</h3>
-    <div id="historyList"></div>
-  </div>
-</div>
-
-<div id="toast"></div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc, updateDoc, collection, addDoc, query, orderBy, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
-  authDomain: "dollar-survey-60fe7.firebaseapp.com",
-  projectId: "dollar-survey-60fe7",
-  storageBucket: "dollar-survey-60fe7.appspot.com",
-  messagingSenderId: "293471697208",
-  appId: "1:293471697208:web:664863f09e830e420c69cd"
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
-// UI helpers
-let currentUser = null;
-const toast = document.getElementById("toast");
-function showToast(message, ms=3000) {
-  toast.textContent = message;
-  toast.style.display = "block";
-  setTimeout(()=> toast.style.display = "none", ms);
-}
-function currency(amount){ return "$" + amount.toFixed(2); }
-
-function switchMethod() {
-  document.querySelectorAll('.method-section').forEach(s => s.style.display = 'none');
-  const val = document.getElementById('method').value;
-  if(val) document.getElementById(val + 'Fields').style.display = 'block';
-}
-
-let userBalance = 0;
-
-// Load user info and balance
-onAuthStateChanged(auth, async user => {
-  if(user){
-    currentUser = user;
-    const uid = user.uid;
-    document.getElementById("userId").textContent = uid.slice(0,6);
-    const userRef = doc(db, "users", uid);
-    const snap = await getDoc(userRef);
-    if(snap.exists()) {
-      userBalance = snap.data().balance || 0;
-      document.getElementById("userBalance").textContent = currency(userBalance);
-    }
-    loadHistory(uid);
-  } else {
-    showToast("Please log in first", 4000);
-  }
-});
-
-// Submit withdrawal
-window.submitWithdrawal = async function() {
-  if(!currentUser) return showToast("Not logged in.");
-
-  const method = document.getElementById("method").value;
-  if(!method) return showToast("Select a withdrawal method.");
-
-  let amount = 0;
-  let details = {};
-
-  if(method === "bank") {
-    amount = parseFloat(document.getElementById("bankAmount").value);
-    details = {
-      bankName: document.getElementById("bankName").value,
-      bankCountry: document.getElementById("bankCountry").value,
-      accountHolder: document.getElementById("bankUser").value
-    };
-  }
-  if(method === "crypto") {
-    amount = parseFloat(document.getElementById("cryptoAmount").value);
-    details = {
-      currency: document.getElementById("cryptoCurrency").value,
-      address: document.getElementById("cryptoAddress").value
-    };
-  }
-  if(method === "giftcard") {
-    amount = parseFloat(document.getElementById("giftAmount").value);
-    details = {
-      email: document.getElementById("giftEmail").value
-    };
-  }
-
-  if(amount < 100) return showToast("Minimum withdrawal is $100.");
-  if(amount > userBalance) return showToast("Insufficient balance.");
-
-  // Deduct and update balance
-  const newBalance = userBalance - amount;
-  await updateDoc(doc(db, "users", currentUser.uid), { balance: newBalance });
-  userBalance = newBalance;
-  document.getElementById("userBalance").textContent = currency(newBalance);
-
-  // Record withdrawal
-  await addDoc(collection(db, "users", currentUser.uid, "withdrawals"), {
-    method,
-    amount,
-    details,
-    status: "pending",
-    createdAt: serverTimestamp()
-  });
-
-  showToast("Withdrawal submitted successfully!");
-  loadHistory(currentUser.uid);
-}
-
-// Load withdrawal history
-async function loadHistory(uid) {
-  const q = query(collection(db, "users", uid, "withdrawals"), orderBy("createdAt", "desc"));
-  const snaps = await getDocs(q);
-  const container = document.getElementById("historyList");
-  container.innerHTML = "";
-  snaps.forEach(docSnap => {
-    const data = docSnap.data();
-    container.innerHTML += `
-      <div class="history-entry">
-        <strong>${data.method.toUpperCase()}</strong> - ${currency(data.amount)} <br/>
-        Status: ${data.status || "pending"}
+      <!-- BANK -->
+      <div id="bankFields" class="hidden">
+        <label>Bank Name:</label>
+        <input type="text" id="bankName" placeholder="Enter bank name" />
+        <label>Country:</label>
+        <input type="text" id="bankCountry" placeholder="Enter country" />
+        <label>Account Holder Name:</label>
+        <input type="text" id="bankUser" placeholder="Enter account holder name" />
+        <label>Amount ($):</label>
+        <input type="number" id="bankAmount" min="100" placeholder="Minimum $100" />
       </div>
-    `;
-  });
-}
-</script>
+
+      <!-- CRYPTO -->
+      <div id="cryptoFields" class="hidden">
+        <label>Currency:</label>
+        <input type="text" id="cryptoCurrency" placeholder="e.g., BTC, USDT" />
+        <label>Wallet Address:</label>
+        <input type="text" id="cryptoAddress" placeholder="Enter wallet address" />
+        <label>Amount ($):</label>
+        <input type="number" id="cryptoAmount" min="100" placeholder="Minimum $100" />
+      </div>
+
+      <!-- GIFTCARD -->
+      <div id="giftcardFields" class="hidden">
+        <label>Email:</label>
+        <input type="email" id="giftEmail" placeholder="Enter email for delivery" />
+        <label>Amount ($):</label>
+        <input type="number" id="giftAmount" min="100" placeholder="Minimum $100" />
+      </div>
+
+      <button type="submit">Submit Withdrawal</button>
+    </form>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+    import { getDatabase, ref, get, set, push } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnq2364tMuRPbrjjHmUfFUTjWZC2BmIS4",
+      authDomain: "dollar-survey-60fe7.firebaseapp.com",
+      projectId: "dollar-survey-60fe7",
+      storageBucket: "dollar-survey-60fe7.firebasestorage.app",
+      messagingSenderId: "293471697208",
+      appId: "1:293471697208:web:664863f09e830e420c69cd",
+      measurementId: "G-RCZ7SQJHPZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    const userIdEl = document.getElementById("userId");
+    const balanceEl = document.getElementById("balance");
+    const toast = document.getElementById("toast");
+    const methodSelect = document.getElementById("method");
+
+    let currentUser = null;
+    let guestId = localStorage.getItem("ds_guest_id_v1") || "guest";
+    let localBalance = 0;
+
+    function showToast(msg, ms=3000){
+      toast.textContent = msg;
+      toast.style.display = "block";
+      setTimeout(()=>toast.style.display="none", ms);
+    }
+    function currency(amount){ return '$'+amount.toFixed(2); }
+    function updateBalanceUI(){ balanceEl.textContent = currency(localBalance); }
+
+    async function fetchBalance(uidPath){
+      const snap = await get(ref(db, uidPath + '/balance'));
+      if(snap.exists()) localBalance = Number(snap.val()) || 0;
+      updateBalanceUI();
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      currentUser = user;
+      let path;
+      if(user && user.uid){
+        userIdEl.textContent = user.email.slice(0,5).toLowerCase();
+        path = `users/${user.uid}`;
+      } else {
+        userIdEl.textContent = guestId.slice(0,5);
+        path = `guests/${guestId}`;
+      }
+      await fetchBalance(path);
+    });
+
+    // Handle form UI
+    methodSelect.addEventListener("change", ()=>{
+      document.getElementById("bankFields").classList.toggle("hidden", methodSelect.value!=="bank");
+      document.getElementById("cryptoFields").classList.toggle("hidden", methodSelect.value!=="crypto");
+      document.getElementById("giftcardFields").classList.toggle("hidden", methodSelect.value!=="giftcard");
+    });
+
+    // Handle withdrawal
+    document.getElementById("withdrawForm").addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const method = methodSelect.value;
+      if(!method) return showToast("Select a withdrawal method");
+
+      let details = {}, amount = 0;
+
+      if(method === "bank"){
+        details = {
+          bank: document.getElementById("bankName").value.trim(),
+          country: document.getElementById("bankCountry").value.trim(),
+          holder: document.getElementById("bankUser").value.trim(),
+        };
+        amount = Number(document.getElementById("bankAmount").value);
+      } else if(method === "crypto"){
+        details = {
+          currency: document.getElementById("cryptoCurrency").value.trim(),
+          address: document.getElementById("cryptoAddress").value.trim(),
+        };
+        amount = Number(document.getElementById("cryptoAmount").value);
+      } else if(method === "giftcard"){
+        details = { email: document.getElementById("giftEmail").value.trim() };
+        amount = Number(document.getElementById("giftAmount").value);
+      }
+
+      if(isNaN(amount) || amount < 100) return showToast("Minimum withdrawal is $100");
+      if(amount > localBalance) return showToast("Insufficient balance");
+
+      // Deduct balance
+      localBalance = +(localBalance - amount).toFixed(2);
+      updateBalanceUI();
+
+      const uidPath = currentUser && currentUser.uid ? `users/${currentUser.uid}` : `guests/${guestId}`;
+      await set(ref(db, uidPath + "/balance"), localBalance);
+
+      // Save withdrawal record
+      const withdrawalData = {
+        method,
+        details,
+        amount,
+        timestamp: Date.now()
+      };
+      const recordPath = currentUser && currentUser.uid ? 
+        `withdrawals/users/${currentUser.uid}` : 
+        `withdrawals/guests/${guestId}`;
+      await set(push(ref(db, recordPath)), withdrawalData);
+
+      showToast("✅ Withdrawal submitted successfully!");
+    });
+  </script>
 </body>
 </html>
