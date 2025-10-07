@@ -64,11 +64,14 @@
     }
 
     /* small horizontal info boxes beside logo */
-    .info-boxes{
-      display:flex;
-      gap:6px;
-      align-items:center;
+
+    .info-boxes {
+  display: flex;
+  flex-direction: column; /* ⬅️ stacks them vertically */
+  gap: 6px;               /* space between each box */
+  align-items: stretch;   /* makes each box fill horizontally */
     }
+    
     .info{
       display:flex;
       align-items:center;
@@ -624,6 +627,7 @@ document.addEventListener('click', (event) => {
   </script>
 </body>
 </html>
+
 
 
 
