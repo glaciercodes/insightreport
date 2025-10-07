@@ -317,15 +317,36 @@
 
     // menu
     const menuBtn = document.getElementById('menuBtn');
-    const menuModal = document.getElementById('menuModal');
-    const closeModal = document.getElementById('closeModal');
-    menuBtn.addEventListener('click', ()=> {
-      const open = menuModal.style.display === 'block';
-      menuModal.style.display = open ? 'none' : 'block';
-      menuBtn.setAttribute('aria-expanded', String(!open));
-      menuModal.setAttribute('aria-hidden', String(open));
-    });
-    closeModal.addEventListener('click', ()=> { menuModal.style.display = 'none'; menuBtn.setAttribute('aria-expanded','false'); });
+const menuModal = document.getElementById('menuModal');
+const closeModal = document.getElementById('closeModal');
+
+// Toggle menu when clicking the button
+menuBtn.addEventListener('click', (event) => {
+  event.stopPropagation(); // Prevent click from bubbling to document
+  const open = menuModal.style.display === 'block';
+  menuModal.style.display = open ? 'none' : 'block';
+  menuBtn.setAttribute('aria-expanded', String(!open));
+  menuModal.setAttribute('aria-hidden', String(open));
+});
+
+// Close button inside the menu
+closeModal.addEventListener('click', () => {
+  menuModal.style.display = 'none';
+  menuBtn.setAttribute('aria-expanded', 'false');
+  menuModal.setAttribute('aria-hidden', 'true');
+});
+
+// Close menu when clicking outside of it
+document.addEventListener('click', (event) => {
+  const isClickInside =
+    menuModal.contains(event.target) || menuBtn.contains(event.target);
+
+  if (!isClickInside && menuModal.style.display === 'block') {
+    menuModal.style.display = 'none';
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuModal.setAttribute('aria-hidden', 'true');
+  }
+});
 
     // guest id (persistent)
     let currentUser = null;
@@ -606,4 +627,5 @@
   </script>
 </body>
 </html>
+
 
