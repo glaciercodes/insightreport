@@ -1,40 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About</title>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1947981398780941"
-     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="about-style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About Us - Dollarsurvey</title>
+  <style>
+    :root{
+      --bg: #000;
+      --card: #111;
+      --green: #0f0;
+      --muted-green: #bfffbf;
+    }
+    html,body{
+      height:100%;
+      margin:0;
+      background:var(--bg);
+      color:var(--green);
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      text-rendering:optimizeLegibility;
+    }
+
+    .wrap{
+      max-width:1000px;
+      margin:28px auto;
+      padding:20px;
+    }
+
+    /* Logo (clickable placeholder link -> #) */
+    .logo-wrap{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin-bottom:18px;
+    }
+    .logo-link{
+      display:inline-block;
+      width:120px;
+      height:120px;
+      border-radius:12px;
+      border:2px solid var(--green);
+      box-shadow:0 0 18px rgba(15,255,15,0.12), 0 0 6px var(--green);
+      overflow:hidden;
+      background:#000;
+      text-decoration:none;
+    }
+    .logo-link img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      background-position:center;
+      background-size:cover;
+    }
+
+    h1{
+      text-align:center;
+      margin:6px 0 22px 0;
+      color:var(--green);
+      font-size:28px;
+      letter-spacing:0.6px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:22px;
+      align-items:start;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--green);
+      border-radius:12px;
+      padding:26px;
+      box-shadow:0 0 20px rgba(15,255,15,0.06);
+      line-height:1.9;
+    }
+
+    .card h2{
+      margin:0 0 12px 0;
+      font-size:16px;
+      color:var(--green);
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-weight:800;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted-green);
+      font-weight:800; /* bold */
+      font-size:15px;
+      letter-spacing:0.3px;
+      /* well spaced: larger line-height & margin handled above */
+      text-align:justify;
+    }
+
+    .footer-link{
+      display:block;
+      margin:28px auto 0;
+      text-align:center;
+      color:var(--green);
+      text-decoration:underline;
+      font-weight:800;
+      width:max-content;
+    }
+    .footer-link:hover{ color:#1aff1a; }
+
+    /* Responsive tweaks */
+    @media (max-width:420px){
+      h1{ font-size:22px; }
+      .logo-link{ width:100px; height:100px; }
+      .card{ padding:18px; }
+    }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="logo-wrap">
+      <!-- Placeholder link to replace later: href="#" and src="#" -->
+      <a class="logo-link" href="#" aria-label="Replace logo (placeholder)">
+        <img src="#" alt="Dollarsurvey logo placeholder">
+      </a>
+    </div>
 
-  <button class="go-back-btn" onclick="goBack()">⬅ Back</button>
+    <h1>About Dollarsurvey</h1>
 
-  <div class="about-container">
-    <h1>About</h1>
-    
-    <p><strong>Dollar Survey</strong> is a web-based platform designed to reward users with real money for simply answering short and meaningful surveys.</p>
+    <div class="cards">
+      <article class="card">
+        <h2>Empowering Feedback to Shape the Modern World</h2>
+        <p>
+          At Dollarsurvey, we believe every opinion matters. User feedback collected through surveys empowers companies to refine products, improve services, and design solutions that address real human needs. By answering simple questions, participants influence product roadmaps, prompt customer experience improvements, and inform responsible business decisions. Aggregated responses reveal patterns that guide innovation, reduce waste, and prioritize features that benefit users worldwide. Our platform amplifies voices, making them accessible to decision-makers who value authentic insight. We ensure feedback is collected ethically, analyzed thoughtfully, and delivered to brands so user experiences continually evolve for the better. Every response helps shape a fairer marketplace.
+        </p>
+      </article>
 
-    <p>The surveys are carefully curated to support the productivity and growth of this website as well as trusted third-party platforms who use the feedback for research, product improvement, and innovation.</p>
+      <article class="card">
+        <h2>Our Role as a Trusted Intermediary</h2>
+        <p>
+          Dollarsurvey acts as a trusted intermediary between users and brands, facilitating constructive conversations that drive measurable change. We recruit diverse participants, craft clear survey instruments, and protect respondent privacy so companies receive honest, representative feedback they can trust. Our team translates raw answers into actionable insight through secure reporting tools and concise recommendations, making it simple for product managers and executives to prioritize improvements. We also ensure fair compensation and transparent processes for participants, encouraging continued engagement. By bridging user experience and business strategy, Dollarsurvey accelerates innovation while maintaining integrity, clarity, and impact across every research project and measurable outcomes.
+        </p>
+      </article>
+    </div>
 
-    <p>Each survey you answer contributes valuable data which is either used internally or shared with partner organizations. In return, we compensate you with real-time balance updates which you can track on your dashboard.</p>
-
-    <p>Once you reach a minimum payout threshold, you can withdraw your earnings through multiple available options including bank transfer, gift cards, and crypto wallets.</p>
-
-    <p>Your time is valuable, and Dollar Survey is here to make sure you’re rewarded for it.</p>
-    
-    <p><strong>Thank you for being part of our productivity-driven community!</strong></p>
+    <a class="footer-link" href="faqs.html">See what users are asking...</a>
   </div>
-
-  <script>
-    function goBack() {
-      window.history.back();
-    }
-  </script>
-
 </body>
 </html>
-
-
