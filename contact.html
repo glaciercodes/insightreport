@@ -1,45 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Contact Us - Dollar Survey</title>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1947981398780941"
-     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="contact-style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dollarsurvey Contact Page</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #0f0;
+      font-family: 'Poppins', sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    .contact-container {
+      background: #111;
+      border: 1px solid #0f0;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 40px auto;
+      max-width: 420px;
+      box-shadow: 0 0 15px #0f0;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-top: 10px;
+      background: #000;
+      border: 1px solid #0f0;
+      color: #0f0;
+      border-radius: 5px;
+      padding: 10px;
+      resize: none;
+    }
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      background: #0f0;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #1aff1a;
+    }
+    a {
+      color: #0f0;
+      text-decoration: underline;
+    }
+    .date {
+      margin-top: 10px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    #backBtn {
+      background: none;
+      border: 1px solid #0f0;
+      color: #0f0;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: 0.3s;
+    }
+    #backBtn:hover {
+      background: #0f0;
+      color: #000;
+    }
+  </style>
 </head>
 <body>
-  <button class="go-back-btn" onclick="goBack()">⬅ Back</button>
-  <div class="container">
-    <h1>Contact Us</h1>
-    <p>If you have any questions, suggestions, or technical issues, please feel free to reach out to us. We're always happy to hear from our users and will do our best to respond as soon as possible.</p>
 
-    <p><strong>Email:</strong> <a href="mailto:dollarsurveyus@gmail.com" style="color: #00ff88; text-decoration: underline;">
-    Contact us at dollarsurveyus@gmail.com
-  </a></p>
-    <p><strong>Phone:</strong> +1 777 990 033 (optional)</p>
-    <p><strong>Office Hours:</strong> Monday – Sartuday, 9:00 AM – 5:00 PM (WAT)</p>
+  <!-- Back button -->
+  <button id="backBtn" onclick="history.back()">← Back</button>
 
-    <p>For Faster Respose Contact Us Through Our Support Email. Thank You</p>
+  <div class="contact-container">
+    <h2>Contact Dollarsurvey</h2>
+    <p>If you have any problem or need help, please contact us at:</p>
+
+    <p>
+      <a href="mailto:dollarsurveyus@gmail.com?subject=Dollarsurvey Support Request">
+        dollarsurveyus@gmail.com
+      </a>
+    </p>
+
+    <p>Or describe your issue below and click “Submit”.</p>
+
+    <textarea id="userMessage" placeholder="Type your problem or reason for contact here..."></textarea>
+
+    <button onclick="sendEmail()">Submit</button>
+
+    <div class="date" id="openDate"></div>
   </div>
-  <script>
-  function goBack() {
-    if (document.referrer !== "") {
-      window.history.back();
-    } else {
-      window.location.href = "index.html"; // fallback to homepage
-    }
-  }
-</script>
 
+  <script>
+    // Display the day and date
+    const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const now = new Date();
+    const dayName = days[now.getDay()];
+    const dateStr = now.toLocaleDateString();
+    document.getElementById("openDate").textContent = `Opened on: ${dayName}, ${dateStr}`;
+
+    // Function to open Gmail with user message
+    function sendEmail() {
+      const message = document.getElementById('userMessage').value.trim();
+      const subject = encodeURIComponent("Dollarsurvey Support Request");
+      const body = encodeURIComponent(message || "Write your issue here...");
+      const email = "dollarsurveyus@gmail.com";
+
+      // Open Gmail or default mail app
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    }
+  </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
