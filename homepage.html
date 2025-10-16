@@ -382,17 +382,106 @@ document.addEventListener('click', (event) => {
 
     // survey prompts (~50 words each). Kept concise but ~50 words each.
     const prompts = [
-`When shopping for mobile headphones, which factors matter most? Consider sound clarity, noise cancellation, battery life, comfort for long-term wear, brand trust, and price. Describe your preference with an example scenario where you would choose one model over another and why that tradeoff wins for you.`,
-`Imagine choosing a morning beverage subscription. Describe whether you prefer strong roast or mild blends, frequency of delivery, eco-friendly packaging, price sensitivity, and special add-ons (e.g., syrups). Explain a scenario where subscription convenience outweighs variety for you.`,
-`Think about household cleaning products. Rate importance of natural ingredients, packaging size, scent strength, cost per use, and multi-surface compatibility. Give an example of when you’d pay a premium for a trusted brand versus trying a cheaper alternative.`,
-`Consider buying a basic smart watch. Explain your priorities: accurate fitness tracking, battery life, display clarity, ecosystem compatibility, or low cost. Describe a situation when style or battery life decides your purchase more than advanced features.`,
-`Choose a streaming music service — what convinces you to subscribe? Consider exclusive playlists, audio quality, family plans, offline listening, price, and device compatibility. Describe a scenario where switching services would be worth your hassle.`,
-`Think about snack bars or healthy bars. Which matters more: ingredients list, taste variety, price, portability, or brand reputation? Describe a weekday scenario where you pick a bar for work versus one for travel and why.`,
-`When selecting a budget laptop, which tradeoffs matter? Prioritize CPU, RAM, screen quality, battery life, and brand warranty. Explain a case where battery life or screen clarity would sway you to pay more for one model.`,
-`Think about eco-friendly grocery choices: reusable packaging, organic certification, price premium, local sourcing, or brand transparency. Describe a family shopping trip where those factors alter what you put in the cart.`,
-`Consider home coffee machines: ease of use, maintenance, pod vs grounds, brew quality, and upfront cost. Give an example of when you’d pick a simple drip machine over a premium espresso maker and why.`,
-`When buying athletic shoes, describe how you balance comfort, performance, durability, style, and cost. Explain a situation where durability or brand trust matters more than appearance and when you’d prioritize style instead.`
-    ];
+`When planning your weekly groceries, how do you decide between convenience foods and cooking from scratch? Consider freshness, preparation time, cost, taste preference, and health balance. Describe a situation where you’d choose quick frozen meals over fresh produce and what motivates that decision for your week.`,
+
+`Think about your morning routine. Which matters most: waking up on time, breakfast, outfit selection, or quiet preparation space? Explain a day when adjusting your routine improved your energy or mood, and how those small changes influence the rest of your day’s productivity.`,
+
+`When selecting a reusable water bottle, which features matter most? Consider capacity, insulation, weight, leak resistance, and cleaning ease. Describe an example where you’d pick a heavier insulated model for travel over a lightweight option for daily use, and what tradeoff feels worth it.`,
+
+`Choosing a daily outfit often balances comfort, weather, and impression. Which factor leads your choice most days? Explain a scenario when you dressed more for comfort than appearance, or vice versa, and how that choice affected your confidence or comfort throughout the day.`,
+
+`When deciding what to cook for dinner, what influences your choice most—ingredients available, cooking time, taste, or nutrition? Describe a night when you chose a simple meal over an elaborate one and why that decision fit your schedule or energy level best.`,
+
+`Think about planning weekend activities. Which factors guide you: relaxation, socializing, productivity, or outdoor fun? Describe a weekend when you consciously chose rest over social plans or vice versa, and how that affected your overall sense of balance.`,
+
+`When buying everyday shoes, which aspects influence you most—comfort, price, durability, or brand trust? Describe a time when you invested in a high-quality pair instead of a cheaper one and whether that decision felt worthwhile in the long run.`,
+
+`Choosing a TV show to watch can depend on time, genre mood, or energy level. Which factor matters most for you? Describe a situation when you picked a relaxing show over a thought-provoking one and how that choice matched your mood or environment.`,
+
+`When selecting a mobile data plan, what matters most—coverage, speed, price, or data limit? Describe a scenario when you preferred a slightly more expensive plan for reliability and why that felt like a smart long-term choice for your daily usage.`,
+
+`Think about your phone’s charging habits. Do you value fast charging, battery capacity, or durability more? Explain a moment when your charging setup (like a power bank or cable) made your routine easier and why that convenience mattered most.`,
+
+`When buying a backpack or work bag, which qualities matter most—size, material, comfort, or design? Describe a time when you chose practicality over style or vice versa, and how that decision impacted your daily comfort or confidence.`,
+
+`Consider your morning commute. Do you prefer walking, public transport, or driving? Explain what influences your choice—cost, comfort, speed, or environmental impact—and describe a morning when that decision shaped how your day started.`,
+
+`When cleaning your home, do you focus more on speed, thoroughness, scent, or product safety? Describe a cleaning session where you prioritized one factor over another and why that approach fit your mood, time, or goal that day.`,
+
+`Choosing a lunch spot often balances cost, nutrition, taste, and proximity. Explain how you usually decide where to eat on busy workdays versus relaxed weekends, and describe an example when convenience outweighed variety for you.`,
+
+`When buying toothpaste, which qualities influence your decision—flavor, whitening ability, brand, or sensitivity protection? Describe a case when you switched brands and how that change met or missed your expectations over time.`,
+
+`Consider buying new bedsheets. What matters most—fabric quality, price, color, or thread count? Describe a purchase when comfort or durability influenced you more than style, and how that affected your satisfaction later on.`,
+
+`When picking a phone case, which factor matters most—design, protection, grip, or price? Explain a moment when you sacrificed one aspect for another, such as style over durability, and how that tradeoff felt afterward.`,
+
+`When choosing laundry detergent, do you prioritize scent, cleaning power, eco-friendliness, or price? Describe an instance when you tried a new brand and what made you keep or switch back afterward.`,
+
+`When deciding how to spend a rainy day, do you prefer staying in, reading, cooking, or watching shows? Explain how your choice usually reflects your mood or need for rest, and describe a recent cozy day indoors.`,
+
+`When picking light snacks, do you prefer salty, sweet, or balanced flavors? Explain how you decide between health-conscious and indulgent options, and share a situation when convenience influenced your snack choice most.`,
+
+`When organizing your workspace, what’s most important—neatness, accessibility, aesthetics, or comfort? Describe how changing your setup once improved your focus or mood during work or study time.`,
+
+`Choosing a daily planner or app depends on layout, reminders, simplicity, and syncing options. Which do you value most, and describe a time when better organization helped reduce stress or boost productivity.`,
+
+`When purchasing soap or body wash, what matters most—fragrance, moisturizing ability, brand, or skin type compatibility? Share an instance when a product’s scent or packaging convinced you to try it over your usual choice.`,
+
+`When listening to music during chores, what drives your selection—energy level, lyrics, or background rhythm? Describe how certain songs or genres change your motivation or enjoyment while working.`,
+
+`When buying groceries online, do you prioritize delivery speed, price, freshness, or variety? Describe a time when online shopping saved you time or caused a small issue that changed how you plan future orders.`,
+
+`When selecting home lighting, what influences your decision—brightness, energy use, style, or color tone? Explain how lighting choice once affected your mood or the atmosphere of a room.`,
+
+`Choosing a reusable shopping bag depends on durability, capacity, design, and foldability. Which matters most for you, and describe a moment when having one made a big difference during a busy shopping trip.`,
+
+`When picking a phone plan add-on, such as streaming data or hotspot, what influences you most—cost, usefulness, or entertainment options? Describe a case when you added or removed one and why.`,
+
+`When choosing personal care items like shampoo, do you value scent, ingredients, packaging, or performance most? Describe a moment when trying a natural or premium option changed your perception of daily routines.`,
+
+`When preparing for travel, do you focus more on comfort, efficiency, or style? Describe a packing experience where you learned to balance minimalism with preparedness and how it affected your trip.`,
+
+`When replacing kitchen tools, what factors matter—price, durability, brand, or ergonomics? Describe a moment when investing in a better-quality item saved time or frustration later.`,
+
+`When downloading a new app, do you consider reviews, functionality, data privacy, or design first? Explain a time when one feature made you keep using the app despite small drawbacks.`,
+
+`Choosing what to read—fiction, news, or blogs—often reflects your mindset. Describe how your reading choice changes with time or mood and share a situation when one article or book brightened your day.`,
+
+`When planning exercise routines, do you prioritize duration, enjoyment, convenience, or intensity? Explain a day when a short workout felt more rewarding than a long one and why that approach worked for you.`,
+
+`When buying everyday clothes, what matters more—fit, color, versatility, or price? Describe a recent purchase that became your favorite because of its comfort or practicality.`,
+
+`When managing your digital storage, do you delete old files regularly or rely on cloud backups? Explain your method and share how organization affects your productivity or peace of mind.`,
+
+`When planning meals for the week, do you focus on nutrition, taste, or budget? Describe how one well-planned meal prep week improved your routine and reduced daily stress.`,
+
+`When deciding on home fragrance—candles, sprays, or diffusers—what matters most: scent longevity, design, or price? Describe a favorite scent and how it changes your home’s atmosphere.`,
+
+`When using public transport, what factors matter—timeliness, comfort, cleanliness, or safety? Describe a commute that stood out to you and why that experience shaped your preferences.`,
+
+`When organizing digital photos, do you prefer cloud storage, albums, or local folders? Describe a system that helped you rediscover memories easily and why you’d recommend it.`,
+
+`When choosing household paper products, what influences you—softness, strength, price, or eco-friendliness? Share an example when one quality made you stay loyal to a brand.`,
+
+`When shopping for new glasses or sunglasses, do you prioritize frame design, comfort, price, or brand? Describe a purchase that made you feel confident and what drove your final decision.`,
+
+`When updating your phone wallpaper, do you choose photos, quotes, or patterns? Explain how your choice reflects your personality or mood at the time.`,
+
+`When cleaning digital devices, what matters—frequency, tools used, or thoroughness? Describe how maintaining cleanliness once improved performance or satisfaction with your gadget.`,
+
+`When choosing between handwritten notes and digital ones, which do you prefer and why? Describe a time when one method helped you stay more organized or creative.`,
+
+`When planning movie nights, do you focus on genre, group choice, or time? Share how you balance everyone’s preferences or your own when deciding what to watch.`,
+
+`When buying stationary, do you prefer design, smooth writing, durability, or brand? Describe how using good stationery improved your focus or enjoyment of daily writing tasks.`,
+
+`When decorating your room, what’s most important—comfort, color harmony, lighting, or minimalism? Explain how a small change once made your space feel better or more inspiring.`,
+
+`When deciding on weekend chores, how do you balance them with relaxation? Describe a method that helps you stay productive without feeling overwhelmed or rushed.`,
+
+`When using a streaming video platform, what features matter—recommendations, ad-free experience, video quality, or cost? Describe a time when one feature made you switch or stay with a service.`
+];
 
     // generate survey cards
     function renderSurveys(){
@@ -627,6 +716,7 @@ document.addEventListener('click', (event) => {
   </script>
 </body>
 </html>
+
 
 
 
