@@ -1,1 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Available This Week | InsightReport</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js"></script>
+    <style>
+        :root {
+            --primary: #6a1b9a;
+            --secondary: #4caf50;
+            --accent: #ff9800;
+            --light: #f5f5f5;
+            --dark: #333;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav i {
+            font-size: 1.2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--dark);
+        }
+
+        /* Survey Cards */
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            width: 350px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            padding: 25px;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .card-header.purple {
+            background-color: var(--primary);
+        }
+
+        .card-header.green {
+            background-color: var(--secondary);
+        }
+
+        .card-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .card-body {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .card-body p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--accent);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #e68900;
+            transform: scale(1.05);
+        }
+
+        /* Survey Steps */
+        .survey-step {
+            display: none;
+            padding: 25px;
+        }
+
+        .survey-step.active {
+            display: block;
+        }
+
+        .survey-step h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(106, 27, 154, 0.2);
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+
+        .btn-secondary {
+            background-color: #757575;
+        }
+
+        .btn-secondary:hover {
+            background-color: #616161;
+        }
+
+        /* Subscribe Section */
+        .subscribe-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            padding: 50px 0;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            display: none;
+        }
+
+        .subscribe-section.active {
+            display: block;
+        }
+
+        .subscribe-section h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .subscribe-section p {
+            max-width: 600px;
+            margin: 0 auto 25px;
+            font-size: 1.1rem;
+        }
+
+        .subscribe-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .subscribe-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+        }
+
+        .subscribe-form button {
+            padding: 12px 25px;
+            background-color: var(--accent);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe-form button:hover {
+            background-color: #e68900;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-logo .logo {
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .footer-links {
+            flex: 2;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Success Message */
+        .success-message {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        .success-message i {
+            font-size: 4rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .success-message h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 350px;
+            }
+
+            .subscribe-form {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>InsightReport</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-chart-bar"></i> Insights</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Survey Available This Week</h1>
+            <p>Share your opinions and help us gather valuable insights. Your responses contribute to meaningful research and reports.</p>
+        </div>
+    </section>
+
+    <!-- Survey Cards -->
+    <section class="container">
+        <div class="cards-container">
+            <!-- General Survey Card -->
+            <div class="card" id="general-card">
+                <div class="card-header purple">
+                    <h2>General Survey</h2>
+                    <p>For everyone worldwide</p>
+                </div>
+                <div class="card-body">
+                    <div class="survey-step active" id="general-step1">
+                        <p>This survey will ask you about your age and food preferences. It takes about 3 minutes to complete.</p>
+                        <button class="btn" onclick="startSurvey('general')">Get Started</button>
+                    </div>
+                    <div class="survey-step" id="general-step2">
+                        <h3>About You</h3>
+                        <div class="form-group">
+                            <label for="general-age">What is your age?</label>
+                            <input type="number" id="general-age" min="1" max="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="general-generation">Which generation do you identify with?</label>
+                            <select id="general-generation" required>
+                                <option value="">Select generation</option>
+                                <option value="Gen Z">Gen Z (1997-2012)</option>
+                                <option value="Millennial">Millennial (1981-1996)</option>
+                                <option value="Gen X">Gen X (1965-1980)</option>
+                                <option value="Boomer">Baby Boomer (1946-1964)</option>
+                                <option value="Silent">Silent Generation (1928-1945)</option>
+                            </select>
+                        </div>
+                        <div class="navigation-buttons">
+                            <button class="btn btn-secondary" onclick="goToStep('general', 1)">Back</button>
+                            <button class="btn" onclick="goToStep('general', 3)">Next</button>
+                        </div>
+                    </div>
+                    <div class="survey-step" id="general-step3">
+                        <h3>Food Preferences</h3>
+                        <div class="form-group">
+                            <label for="general-cuisine">What is your favorite cuisine?</label>
+                            <input type="text" id="general-cuisine" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="general-meal">What is your most important meal of the day?</label>
+                            <select id="general-meal" required>
+                                <option value="">Select meal</option>
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Dinner">Dinner</option>
+                                <option value="Snacks">Snacks throughout the day</option>
+                            </select>
+                        </div>
+                        <div class="navigation-buttons">
+                            <button class="btn btn-secondary" onclick="goToStep('general', 2)">Back</button>
+                            <button class="btn" onclick="submitSurvey('general')">Submit</button>
+                        </div>
+                    </div>
+                    <div class="success-message" id="general-success">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Thank You!</h3>
+                        <p>Your responses have been recorded successfully.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nigerian Survey Card -->
+            <div class="card" id="nigerian-card">
+                <div class="card-header green">
+                    <h2>For Nigerians</h2>
+                    <p>Exclusive for Nigerian residents</p>
+                </div>
+                <div class="card-body">
+                    <div class="survey-step active" id="nigerian-step1">
+                        <p>This survey is specifically for Nigerian residents and focuses on age and relationships.</p>
+                        <button class="btn" onclick="startSurvey('nigerian')">Get Started</button>
+                    </div>
+                    <div class="survey-step" id="nigerian-step2">
+                        <h3>About You</h3>
+                        <div class="form-group">
+                            <label for="nigerian-age">What is your age?</label>
+                            <input type="number" id="nigerian-age" min="1" max="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nigerian-state">Which state do you reside in?</label>
+                            <input type="text" id="nigerian-state" required>
+                        </div>
+                        <div class="navigation-buttons">
+                            <button class="btn btn-secondary" onclick="goToStep('nigerian', 1)">Back</button>
+                            <button class="btn" onclick="goToStep('nigerian', 3)">Next</button>
+                        </div>
+                    </div>
+                    <div class="survey-step" id="nigerian-step3">
+                        <h3>Relationships</h3>
+                        <div class="form-group">
+                            <label for="nigerian-love">What does love mean to you?</label>
+                            <textarea id="nigerian-love" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="nigerian-relationship">What is your current relationship status?</label>
+                            <select id="nigerian-relationship" required>
+                                <option value="">Select status</option>
+                                <option value="Single">Single</option>
+                                <option value="In a relationship">In a relationship</option>
+                                <option value="Engaged">Engaged</option>
+                                <option value="Married">Married</option>
+                                <option value="Divorced">Divorced</option>
+                                <option value="Widowed">Widowed</option>
+                            </select>
+                        </div>
+                        <div class="navigation-buttons">
+                            <button class="btn btn-secondary" onclick="goToStep('nigerian', 2)">Back</button>
+                            <button class="btn" onclick="submitSurvey('nigerian')">Submit</button>
+                        </div>
+                    </div>
+                    <div class="success-message" id="nigerian-success">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Thank You!</h3>
+                        <p>Your responses have been recorded successfully.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscribe Section -->
+    <section class="container">
+        <div class="subscribe-section" id="subscribe-section">
+            <h2>Stay Updated with Our Insights</h2>
+            <p>Subscribe to our newsletter to receive the latest reports and insights directly in your inbox.</p>
+            <form class="subscribe-form" id="subscribe-form">
+                <input type="email" id="subscribe-email" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">
+                        <i class="fas fa-chart-line"></i>
+                        <span>InsightReport</span>
+                    </div>
+                    <p>Your trusted source for data-driven insights and reports that matter.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                            <li><a href="#"><i class="fas fa-chart-bar"></i> Insights</a></li>
+                            <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Legal</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+                            <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                            <li><a href="#"><i class="fas fa-cookie"></i> Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-info-circle"></i> About Us</a></li>
+                            <li><a href="#"><i class="fas fa-bullhorn"></i> Careers</a></li>
+                            <li><a href="#"><i class="fas fa-newspaper"></i> Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 InsightReport. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCXqNe_BDdh9WIJ9lyrFPeQ_-733qbXW4s",
+            authDomain: "realinsightreport.firebaseapp.com",
+            projectId: "realinsightreport",
+            storageBucket: "realinsightreport.firebasestorage.app",
+            messagingSenderId: "1083096764833",
+            appId: "1:1083096764833:web:4b526f278471212ba43be0",
+            measurementId: "G-6LHBN68HMH"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const analytics = firebase.getAnalytics(app);
+        const db = firebase.firestore();
+
+        // Track user's country
+        let userCountry = '';
+        let hasSubscribed = false;
+
+        // Get user's country based on IP
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                userCountry = data.country_name;
+                // If user is not from Nigeria, hide the Nigerian survey card
+                if (userCountry !== 'Nigeria') {
+                    document.getElementById('nigerian-card').style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching location:', error);
+            });
+
+        // Survey navigation functions
+        function startSurvey(type) {
+            goToStep(type, 2);
+        }
+
+        function goToStep(type, stepNumber) {
+            // Hide all steps for this survey type
+            const steps = document.querySelectorAll(`#${type}-card .survey-step`);
+            steps.forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            // Show the requested step
+            document.getElementById(`${type}-step${stepNumber}`).classList.add('active');
+        }
+
+        function submitSurvey(type) {
+            // Validate all fields in current step
+            const currentStep = document.querySelector(`#${type}-card .survey-step.active`);
+            const inputs = currentStep.querySelectorAll('input, select, textarea');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.style.borderColor = 'red';
+                } else {
+                    input.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (!isValid) {
+                alert('Please fill in all required fields before submitting.');
+                return;
+            }
+            
+            // Collect survey data
+            let surveyData = {
+                type: type,
+                country: userCountry,
+                timestamp: new Date()
+            };
+            
+            if (type === 'general') {
+                surveyData.age = document.getElementById('general-age').value;
+                surveyData.generation = document.getElementById('general-generation').value;
+                surveyData.cuisine = document.getElementById('general-cuisine').value;
+                surveyData.meal = document.getElementById('general-meal').value;
+            } else if (type === 'nigerian') {
+                surveyData.age = document.getElementById('nigerian-age').value;
+                surveyData.state = document.getElementById('nigerian-state').value;
+                surveyData.loveMeaning = document.getElementById('nigerian-love').value;
+                surveyData.relationshipStatus = document.getElementById('nigerian-relationship').value;
+            }
+            
+            // Save to Firebase
+            db.collection('surveys').add(surveyData)
+                .then(() => {
+                    // Show success message
+                    document.querySelector(`#${type}-card .survey-step.active`).classList.remove('active');
+                    document.getElementById(`${type}-success`).classList.add('active');
+                    
+                    // Show subscribe section if not already subscribed
+                    if (!hasSubscribed) {
+                        setTimeout(() => {
+                            document.getElementById('subscribe-section').classList.add('active');
+                        }, 1500);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error saving survey:', error);
+                    alert('There was an error submitting your survey. Please try again.');
+                });
+        }
+
+        // Handle subscription
+        document.getElementById('subscribe-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('subscribe-email').value;
+            
+            if (!email) {
+                alert('Please enter your email address.');
+                return;
+            }
+            
+            // Save to Firebase
+            db.collection('subscribers').add({
+                email: email,
+                country: userCountry,
+                timestamp: new Date()
+            })
+            .then(() => {
+                alert('Thank you for subscribing!');
+                hasSubscribed = true;
+                document.getElementById('subscribe-section').style.display = 'none';
+                document.getElementById('subscribe-form').reset();
+            })
+            .catch(error => {
+                console.error('Error saving subscription:', error);
+                alert('There was an error with your subscription. Please try again.');
+            });
+        });
+    </script>
+</body>
+  </html>
