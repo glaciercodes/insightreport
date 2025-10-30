@@ -10,13 +10,14 @@
     <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js"></script>
     <style>
         :root {
-            --primary: #6a1b9a;
-            --secondary: #4caf50;
-            --accent: #ff9800;
-            --light: #f5f5f5;
-            --dark: #333;
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
             --white: #ffffff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #f44336;
         }
 
         * {
@@ -27,8 +28,8 @@
         }
 
         body {
-            background-color: var(--light);
-            color: var(--dark);
+            background-color: var(--white);
+            color: var(--dark-gray);
             line-height: 1.6;
         }
 
@@ -40,168 +41,154 @@
 
         /* Header Styles */
         header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
         }
 
-        .logo i {
+        .logo-icon {
             font-size: 2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 25px;
+            gap: 20px;
         }
 
         nav a {
+            color: var(--white);
             text-decoration: none;
-            color: var(--dark);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: opacity 0.3s;
             display: flex;
-            flex-direction: column;
             align-items: center;
             gap: 5px;
         }
 
         nav a:hover {
-            color: var(--primary);
+            opacity: 0.8;
         }
 
-        nav i {
-            font-size: 1.2rem;
+        /* Main Content */
+        main {
+            padding: 40px 0;
+            min-height: calc(100vh - 160px);
         }
 
-        /* Hero Section */
-        .hero {
+        .page-title {
             text-align: center;
-            padding: 60px 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
             margin-bottom: 40px;
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto;
-            color: var(--dark);
-        }
-
-        /* Survey Cards */
-        .cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
         .card {
-            background-color: var(--white);
             border-radius: 12px;
-            box-shadow: var(--shadow);
             overflow: hidden;
-            width: 350px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            background-color: var(--white);
+            position: relative;
         }
 
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
         }
 
         .card-header {
-            padding: 25px;
+            padding: 20px;
             color: var(--white);
             text-align: center;
-        }
-
-        .card-header.purple {
-            background-color: var(--primary);
-        }
-
-        .card-header.green {
-            background-color: var(--secondary);
-        }
-
-        .card-header h2 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
         }
 
         .card-body {
-            padding: 25px;
+            padding: 20px;
             text-align: center;
         }
 
-        .card-body p {
-            margin-bottom: 20px;
-            color: #666;
+        .card-footer {
+            padding: 15px 20px;
+            background-color: var(--light-gray);
+            text-align: center;
         }
 
         .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background-color: var(--accent);
-            color: var(--white);
+            padding: 10px 20px;
             border: none;
-            border-radius: 30px;
-            font-size: 1rem;
+            border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
+            display: inline-block;
+            text-decoration: none;
         }
 
         .btn:hover {
-            background-color: #e68900;
             transform: scale(1.05);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: var(--white);
         }
 
         /* Survey Steps */
         .survey-step {
             display: none;
-            padding: 25px;
+            padding: 20px;
         }
 
         .survey-step.active {
             display: block;
         }
 
-        .survey-step h3 {
-            margin-bottom: 20px;
-            color: var(--primary);
+        .step-title {
+            margin-bottom: 15px;
+            color: var(--primary-color);
             text-align: center;
         }
 
         .form-group {
             margin-bottom: 20px;
-            text-align: left;
         }
 
         .form-group label {
@@ -210,7 +197,7 @@
             font-weight: 500;
         }
 
-        .form-group input, .form-group select, .form-group textarea {
+        .form-control {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
@@ -218,87 +205,50 @@
             font-size: 1rem;
         }
 
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(106, 27, 154, 0.2);
-        }
-
-        .navigation-buttons {
+        .step-actions {
             display: flex;
             justify-content: space-between;
-            margin-top: 25px;
-        }
-
-        .btn-secondary {
-            background-color: #757575;
-        }
-
-        .btn-secondary:hover {
-            background-color: #616161;
+            margin-top: 20px;
         }
 
         /* Subscribe Section */
-        .subscribe-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--white);
-            padding: 50px 0;
-            text-align: center;
+        .subscribe-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             border-radius: 12px;
-            margin-bottom: 60px;
-            display: none;
+            color: var(--white);
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .subscribe-section.active {
-            display: block;
-        }
-
-        .subscribe-section h2 {
-            font-size: 2rem;
+        .subscribe-title {
             margin-bottom: 15px;
+            font-size: 1.8rem;
         }
 
-        .subscribe-section p {
-            max-width: 600px;
-            margin: 0 auto 25px;
+        .subscribe-text {
+            margin-bottom: 20px;
             font-size: 1.1rem;
         }
 
         .subscribe-form {
-            max-width: 500px;
-            margin: 0 auto;
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .subscribe-form input {
-            flex: 1;
-            padding: 12px 15px;
-            border: none;
-            border-radius: 30px;
+        .subscribe-form .form-control {
+            padding: 15px;
             font-size: 1rem;
-        }
-
-        .subscribe-form button {
-            padding: 12px 25px;
-            background-color: var(--accent);
-            color: var(--white);
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .subscribe-form button:hover {
-            background-color: #e68900;
         }
 
         /* Footer */
         footer {
-            background-color: var(--dark);
+            background-color: var(--dark-gray);
             color: var(--white);
-            padding: 40px 0 20px;
+            padding: 30px 0;
         }
 
         .footer-content {
@@ -306,105 +256,73 @@
             flex-wrap: wrap;
             justify-content: space-between;
             gap: 30px;
-            margin-bottom: 30px;
         }
 
-        .footer-logo {
+        .footer-section {
             flex: 1;
-            min-width: 250px;
+            min-width: 200px;
         }
 
-        .footer-logo .logo {
+        .footer-section h3 {
             margin-bottom: 15px;
-            color: var(--white);
+            font-size: 1.2rem;
         }
 
         .footer-links {
-            flex: 2;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-        }
-
-        .footer-column h3 {
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            color: var(--accent);
-        }
-
-        .footer-column ul {
             list-style: none;
         }
 
-        .footer-column ul li {
+        .footer-links li {
             margin-bottom: 10px;
         }
 
-        .footer-column a {
-            color: #ddd;
+        .footer-links a {
+            color: var(--white);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             transition: color 0.3s;
         }
 
-        .footer-column a:hover {
-            color: var(--accent);
+        .footer-links a:hover {
+            color: var(--secondary-color);
         }
 
-        .footer-bottom {
+        .copyright {
             text-align: center;
+            margin-top: 30px;
             padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 0.9rem;
-            color: #aaa;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Success Message */
-        .success-message {
-            text-align: center;
-            padding: 40px;
-            display: none;
-        }
+        /* Country-specific colors */
+        .card.general .card-header { background-color: #8e44ad; }
+        .card.nigeria .card-header { background-color: #27ae60; }
+        .card.india .card-header { background-color: #ff9933; }
+        .card.canada .card-header { background-color: #d52b1e; }
+        .card.usa .card-header { background-color: #3c3b6e; }
+        .card.germany .card-header { background-color: #000000; }
+        .card.pakistan .card-header { background-color: #00401A; }
+        .card.ghana .card-header { background-color: #CE1126; }
+        .card.south-africa .card-header { background: linear-gradient(to right, #000 33%, #ffb612 33%, #ffb612 66%, #007749 66%); }
 
-        .success-message.active {
-            display: block;
-        }
-
-        .success-message i {
-            font-size: 4rem;
-            color: var(--secondary);
-            margin-bottom: 20px;
-        }
-
-        .success-message h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--secondary);
-        }
-
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 gap: 15px;
             }
-
+            
             nav ul {
-                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
-
-            .hero h1 {
-                font-size: 2rem;
+            
+            .cards-container {
+                grid-template-columns: 1fr;
             }
-
-            .card {
-                width: 100%;
-                max-width: 350px;
-            }
-
-            .subscribe-form {
-                flex-direction: column;
-            }
-
+            
             .footer-content {
                 flex-direction: column;
             }
@@ -412,13 +330,12 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-chart-line"></i>
-                    <span>InsightReport</span>
+                    <i class="fas fa-chart-line logo-icon"></i>
+                    <span class="logo-text">InsightReport</span>
                 </div>
                 <nav>
                     <ul>
@@ -426,196 +343,52 @@
                         <li><a href="#"><i class="fas fa-chart-bar"></i> Insights</a></li>
                         <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
                         <li><a href="#"><i class="fas fa-file-contract"></i> Terms</a></li>
-                        <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a href="#"><i class="fas fa-users"></i> About Us</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <main>
         <div class="container">
-            <h1>Survey Available This Week</h1>
-            <p>Share your opinions and help us gather valuable insights. Your responses contribute to meaningful research and reports.</p>
-        </div>
-    </section>
-
-    <!-- Survey Cards -->
-    <section class="container">
-        <div class="cards-container">
-            <!-- General Survey Card -->
-            <div class="card" id="general-card">
-                <div class="card-header purple">
-                    <h2>General Survey</h2>
-                    <p>For everyone worldwide</p>
-                </div>
-                <div class="card-body">
-                    <div class="survey-step active" id="general-step1">
-                        <p>This survey will ask you about your age and food preferences. It takes about 3 minutes to complete.</p>
-                        <button class="btn" onclick="startSurvey('general')">Get Started</button>
-                    </div>
-                    <div class="survey-step" id="general-step2">
-                        <h3>About You</h3>
-                        <div class="form-group">
-                            <label for="general-age">What is your age?</label>
-                            <input type="number" id="general-age" min="1" max="120" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="general-generation">Which generation do you identify with?</label>
-                            <select id="general-generation" required>
-                                <option value="">Select generation</option>
-                                <option value="Gen Z">Gen Z (1997-2012)</option>
-                                <option value="Millennial">Millennial (1981-1996)</option>
-                                <option value="Gen X">Gen X (1965-1980)</option>
-                                <option value="Boomer">Baby Boomer (1946-1964)</option>
-                                <option value="Silent">Silent Generation (1928-1945)</option>
-                            </select>
-                        </div>
-                        <div class="navigation-buttons">
-                            <button class="btn btn-secondary" onclick="goToStep('general', 1)">Back</button>
-                            <button class="btn" onclick="goToStep('general', 3)">Next</button>
-                        </div>
-                    </div>
-                    <div class="survey-step" id="general-step3">
-                        <h3>Food Preferences</h3>
-                        <div class="form-group">
-                            <label for="general-cuisine">What is your favorite cuisine?</label>
-                            <input type="text" id="general-cuisine" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="general-meal">What is your most important meal of the day?</label>
-                            <select id="general-meal" required>
-                                <option value="">Select meal</option>
-                                <option value="Breakfast">Breakfast</option>
-                                <option value="Lunch">Lunch</option>
-                                <option value="Dinner">Dinner</option>
-                                <option value="Snacks">Snacks throughout the day</option>
-                            </select>
-                        </div>
-                        <div class="navigation-buttons">
-                            <button class="btn btn-secondary" onclick="goToStep('general', 2)">Back</button>
-                            <button class="btn" onclick="submitSurvey('general')">Submit</button>
-                        </div>
-                    </div>
-                    <div class="success-message" id="general-success">
-                        <i class="fas fa-check-circle"></i>
-                        <h3>Thank You!</h3>
-                        <p>Your responses have been recorded successfully.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Nigerian Survey Card -->
-            <div class="card" id="nigerian-card">
-                <div class="card-header green">
-                    <h2>For Nigerians</h2>
-                    <p>Exclusive for Nigerian residents</p>
-                </div>
-                <div class="card-body">
-                    <div class="survey-step active" id="nigerian-step1">
-                        <p>This survey is specifically for Nigerian residents and focuses on age and relationships.</p>
-                        <button class="btn" onclick="startSurvey('nigerian')">Get Started</button>
-                    </div>
-                    <div class="survey-step" id="nigerian-step2">
-                        <h3>About You</h3>
-                        <div class="form-group">
-                            <label for="nigerian-age">What is your age?</label>
-                            <input type="number" id="nigerian-age" min="1" max="120" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nigerian-state">Which state do you reside in?</label>
-                            <input type="text" id="nigerian-state" required>
-                        </div>
-                        <div class="navigation-buttons">
-                            <button class="btn btn-secondary" onclick="goToStep('nigerian', 1)">Back</button>
-                            <button class="btn" onclick="goToStep('nigerian', 3)">Next</button>
-                        </div>
-                    </div>
-                    <div class="survey-step" id="nigerian-step3">
-                        <h3>Relationships</h3>
-                        <div class="form-group">
-                            <label for="nigerian-love">What does love mean to you?</label>
-                            <textarea id="nigerian-love" rows="3" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="nigerian-relationship">What is your current relationship status?</label>
-                            <select id="nigerian-relationship" required>
-                                <option value="">Select status</option>
-                                <option value="Single">Single</option>
-                                <option value="In a relationship">In a relationship</option>
-                                <option value="Engaged">Engaged</option>
-                                <option value="Married">Married</option>
-                                <option value="Divorced">Divorced</option>
-                                <option value="Widowed">Widowed</option>
-                            </select>
-                        </div>
-                        <div class="navigation-buttons">
-                            <button class="btn btn-secondary" onclick="goToStep('nigerian', 2)">Back</button>
-                            <button class="btn" onclick="submitSurvey('nigerian')">Submit</button>
-                        </div>
-                    </div>
-                    <div class="success-message" id="nigerian-success">
-                        <i class="fas fa-check-circle"></i>
-                        <h3>Thank You!</h3>
-                        <p>Your responses have been recorded successfully.</p>
-                    </div>
-                </div>
+            <h1 class="page-title">Survey Available This Week</h1>
+            
+            <div class="cards-container" id="cards-container">
+                <!-- Cards will be dynamically generated here -->
             </div>
         </div>
-    </section>
+    </main>
 
-    <!-- Subscribe Section -->
-    <section class="container">
-        <div class="subscribe-section" id="subscribe-section">
-            <h2>Stay Updated with Our Insights</h2>
-            <p>Subscribe to our newsletter to receive the latest reports and insights directly in your inbox.</p>
-            <form class="subscribe-form" id="subscribe-form">
-                <input type="email" id="subscribe-email" placeholder="Enter your email address" required>
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">
-                    <div class="logo">
-                        <i class="fas fa-chart-line"></i>
-                        <span>InsightReport</span>
-                    </div>
-                    <p>Your trusted source for data-driven insights and reports that matter.</p>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-chart-bar"></i> Insights</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
                 </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                            <li><a href="#"><i class="fas fa-chart-bar"></i> Insights</a></li>
-                            <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h3>Legal</h3>
-                        <ul>
-                            <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
-                            <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
-                            <li><a href="#"><i class="fas fa-cookie"></i> Cookie Policy</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h3>Company</h3>
-                        <ul>
-                            <li><a href="#"><i class="fas fa-info-circle"></i> About Us</a></li>
-                            <li><a href="#"><i class="fas fa-bullhorn"></i> Careers</a></li>
-                            <li><a href="#"><i class="fas fa-newspaper"></i> Blog</a></li>
-                        </ul>
-                    </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-cookie"></i> Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-users"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-briefcase"></i> Careers</a></li>
+                        <li><a href="#"><i class="fas fa-newspaper"></i> Blog</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
+            <div class="copyright">
                 <p>&copy; 2023 InsightReport. All rights reserved.</p>
             </div>
         </div>
@@ -636,129 +409,263 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const analytics = firebase.getAnalytics(app);
-        const db = firebase.firestore();
+        const db = firebase.getFirestore(app);
 
-        // Track user's country
-        let userCountry = '';
-        let hasSubscribed = false;
+        // Survey data structure
+        const surveyData = {
+            general: {
+                title: "General Survey",
+                color: "purple",
+                steps: [
+                    {
+                        title: "Age Information",
+                        questions: [
+                            { id: "age", text: "What is your age?", type: "number" },
+                            { id: "birthYear", text: "What year were you born?", type: "number" }
+                        ]
+                    },
+                    {
+                        title: "Food Preferences",
+                        questions: [
+                            { id: "favoriteFood", text: "What is your favorite food?", type: "text" },
+                            { id: "dietaryRestrictions", text: "Do you have any dietary restrictions?", type: "text" }
+                        ]
+                    }
+                ]
+            },
+            nigeria: {
+                title: "For Nigerians",
+                color: "green",
+                steps: [
+                    {
+                        title: "Age Information",
+                        questions: [
+                            { id: "age", text: "What is your age?", type: "number" },
+                            { id: "birthYear", text: "What year were you born?", type: "number" }
+                        ]
+                    },
+                    {
+                        title: "Love & Relationships",
+                        questions: [
+                            { id: "relationshipStatus", text: "What is your relationship status?", type: "text" },
+                            { id: "loveLanguage", text: "What is your primary love language?", type: "text" }
+                        ]
+                    }
+                ]
+            },
+            // Other countries would be added here
+        };
 
-        // Get user's country based on IP
-        fetch('https://ipapi.co/json/')
-            .then(response => response.json())
-            .then(data => {
-                userCountry = data.country_name;
-                // If user is not from Nigeria, hide the Nigerian survey card
-                if (userCountry !== 'Nigeria') {
-                    document.getElementById('nigerian-card').style.display = 'none';
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching location:', error);
+        // Function to create survey cards
+        function createSurveyCards() {
+            const container = document.getElementById('cards-container');
+            
+            for (const [country, data] of Object.entries(surveyData)) {
+                const card = document.createElement('div');
+                card.className = `card ${country}`;
+                card.innerHTML = `
+                    <div class="card-header">${data.title}</div>
+                    <div class="card-body">
+                        <p>Share your insights and help us understand perspectives from ${country === 'general' ? 'around the world' : country}.</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary start-survey" data-country="${country}">Get Started</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            }
+            
+            // Add event listeners to start buttons
+            document.querySelectorAll('.start-survey').forEach(button => {
+                button.addEventListener('click', function() {
+                    const country = this.getAttribute('data-country');
+                    startSurvey(country);
+                });
             });
-
-        // Survey navigation functions
-        function startSurvey(type) {
-            goToStep(type, 2);
         }
 
-        function goToStep(type, stepNumber) {
-            // Hide all steps for this survey type
-            const steps = document.querySelectorAll(`#${type}-card .survey-step`);
-            steps.forEach(step => {
+        // Function to start a survey
+        function startSurvey(country) {
+            // Hide all cards
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.display = 'none';
+            });
+            
+            // Create survey interface
+            const container = document.getElementById('cards-container');
+            container.innerHTML = `
+                <div class="card ${country} survey-active">
+                    <div class="card-header">${surveyData[country].title}</div>
+                    <div id="survey-steps-container">
+                        <!-- Survey steps will be dynamically added here -->
+                    </div>
+                </div>
+            `;
+            
+            // Initialize survey steps
+            initializeSurveySteps(country);
+        }
+
+        // Function to initialize survey steps
+        function initializeSurveySteps(country) {
+            const container = document.getElementById('survey-steps-container');
+            const steps = surveyData[country].steps;
+            
+            // Create step elements
+            steps.forEach((step, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.className = `survey-step ${index === 0 ? 'active' : ''}`;
+                stepElement.id = `step-${index}`;
+                
+                let questionsHTML = '';
+                step.questions.forEach(question => {
+                    questionsHTML += `
+                        <div class="form-group">
+                            <label for="${question.id}">${question.text}</label>
+                            <input type="${question.type}" class="form-control" id="${question.id}" required>
+                        </div>
+                    `;
+                });
+                
+                stepElement.innerHTML = `
+                    <div class="card-body">
+                        <h3 class="step-title">${step.title}</h3>
+                        ${questionsHTML}
+                        <div class="step-actions">
+                            ${index > 0 ? `<button class="btn btn-secondary prev-step" data-step="${index}">Previous</button>` : '<div></div>'}
+                            ${index < steps.length - 1 ? `<button class="btn btn-primary next-step" data-step="${index}">Next</button>` : `<button class="btn btn-success submit-survey" data-country="${country}">Submit</button>`}
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(stepElement);
+            });
+            
+            // Add event listeners for navigation
+            document.querySelectorAll('.next-step').forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentStep = parseInt(this.getAttribute('data-step'));
+                    navigateToStep(currentStep + 1);
+                });
+            });
+            
+            document.querySelectorAll('.prev-step').forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentStep = parseInt(this.getAttribute('data-step'));
+                    navigateToStep(currentStep - 1);
+                });
+            });
+            
+            // Add event listener for submit
+            document.querySelector('.submit-survey').addEventListener('click', function() {
+                const country = this.getAttribute('data-country');
+                submitSurvey(country);
+            });
+        }
+
+        // Function to navigate between survey steps
+        function navigateToStep(stepIndex) {
+            // Hide all steps
+            document.querySelectorAll('.survey-step').forEach(step => {
                 step.classList.remove('active');
             });
             
-            // Show the requested step
-            document.getElementById(`${type}-step${stepNumber}`).classList.add('active');
+            // Show the target step
+            document.getElementById(`step-${stepIndex}`).classList.add('active');
         }
 
-        function submitSurvey(type) {
-            // Validate all fields in current step
-            const currentStep = document.querySelector(`#${type}-card .survey-step.active`);
-            const inputs = currentStep.querySelectorAll('input, select, textarea');
+        // Function to submit survey
+        function submitSurvey(country) {
+            // Collect all answers
+            const answers = {};
             let isValid = true;
             
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    input.style.borderColor = 'red';
-                } else {
-                    input.style.borderColor = '#ddd';
-                }
+            document.querySelectorAll('.survey-step').forEach(step => {
+                const inputs = step.querySelectorAll('input');
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.style.borderColor = 'red';
+                    } else {
+                        answers[input.id] = input.value;
+                    }
+                });
             });
             
             if (!isValid) {
-                alert('Please fill in all required fields before submitting.');
+                alert('Please answer all questions before submitting.');
                 return;
             }
             
-            // Collect survey data
-            let surveyData = {
-                type: type,
+            // In a real implementation, we would get the user's actual country
+            // For this demo, we're using the survey country
+            const userCountry = country === 'general' ? 'Unknown' : country;
+            
+            // Store in Firebase
+            firebase.firestore().collection('surveyResponses').add({
                 country: userCountry,
-                timestamp: new Date()
-            };
-            
-            if (type === 'general') {
-                surveyData.age = document.getElementById('general-age').value;
-                surveyData.generation = document.getElementById('general-generation').value;
-                surveyData.cuisine = document.getElementById('general-cuisine').value;
-                surveyData.meal = document.getElementById('general-meal').value;
-            } else if (type === 'nigerian') {
-                surveyData.age = document.getElementById('nigerian-age').value;
-                surveyData.state = document.getElementById('nigerian-state').value;
-                surveyData.loveMeaning = document.getElementById('nigerian-love').value;
-                surveyData.relationshipStatus = document.getElementById('nigerian-relationship').value;
-            }
-            
-            // Save to Firebase
-            db.collection('surveys').add(surveyData)
-                .then(() => {
-                    // Show success message
-                    document.querySelector(`#${type}-card .survey-step.active`).classList.remove('active');
-                    document.getElementById(`${type}-success`).classList.add('active');
-                    
-                    // Show subscribe section if not already subscribed
-                    if (!hasSubscribed) {
-                        setTimeout(() => {
-                            document.getElementById('subscribe-section').classList.add('active');
-                        }, 1500);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error saving survey:', error);
-                    alert('There was an error submitting your survey. Please try again.');
-                });
-        }
-
-        // Handle subscription
-        document.getElementById('subscribe-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('subscribe-email').value;
-            
-            if (!email) {
-                alert('Please enter your email address.');
-                return;
-            }
-            
-            // Save to Firebase
-            db.collection('subscribers').add({
-                email: email,
-                country: userCountry,
-                timestamp: new Date()
+                answers: answers,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
             .then(() => {
-                alert('Thank you for subscribing!');
-                hasSubscribed = true;
-                document.getElementById('subscribe-section').style.display = 'none';
-                document.getElementById('subscribe-form').reset();
+                // Show subscribe form
+                showSubscribeForm();
             })
-            .catch(error => {
-                console.error('Error saving subscription:', error);
-                alert('There was an error with your subscription. Please try again.');
+            .catch((error) => {
+                console.error('Error storing survey response: ', error);
+                alert('There was an error submitting your survey. Please try again.');
             });
+        }
+
+        // Function to show subscribe form
+        function showSubscribeForm() {
+            const container = document.getElementById('cards-container');
+            container.innerHTML = `
+                <div class="subscribe-container">
+                    <h2 class="subscribe-title">Thank You!</h2>
+                    <p class="subscribe-text">Your insights are valuable to us. Subscribe to receive updates and insights based on survey results.</p>
+                    <form class="subscribe-form" id="subscribe-form">
+                        <input type="email" class="form-control" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-success">Subscribe</button>
+                    </form>
+                </div>
+            `;
+            
+            // Add event listener for subscribe form
+            document.getElementById('subscribe-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('input').value;
+                
+                // Store email in Firebase
+                firebase.firestore().collection('subscribers').add({
+                    email: email,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                })
+                .then(() => {
+                    container.innerHTML = `
+                        <div class="subscribe-container">
+                            <h2 class="subscribe-title">Thank You for Subscribing!</h2>
+                            <p class="subscribe-text">You'll receive updates and insights in your inbox soon.</p>
+                            <a href="#" class="btn btn-primary" id="back-to-surveys">Back to Surveys</a>
+                        </div>
+                    `;
+                    
+                    document.getElementById('back-to-surveys').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        location.reload();
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error storing email: ', error);
+                    alert('There was an error subscribing. Please try again.');
+                });
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            createSurveyCards();
         });
     </script>
 </body>
-  </html>
+</html>
