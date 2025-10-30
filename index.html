@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey Available This Week | InsightReport</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js"></script>
     <style>
         :root {
             --primary: #6a1b9a;
@@ -16,7 +13,7 @@
             --light: #f5f5f5;
             --dark: #333;
             --white: #ffffff;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -27,7 +24,7 @@
         }
 
         body {
-            background-color: var(--white);
+            background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
         }
@@ -81,64 +78,70 @@
             text-decoration: none;
             color: var(--dark);
             font-weight: 500;
-            transition: color 0.3s;
             display: flex;
             align-items: center;
             gap: 5px;
+            transition: color 0.3s;
         }
 
         nav a:hover {
             color: var(--primary);
         }
 
-        .nav-icon {
+        nav i {
             font-size: 18px;
         }
 
         /* Hero Section */
         .hero {
+            background: linear-gradient(135deg, var(--primary), #8e24aa);
+            color: var(--white);
+            padding: 60px 0;
             text-align: center;
-            padding: 60px 0 40px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 0 0 30px 30px;
             margin-bottom: 40px;
         }
 
         .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 15px;
-            color: var(--primary);
         }
 
         .hero p {
             font-size: 1.2rem;
             max-width: 700px;
-            margin: 0 auto 30px;
+            margin: 0 auto;
+        }
+
+        /* Survey Cards */
+        .survey-section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
             color: var(--dark);
         }
 
-        /* Cards Grid */
-        .cards-grid {
+        .cards-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
             margin-bottom: 60px;
         }
 
         .card {
-            border-radius: 15px;
+            background: var(--white);
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: transform 0.3s, box-shadow 0.3s;
-            background-color: var(--white);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         .card-header {
@@ -147,129 +150,75 @@
             text-align: center;
         }
 
-        .card-header h2 {
-            font-size: 1.5rem;
+        .card-header.purple {
+            background-color: var(--primary);
+        }
+
+        .card-header.green {
+            background-color: var(--secondary);
+        }
+
+        .card-header h3 {
+            font-size: 1.8rem;
             margin-bottom: 10px;
         }
 
         .card-body {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            padding: 25px;
         }
 
-        .card-body p {
+        .card-description {
             margin-bottom: 20px;
-            color: #555;
+            color: #666;
         }
 
         .btn {
             display: inline-block;
             padding: 12px 25px;
-            background-color: var(--white);
-            color: var(--dark);
+            background-color: var(--primary);
+            color: var(--white);
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
+            transition: background-color 0.3s;
             text-decoration: none;
+            text-align: center;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #4a148c;
         }
 
-        /* Card Colors */
-        .purple .card-header {
-            background-color: var(--primary);
-        }
-        .purple .btn {
-            background-color: var(--primary);
-            color: var(--white);
-        }
-
-        .green .card-header {
+        .btn-green {
             background-color: var(--secondary);
         }
-        .green .btn {
-            background-color: var(--secondary);
-            color: var(--white);
+
+        .btn-green:hover {
+            background-color: #388e3c;
         }
 
-        .orange .card-header {
+        .btn-accent {
             background-color: var(--accent);
         }
-        .orange .btn {
-            background-color: var(--accent);
-            color: var(--white);
-        }
 
-        .blue .card-header {
-            background-color: #2196f3;
-        }
-        .blue .btn {
-            background-color: #2196f3;
-            color: var(--white);
-        }
-
-        .red .card-header {
-            background-color: #f44336;
-        }
-        .red .btn {
-            background-color: #f44336;
-            color: var(--white);
-        }
-
-        .teal .card-header {
-            background-color: #009688;
-        }
-        .teal .btn {
-            background-color: #009688;
-            color: var(--white);
-        }
-
-        .indigo .card-header {
-            background-color: #3f51b5;
-        }
-        .indigo .btn {
-            background-color: #3f51b5;
-            color: var(--white);
-        }
-
-        .pink .card-header {
-            background-color: #e91e63;
-        }
-        .pink .btn {
-            background-color: #e91e63;
-            color: var(--white);
-        }
-
-        .cyan .card-header {
-            background-color: #00bcd4;
-        }
-        .cyan .btn {
-            background-color: #00bcd4;
-            color: var(--white);
+        .btn-accent:hover {
+            background-color: #f57c00;
         }
 
         /* Survey Steps */
         .survey-step {
             display: none;
-            padding: 20px;
         }
 
         .survey-step.active {
             display: block;
         }
 
-        .survey-step h3 {
+        .step-title {
             margin-bottom: 20px;
-            color: var(--dark);
+            color: var(--primary);
         }
 
         .form-group {
@@ -282,107 +231,105 @@
             font-weight: 500;
         }
 
-        .form-group input, .form-group select, .form-group textarea {
+        .form-control {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
         }
 
-        .survey-navigation {
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .step-actions {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         /* Subscribe Section */
-        .subscribe-container {
-            display: none;
-            padding: 40px 20px;
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
+        .subscribe-section {
+            background: linear-gradient(135deg, #ff9800, #ff5722);
             color: var(--white);
-            margin-bottom: 40px;
+            padding: 60px 0;
+            text-align: center;
+            border-radius: 12px;
+            margin: 40px 0;
+            display: none;
         }
 
-        .subscribe-container.active {
+        .subscribe-section.active {
             display: block;
         }
 
-        .subscribe-container h2 {
-            font-size: 2rem;
+        .subscribe-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .subscribe-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .subscribe-title {
+            font-size: 2.2rem;
             margin-bottom: 15px;
         }
 
-        .subscribe-container p {
+        .subscribe-description {
             font-size: 1.1rem;
-            margin-bottom: 25px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 30px;
         }
 
         .subscribe-form {
-            max-width: 500px;
-            margin: 0 auto;
             display: flex;
             gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        .subscribe-form input {
-            flex-grow: 1;
+        .subscribe-input {
+            flex: 1;
             padding: 12px 15px;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        .subscribe-form button {
-            padding: 12px 25px;
-            background-color: var(--accent);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .subscribe-form button:hover {
-            background-color: #e68900;
+            border-radius: 6px;
+            font-size: 1rem;
         }
 
         /* Footer */
         footer {
             background-color: var(--dark);
             color: var(--white);
-            padding: 40px 0 20px;
+            padding: 50px 0 20px;
         }
 
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
-        .footer-section h3 {
+        .footer-column h4 {
             font-size: 1.2rem;
             margin-bottom: 20px;
             color: var(--accent);
         }
 
-        .footer-section ul {
+        .footer-links {
             list-style: none;
         }
 
-        .footer-section ul li {
+        .footer-links li {
             margin-bottom: 10px;
         }
 
-        .footer-section a {
+        .footer-links a {
             color: #ddd;
             text-decoration: none;
             transition: color 0.3s;
@@ -391,7 +338,7 @@
             gap: 8px;
         }
 
-        .footer-section a:hover {
+        .footer-links a:hover {
             color: var(--accent);
         }
 
@@ -409,20 +356,16 @@
                 flex-direction: column;
                 gap: 15px;
             }
-            
+
             nav ul {
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            
+
             .hero h1 {
                 font-size: 2rem;
             }
-            
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-            
+
             .subscribe-form {
                 flex-direction: column;
             }
@@ -440,11 +383,11 @@
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="#"><i class="fas fa-home nav-icon"></i> Home</a></li>
-                        <li><a href="#"><i class="fas fa-chart-bar nav-icon"></i> Insights</a></li>
-                        <li><a href="#"><i class="fas fa-envelope nav-icon"></i> Contact</a></li>
-                        <li><a href="#"><i class="fas fa-file-contract nav-icon"></i> Terms</a></li>
-                        <li><a href="#"><i class="fas fa-users nav-icon"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-chart-bar"></i> Insights</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms</a></li>
+                        <li><a href="#"><i class="fas fa-users"></i> About Us</a></li>
                     </ul>
                 </nav>
             </div>
@@ -455,14 +398,118 @@
     <section class="hero">
         <div class="container">
             <h1>Survey Available This Week</h1>
-            <p>Share your opinions and help shape insights on various topics. Select a survey that matches your interests or location.</p>
+            <p>Help us gather valuable insights by participating in our surveys. Your responses help shape better products and services.</p>
         </div>
     </section>
 
-    <!-- Cards Grid -->
-    <section class="container">
-        <div class="cards-grid" id="cardsContainer">
-            <!-- Cards will be dynamically generated here -->
+    <!-- Survey Section -->
+    <section class="survey-section">
+        <div class="container">
+            <h2 class="section-title">Available Surveys</h2>
+            <div class="cards-container">
+                <!-- General Survey Card -->
+                <div class="card" id="general-card">
+                    <div class="card-header purple">
+                        <h3>General Survey</h3>
+                        <p>For users worldwide</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="survey-step active" id="general-step-1">
+                            <p class="card-description">This survey helps us understand general preferences and trends across different demographics.</p>
+                            <button class="btn" onclick="startSurvey('general')">Get Started</button>
+                        </div>
+                        <div class="survey-step" id="general-step-2">
+                            <h4 class="step-title">About You</h4>
+                            <div class="form-group">
+                                <label for="general-age">What is your age?</label>
+                                <input type="number" id="general-age" class="form-control" placeholder="Enter your age">
+                            </div>
+                            <div class="form-group">
+                                <label for="general-generation">Which generation do you identify with?</label>
+                                <input type="text" id="general-generation" class="form-control" placeholder="e.g., Millennial, Gen Z">
+                            </div>
+                            <div class="step-actions">
+                                <button class="btn" onclick="goToStep('general', 1)">Back</button>
+                                <button class="btn" onclick="goToStep('general', 3)">Next</button>
+                            </div>
+                        </div>
+                        <div class="survey-step" id="general-step-3">
+                            <h4 class="step-title">Food Preferences</h4>
+                            <div class="form-group">
+                                <label for="general-favorite-food">What is your favorite type of cuisine?</label>
+                                <input type="text" id="general-favorite-food" class="form-control" placeholder="e.g., Italian, Asian, etc.">
+                            </div>
+                            <div class="form-group">
+                                <label for="general-eating-habits">How often do you eat out per week?</label>
+                                <input type="text" id="general-eating-habits" class="form-control" placeholder="e.g., 2-3 times">
+                            </div>
+                            <div class="step-actions">
+                                <button class="btn" onclick="goToStep('general', 2)">Back</button>
+                                <button class="btn" onclick="submitSurvey('general')">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nigerian Survey Card -->
+                <div class="card" id="nigerian-card">
+                    <div class="card-header green">
+                        <h3>For Nigerians</h3>
+                        <p>Exclusive for Nigerian residents</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="survey-step active" id="nigerian-step-1">
+                            <p class="card-description">This survey focuses on specific preferences and trends within Nigeria.</p>
+                            <button class="btn btn-green" onclick="startSurvey('nigerian')">Get Started</button>
+                        </div>
+                        <div class="survey-step" id="nigerian-step-2">
+                            <h4 class="step-title">About You</h4>
+                            <div class="form-group">
+                                <label for="nigerian-age">What is your age?</label>
+                                <input type="number" id="nigerian-age" class="form-control" placeholder="Enter your age">
+                            </div>
+                            <div class="form-group">
+                                <label for="nigerian-generation">Which generation do you identify with?</label>
+                                <input type="text" id="nigerian-generation" class="form-control" placeholder="e.g., Millennial, Gen Z">
+                            </div>
+                            <div class="step-actions">
+                                <button class="btn btn-green" onclick="goToStep('nigerian', 1)">Back</button>
+                                <button class="btn btn-green" onclick="goToStep('nigerian', 3)">Next</button>
+                            </div>
+                        </div>
+                        <div class="survey-step" id="nigerian-step-3">
+                            <h4 class="step-title">Relationship Preferences</h4>
+                            <div class="form-group">
+                                <label for="nigerian-love-language">What is your primary love language?</label>
+                                <input type="text" id="nigerian-love-language" class="form-control" placeholder="e.g., Words of Affirmation, Acts of Service">
+                            </div>
+                            <div class="form-group">
+                                <label for="nigerian-relationship">What do you value most in a relationship?</label>
+                                <input type="text" id="nigerian-relationship" class="form-control" placeholder="e.g., Trust, Communication">
+                            </div>
+                            <div class="step-actions">
+                                <button class="btn btn-green" onclick="goToStep('nigerian', 2)">Back</button>
+                                <button class="btn btn-green" onclick="submitSurvey('nigerian')">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscribe Section -->
+    <section class="subscribe-section" id="subscribe-section">
+        <div class="container">
+            <div class="subscribe-content">
+                <i class="fas fa-envelope-open-text subscribe-icon"></i>
+                <h2 class="subscribe-title">Stay Updated!</h2>
+                <p class="subscribe-description">Subscribe to our newsletter to receive the latest insights and survey results directly in your inbox.</p>
+                <form class="subscribe-form" id="subscribe-form">
+                    <input type="email" class="subscribe-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn btn-accent">Subscribe</button>
+                </form>
+            </div>
         </div>
     </section>
 
@@ -470,36 +517,32 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
+                <div class="footer-column">
+                    <h4>InsightReport</h4>
+                    <p>Your trusted source for data-driven insights and analytics.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
                         <li><a href="#"><i class="fas fa-chart-bar"></i> Insights</a></li>
                         <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h3>Legal</h3>
-                    <ul>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
                         <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
                         <li><a href="#"><i class="fas fa-cookie"></i> Cookie Policy</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h3>Company</h3>
-                    <ul>
+                <div class="footer-column">
+                    <h4>Connect</h4>
+                    <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-users"></i> About Us</a></li>
-                        <li><a href="#"><i class="fas fa-briefcase"></i> Careers</a></li>
-                        <li><a href="#"><i class="fas fa-newspaper"></i> Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Connect</h3>
-                    <ul>
-                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
-                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
+                        <li><a href="#"><i class="fas fa-handshake"></i> Partnerships</a></li>
                     </ul>
                 </div>
             </div>
@@ -509,8 +552,14 @@
         </div>
     </footer>
 
-    <script>
-        // Firebase configuration
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCXqNe_BDdh9WIJ9lyrFPeQ_-733qbXW4s",
             authDomain: "realinsightreport.firebaseapp.com",
@@ -522,476 +571,144 @@
         };
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const analytics = firebase.analytics();
-        const db = firebase.firestore();
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
 
-        // Survey data
-        const surveys = [
-            {
-                id: 'general',
-                title: 'General',
-                color: 'purple',
-                questions: [
-                    {
-                        step: 1,
-                        title: 'About Age',
-                        questions: [
-                            { id: 'q1', text: 'What is your age?', type: 'number' },
-                            { id: 'q2', text: 'How do you feel about your current age?', type: 'text' }
-                        ]
-                    },
-                    {
-                        step: 2,
-                        title: 'About Food',
-                        questions: [
-                            { id: 'q3', text: 'What is your favorite type of cuisine?', type: 'text' },
-                            { id: 'q4', text: 'How often do you try new foods?', type: 'text' }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'nigeria',
-                title: 'For Nigerians',
-                color: 'green',
-                questions: [
-                    {
-                        step: 1,
-                        title: 'About Age',
-                        questions: [
-                            { id: 'q1', text: 'What is your age?', type: 'number' },
-                            { id: 'q2', text: 'At what age did you start working?', type: 'number' }
-                        ]
-                    },
-                    {
-                        step: 2,
-                        title: 'About Love',
-                        questions: [
-                            { id: 'q3', text: 'What qualities do you value in a partner?', type: 'text' },
-                            { id: 'q4', text: 'How important is family approval in relationships?', type: 'text' }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'india',
-                title: 'For Indians',
-                color: 'orange',
-                questions: [
-                    {
-                        step: 1,
-                        title: 'About Age',
-                        questions: [
-                            { id: 'q1', text: 'What is your age?', type: 'number' },
-                            { id: 'q2', text: 'At what age do you think one should get married?', type: 'number' }
-                        ]
-                    },
-                    {
-                        step: 2,
-                        title: 'About Culture',
-                        questions: [
-                            { id: 'q3', text: 'Which festival do you enjoy the most?', type: 'text' },
-                            { id: 'q4', text: 'How has modernization affected traditional values?', type: 'text' }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'canada',
-                title: 'For Canadians',
-                color: 'red',
-                questions: [
-                    {
-                        step: 1,
-                        title: 'About Age',
-                        questions: [
-                            { id: 'q1', text: 'What is your age?', type: 'number' },
-                            { id: 'q2', text: 'At what age did you start living independently?', type: 'number' }
-                        ]
-                    },
-                    {
-                        step: 2,
-                        title: 'About Lifestyle',
-                        questions: [
-                            { id: 'q3', text: 'What outdoor activities do you enjoy most?', type: 'text' },
-                            { id: 'q4', text: 'How do you cope with winter months?', type: 'text' }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'usa',
-                title: 'For Americans',
-                color: 'blue',
-                questions: [
-                    {
-                        step: 1,
-                        title: 'About Age',
-                        questions: [
-                            { id: 'q1', text: 'What is your age?', type: 'number' },
-                            { id: 'q2', text: 'At what age did you start driving?', type: 'number' }
-                        ]
-                    },
-                    {
-                        step: 2,
-                        title: 'About Career',
-                        questions: [
-                            { id: 'q3', text: 'What is most important to you in a career?', type: 'text' },
-                            { id: 'q4', text: 'How has the gig economy affected your work life?', type: 'text' }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'germany',
-                title: 'For Germans',
-                color: 'teal',
-                questions: [
-                    {
-                        step: 1,
-                        title: 'About Age',
-                        questions: [
-                            { id: 'q1', text: 'What is your age?', type: 'number' },
-                            { id: 'q2', text: 'At what age did you complete your education?', type: 'number' }
-                        ]
-                    },
-                    {
-                        step: 2,
-                        title: 'About Work',
-                        questions: [
-                            { id: 'q3', text: 'How important is work-life balance to you?', type: 'text' },
-                            { id: 'q4', text: 'What do you value most in a workplace?', type: 'text' }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'pakistan',
-                title: 'For Pakistanis',
-                color: 'indigo',
-                questions: [
-                    {
-                        step: 1,
-                        title: 'About Age',
-                        questions: [
-                            { id: 'q1', text: 'What is your age?', type: 'number' },
-                            { id: 'q2', text: 'At what age do you think one should start a family?', type: 'number' }
-                        ]
-                    },
-                    {
-                        step: 2,
-                        title: 'About Traditions',
-                        questions: [
-                            { id: 'q3', text: 'Which traditional practice do you value most?', type: 'text' },
-                            { id: 'q4', text: 'How do you balance modern and traditional values?', type: 'text' }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'ghana',
-                title: 'For Ghanaians',
-                color: 'pink',
-                questions: [
-                    {
-                        step: 1,
-                        title: 'About Age',
-                        questions: [
-                            { id: 'q1', text: 'What is your age?', type: 'number' },
-                            { id: 'q2', text: 'At what age did you become financially independent?', type: 'number' }
-                        ]
-                    },
-                    {
-                        step: 2,
-                        title: 'About Community',
-                        questions: [
-                            { id: 'q3', text: 'How important is community in your life?', type: 'text' },
-                            { id: 'q4', text: 'What role do elders play in decision making?', type: 'text' }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 'south-africa',
-                title: 'For South Africans',
-                color: 'cyan',
-                questions: [
-                    {
-                        step: 1,
-                        title: 'About Age',
-                        questions: [
-                            { id: 'q1', text: 'What is your age?', type: 'number' },
-                            { id: 'q2', text: 'At what age did you start working?', type: 'number' }
-                        ]
-                    },
-                    {
-                        step: 2,
-                        title: 'About Diversity',
-                        questions: [
-                            { id: 'q3', text: 'How has diversity enriched your life?', type: 'text' },
-                            { id: 'q4', text: 'What challenges does a multicultural society face?', type: 'text' }
-                        ]
-                    }
-                ]
+        // Make Firebase functions available globally
+        window.firebaseDatabase = database;
+        window.firebaseRef = ref;
+        window.firebaseSet = set;
+    </script>
+
+    <!-- App Script -->
+    <script>
+        // Country detection (simplified for demo)
+        let userCountry = "Unknown";
+        
+        // In a real implementation, you would use a geolocation API
+        // For demo purposes, we'll randomly assign a country
+        const countries = ["Nigeria", "USA", "UK", "Canada", "Germany", "France", "Australia"];
+        userCountry = countries[Math.floor(Math.random() * countries.length)];
+        
+        // Filter cards based on country
+        document.addEventListener('DOMContentLoaded', function() {
+            // For demo, show Nigerian card only to Nigerian users
+            if (userCountry !== "Nigeria") {
+                document.getElementById('nigerian-card').style.display = 'none';
             }
-        ];
+            
+            // Update the card descriptions to show the country
+            document.querySelectorAll('.card-description').forEach(desc => {
+                desc.innerHTML += ` <br><small><em>Detected country: ${userCountry}</em></small>`;
+            });
+        });
 
-        // Function to create survey cards
-        function createSurveyCards() {
-            const cardsContainer = document.getElementById('cardsContainer');
-            
-            surveys.forEach(survey => {
-                const card = document.createElement('div');
-                card.className = `card ${survey.color}`;
-                card.innerHTML = `
-                    <div class="card-header">
-                        <h2>${survey.title}</h2>
-                    </div>
-                    <div class="card-body">
-                        <p>Share your perspective on topics relevant to ${survey.title.toLowerCase()} participants.</p>
-                        <button class="btn get-started" data-survey="${survey.id}">Get Started</button>
-                    </div>
-                `;
-                cardsContainer.appendChild(card);
-            });
-            
-            // Add event listeners to Get Started buttons
-            document.querySelectorAll('.get-started').forEach(button => {
-                button.addEventListener('click', function() {
-                    const surveyId = this.getAttribute('data-survey');
-                    startSurvey(surveyId);
-                });
-            });
+        // Survey navigation functions
+        function startSurvey(type) {
+            goToStep(type, 2);
         }
 
-        // Function to start a survey
-        function startSurvey(surveyId) {
-            const survey = surveys.find(s => s.id === surveyId);
-            if (!survey) return;
+        function goToStep(type, stepNumber) {
+            // Hide all steps for this survey type
+            const steps = document.querySelectorAll(`#${type}-card .survey-step`);
+            steps.forEach(step => {
+                step.classList.remove('active');
+            });
             
-            // Create modal for survey
-            const modal = document.createElement('div');
-            modal.className = 'survey-modal';
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0,0,0,0.7);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
-            `;
+            // Show the requested step
+            document.getElementById(`${type}-step-${stepNumber}`).classList.add('active');
+        }
+
+        function submitSurvey(type) {
+            // Validate all fields
+            let isValid = true;
+            const inputs = document.querySelectorAll(`#${type}-card .form-control`);
             
-            let currentStep = 0;
-            
-            // Function to render current step
-            function renderStep() {
-                const step = survey.questions[currentStep];
-                let stepHTML = `
-                    <div class="survey-step ${currentStep === 0 ? 'active' : ''}" style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%;">
-                        <h3>${step.title}</h3>
-                `;
-                
-                step.questions.forEach(question => {
-                    stepHTML += `
-                        <div class="form-group">
-                            <label for="${question.id}">${question.text}</label>
-                            <input type="${question.type}" id="${question.id}" required>
-                        </div>
-                    `;
-                });
-                
-                stepHTML += `
-                    <div class="survey-navigation">
-                        ${currentStep > 0 ? '<button class="btn prev-btn" style="background: #6c757d; color: white;">Previous</button>' : '<div></div>'}
-                        ${currentStep < survey.questions.length - 1 ? 
-                            '<button class="btn next-btn" style="background: ' + getColor(survey.color) + '; color: white;">Next</button>' : 
-                            '<button class="btn submit-btn" style="background: ' + getColor(survey.color) + '; color: white;">Submit</button>'
-                        }
-                    </div>
-                </div>
-                `;
-                
-                modal.innerHTML = stepHTML;
-                
-                // Add event listeners
-                if (currentStep > 0) {
-                    modal.querySelector('.prev-btn').addEventListener('click', () => {
-                        currentStep--;
-                        renderStep();
-                    });
-                }
-                
-                if (currentStep < survey.questions.length - 1) {
-                    modal.querySelector('.next-btn').addEventListener('click', () => {
-                        // Validate inputs
-                        const inputs = modal.querySelectorAll('input');
-                        let allValid = true;
-                        
-                        inputs.forEach(input => {
-                            if (!input.value.trim()) {
-                                allValid = false;
-                                input.style.borderColor = 'red';
-                            } else {
-                                input.style.borderColor = '';
-                            }
-                        });
-                        
-                        if (allValid) {
-                            currentStep++;
-                            renderStep();
-                        } else {
-                            alert('Please answer all questions before proceeding.');
-                        }
-                    });
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.style.borderColor = 'red';
                 } else {
-                    modal.querySelector('.submit-btn').addEventListener('click', () => {
-                        // Validate inputs
-                        const inputs = modal.querySelectorAll('input');
-                        let allValid = true;
-                        
-                        inputs.forEach(input => {
-                            if (!input.value.trim()) {
-                                allValid = false;
-                                input.style.borderColor = 'red';
-                            } else {
-                                input.style.borderColor = '';
-                            }
-                        });
-                        
-                        if (allValid) {
-                            submitSurvey(survey);
-                        } else {
-                            alert('Please answer all questions before submitting.');
-                        }
-                    });
-                }
-            }
-            
-            // Initial render
-            renderStep();
-            
-            // Add to document
-            document.body.appendChild(modal);
-            
-            // Close modal when clicking outside
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    document.body.removeChild(modal);
+                    input.style.borderColor = '#ddd';
                 }
             });
-        }
-
-        // Function to get color based on survey color class
-        function getColor(colorClass) {
-            const colorMap = {
-                'purple': '#6a1b9a',
-                'green': '#4caf50',
-                'orange': '#ff9800',
-                'blue': '#2196f3',
-                'red': '#f44336',
-                'teal': '#009688',
-                'indigo': '#3f51b5',
-                'pink': '#e91e63',
-                'cyan': '#00bcd4'
-            };
             
-            return colorMap[colorClass] || '#6a1b9a';
-        }
-
-        // Function to submit survey data
-        function submitSurvey(survey) {
-            // In a real implementation, you would collect the user's country
-            // For demo purposes, we'll use the survey title as the country
-            const country = survey.title.replace('For ', '');
+            if (!isValid) {
+                alert('Please fill in all fields before submitting.');
+                return;
+            }
             
-            // Collect answers (in a real implementation, you would get these from the form)
-            const answers = {
-                age: "Sample answer for age question",
-                feeling: "Sample answer for feeling question"
-            };
+            // Gather survey data
+            const surveyData = {};
+            inputs.forEach(input => {
+                surveyData[input.id] = input.value;
+            });
             
-            // For demo, we'll use a placeholder email
-            const email = "user@example.com";
+            // In a real implementation, you would collect the user's email
+            const userEmail = "user@example.com"; // This would come from authentication
             
-            // Save to Firestore
-            db.collection("survey_responses").add({
-                country: country,
-                email: email,
-                answers: answers,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            })
-            .then((docRef) => {
-                console.log("Document written with ID: ", docRef.id);
+            // Save to Firebase
+            const db = window.firebaseDatabase;
+            const surveyRef = window.firebaseRef(db, 'surveys/' + type + '/' + Date.now());
+            
+            window.firebaseSet(surveyRef, {
+                country: userCountry,
+                email: userEmail,
+                responses: surveyData,
+                timestamp: new Date().toISOString()
+            }).then(() => {
+                // Show success message and move to subscribe section
+                alert('Thank you for completing the survey!');
                 
-                // Remove the modal
-                document.querySelector('.survey-modal').remove();
+                // Reset the survey card
+                goToStep(type, 1);
+                inputs.forEach(input => {
+                    input.value = '';
+                });
                 
                 // Show subscribe section
-                showSubscribeSection();
-            })
-            .catch((error) => {
-                console.error("Error adding document: ", error);
-                alert("There was an error submitting your survey. Please try again.");
+                document.getElementById('subscribe-section').classList.add('active');
+            }).catch((error) => {
+                console.error('Error saving survey data:', error);
+                alert('There was an error submitting your survey. Please try again.');
             });
         }
 
-        // Function to show subscribe section
-        function showSubscribeSection() {
-            // Create subscribe section if it doesn't exist
-            let subscribeSection = document.querySelector('.subscribe-container');
+        // Subscribe form handler
+        document.getElementById('subscribe-form').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            if (!subscribeSection) {
-                subscribeSection = document.createElement('div');
-                subscribeSection.className = 'subscribe-container';
-                subscribeSection.innerHTML = `
-                    <h2>Stay Updated with Our Insights</h2>
-                    <p>Subscribe to our newsletter to receive the latest reports and insights directly in your inbox.</p>
-                    <form class="subscribe-form">
-                        <input type="email" placeholder="Enter your email" required>
-                        <button type="submit">Subscribe</button>
-                    </form>
-                `;
-                
-                // Insert after cards grid
-                const cardsGrid = document.querySelector('.cards-grid');
-                cardsGrid.parentNode.insertBefore(subscribeSection, cardsGrid.nextSibling);
-                
-                // Add event listener to form
-                subscribeSection.querySelector('.subscribe-form').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const email = this.querySelector('input').value;
-                    
-                    // Save to Firestore
-                    db.collection("subscribers").add({
-                        email: email,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    })
-                    .then((docRef) => {
-                        console.log("Subscriber added with ID: ", docRef.id);
-                        this.innerHTML = '<p style="font-size: 1.2rem;">Thank you for subscribing! You will receive our latest insights soon.</p>';
-                    })
-                    .catch((error) => {
-                        console.error("Error adding subscriber: ", error);
-                        alert("There was an error with your subscription. Please try again.");
-                    });
-                });
+            const email = this.querySelector('input[type="email"]').value;
+            
+            if (!email) {
+                alert('Please enter your email address.');
+                return;
             }
             
-            // Show the section
-            subscribeSection.classList.add('active');
+            // Save to Firebase
+            const db = window.firebaseDatabase;
+            const subscribeRef = window.firebaseRef(db, 'subscribers/' + Date.now());
             
-            // Scroll to the section
-            subscribeSection.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            createSurveyCards();
+            window.firebaseSet(subscribeRef, {
+                email: email,
+                country: userCountry,
+                timestamp: new Date().toISOString()
+            }).then(() => {
+                // Show success message
+                alert('Thank you for subscribing!');
+                
+                // Clear the form
+                this.reset();
+                
+                // Hide the subscribe section after a delay
+                setTimeout(() => {
+                    document.getElementById('subscribe-section').classList.remove('active');
+                }, 3000);
+            }).catch((error) => {
+                console.error('Error saving subscriber:', error);
+                alert('There was an error with your subscription. Please try again.');
+            });
         });
     </script>
 </body>
