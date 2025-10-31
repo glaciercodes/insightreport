@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | InsightReport</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --primary-light: #8a2be2;
+            --secondary: #2575fc;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --text: #444444;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Modal Menu */
+        .modal-menu-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text);
+    cursor: pointer;
+    transition: color 0.3s;
+    position: absolute;
+    right: 20px; /* Adjust based on your container padding */
+    top: 50%;
+    transform: translateY(-50%);
+        }
+        .modal-menu-btn:hover {
+            background: var(--light-gray);
+        }
+
+
+        .modal-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .modal-nav {
+            list-style: none;
+        }
+
+        .modal-nav li {
+            margin-bottom: 15px;
+        }
+
+        .modal-nav a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .modal-nav a:hover {
+            background-color: var(--light-gray);
+            color: var(--primary);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--dark-gray);
+        }
+
+        /* Contact Content */
+        .contact-content {
+            padding: 60px 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-info h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .contact-info p {
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+
+        .contact-methods {
+            margin-top: 30px;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-method i {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 20px;
+        }
+
+        .contact-method-text h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .contact-method-text a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-method-text a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-form-container {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-form-container h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.3);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        /* Persuasive Section */
+        .persuasive-section {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .persuasive-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .persuasive-section p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+
+        .persuasive-content {
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .persuasive-content h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .persuasive-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .persuasive-content li {
+            margin-bottom: 10px;
+        }
+
+        .email-link {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: transform 0.3s;
+        }
+
+        .email-link:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-menu {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 60px 0 40px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .contact-info, .contact-form-container {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="logo-text">InsightReport</div>
+                </div>
+                <button class="modal-menu-btn" id="modalMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal Menu -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal-menu" id="modalMenu">
+        <div class="modal-menu-header">
+            <h3>Menu</h3>
+            <button class="close-modal" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="modal-nav">
+            <li><a href="index.html"><i class="fas fa-chart-bar"></i> Insights</a></li>
+            <li><a href="survey.html"><i class="fas fa-poll"></i> Survey</a></li>
+            <li><a href="about.html"><i class="fas fa-address-card"></i> About Us</a></li>
+            <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+            <li><a href="#"><i class="fas fa-bell"></i> Subscribe</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Contact InsightReport</h1>
+            <p>Get in touch with our team of data analysts and researchers</p>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="contact-content">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>We're Here to Help</h2>
+                    <p>At InsightReport, we believe in the power of communication. Whether you have questions about our data insights, need technical support, want to explore partnership opportunities, or simply want to share feedback, our team is ready to assist you.</p>
+                    <p>Our dedicated support team typically responds within 24 hours during business days. For urgent matters, we recommend using our direct email option for faster response times.</p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <div class="contact-method-text">
+                                <h3>Email Us Directly</h3>
+                                <p>For immediate assistance: <a href="mailto:healthhubscontact@gmail.com">healthhubscontact@gmail.com</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-clock"></i>
+                            <div class="contact-method-text">
+                                <h3>Response Time</h3>
+                                <p>Typically within 24 hours during business days</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-globe"></i>
+                            <div class="contact-method-text">
+                                <h3>Global Support</h3>
+                                <p>We serve clients and partners worldwide</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form-container">
+                    <h2>Send Us a Message</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-block">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Persuasive Section -->
+    <section class="persuasive-section">
+        <div class="container">
+            <h2>Why Contact InsightReport?</h2>
+            <p>We're more than just a data analytics platform - we're your partners in understanding global trends and making data-driven decisions.</p>
+            
+            <div class="persuasive-content">
+                <h3>How We Can Help You</h3>
+                <p>At InsightReport, we understand that navigating complex data landscapes can be challenging. That's why we've built multiple channels to ensure you get the support you need, when you need it.</p>
+                
+                <h3>Common Reasons to Reach Out</h3>
+                <ul>
+                    <li><strong>Technical Support:</strong> Having trouble accessing our insights or using our platform features?</li>
+                    <li><strong>Data Interpretation:</strong> Need help understanding the implications of our population insights for your specific context?</li>
+                    <li><strong>Partnership Opportunities:</strong> Interested in collaborating on research projects or data sharing initiatives?</li>
+                    <li><strong>Custom Analysis:</strong> Looking for tailored insights specific to your industry or region?</li>
+                    <li><strong>Media Inquiries:</strong> Journalists and researchers seeking verified data for publications.</li>
+                    <li><strong>Survey Participation:</strong> Organizations interested in contributing to our global data collection efforts.</li>
+                    <li><strong>API Access:</strong> Developers wanting to integrate our data into their applications.</li>
+                    <li><strong>Feedback & Suggestions:</strong> Helping us improve our platform and content offerings.</li>
+                </ul>
+                
+                <h3>Our Commitment to You</h3>
+                <p>When you contact InsightReport, you're not just sending an email - you're starting a conversation with a team passionate about data democratization. We believe that accurate, accessible data should be available to everyone, and we're committed to helping you make the most of our resources.</p>
+                
+                <p>Whether you're a student working on a research paper, a business leader making strategic decisions, a policy maker shaping community initiatives, or a curious individual seeking to understand global trends better, we're here to support your journey.</p>
+                
+                <p><strong>Don't hesitate to reach out directly:</strong> <a href="mailto:healthhubscontact@gmail.com" class="email-link">healthhubscontact@gmail.com</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>InsightReport</h3>
+                    <p>Transforming data into actionable insights for better decision making.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chart-bar"></i> Insights</a></li>
+                        <li><a href="survey.html"><i class="fas fa-poll"></i> Survey</a></li>
+                        <li><a href="about.html"><i class="fas fa-address-card"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+                        <li><a href="#"><i class="fas fa-bell"></i> Subscribe</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:healthhubscontact@gmail.com"><i class="fas fa-envelope"></i> Email Us</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Global Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 InsightReport. All rights reserved. | insightreport.netlify.app</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Modal Menu Functionality
+        const modalMenuBtn = document.getElementById('modalMenuBtn');
+        const modalMenu = document.getElementById('modalMenu');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModal = document.getElementById('closeModal');
+
+        modalMenuBtn.addEventListener('click', () => {
+            modalMenu.style.display = 'block';
+            modalOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeModal.addEventListener('click', () => {
+            modalMenu.style.display = 'none';
+            modalOverlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        modalOverlay.addEventListener('click', () => {
+            modalMenu.style.display = 'none';
+            modalOverlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Contact Form Handling
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Create mailto link
+            const mailtoLink = `mailto:healthhubscontact@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+                `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+            )}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show confirmation message
+            alert('Your email client is opening with your message. Please click send to complete your message.');
+            
+            // Reset form
+            contactForm.reset();
+        });
+    </script>
+</body>
+</html>
