@@ -81,12 +81,22 @@
 
         /* Modal Menu */
         .modal-menu-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text);
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text);
+    cursor: pointer;
+    transition: color 0.3s;
+    position: absolute;
+    right: 20px; /* Adjust based on your container padding */
+    top: 50%;
+    transform: translateY(-50%);
         }
+        .modal-menu-btn:hover {
+            background: var(--light-gray);
+        }
+
+    
 
         .modal-menu {
             display: none;
