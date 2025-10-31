@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InsightReport - Global Data Insights</title>
+    <title>InsightReport - Global Population Insights</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -15,6 +15,7 @@
             --dark-gray: #333333;
             --text: #444444;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -28,6 +29,7 @@
             background-color: var(--white);
             color: var(--text);
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
         .container {
@@ -78,40 +80,113 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Menu Icons */
-        .menu-icons {
-            display: flex;
-            gap: 20px;
+        /* Modal Menu */
+        .modal-menu-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text);
+    cursor: pointer;
+    transition: color 0.3s;
+    position: absolute;
+    right: 20px; /* Adjust based on your container padding */
+    top: 50%;
+    transform: translateY(-50%);
         }
 
-        .menu-icon {
+        .modal-menu-btn:hover {
+            color: var(--primary);
+        }
+
+        .modal-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 30px 20px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-menu.show {
+            display: block;
+            transform: translateX(0);
+        }
+
+        .modal-menu-header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-menu-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .modal-menu-items {
+            list-style: none;
+        }
+
+        .modal-menu-item {
+            margin-bottom: 15px;
+        }
+
+        .modal-menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             text-decoration: none;
             color: var(--text);
+            font-size: 18px;
+            padding: 10px 0;
             transition: color 0.3s;
-            font-size: 14px;
         }
 
-        .menu-icon i {
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        .menu-icon:hover {
+        .modal-menu-item a:hover {
             color: var(--primary);
+        }
+
+        .modal-menu-item i {
+            width: 24px;
+            text-align: center;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .overlay.show {
+            display: block;
         }
 
         /* Hero Section */
         .hero {
             text-align: center;
-            padding: 60px 0 40px;
+            padding: 80px 0 60px;
             background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
         }
 
         .hero h1 {
-            font-size: 42px;
+            font-size: 48px;
             margin-bottom: 15px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
@@ -119,56 +194,99 @@
         }
 
         .hero p {
-            font-size: 18px;
+            font-size: 20px;
             max-width: 700px;
             margin: 0 auto 30px;
             color: var(--dark-gray);
         }
 
-        /* Search and Filter Section */
-        .search-filter {
+        /* Country Detection */
+        .country-detection {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            color: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .country-detection h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        /* Search Bar */
+        .search-section {
             padding: 30px 0;
             background-color: var(--light-gray);
         }
 
         .search-container {
-            display: flex;
-            gap: 15px;
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
-        .search-bar, .country-select {
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
             flex: 1;
-            padding: 12px 20px;
+            padding: 15px 20px;
             border: 1px solid #ddd;
             border-radius: 30px;
             font-size: 16px;
+            box-shadow: var(--shadow);
         }
 
-        .search-bar:focus, .country-select:focus {
-            border-color: var(--primary);
-            outline: none;
+        .search-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border: none;
+            padding: 0 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: var(--shadow);
         }
 
-        /* Insights Grid */
-        .insights-grid {
-            padding: 40px 0 80px;
+        .search-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Cards Grid */
+        .cards-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+            color: var(--dark-gray);
+        }
+
+        .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
         }
 
-        .insight-card {
+        .card {
             background-color: var(--white);
             border-radius: 16px;
-            box-shadow: var(--shadow);
+            box-shadow: var(--card-shadow);
             overflow: hidden;
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .insight-card:hover {
-            transform: translateY(-5px);
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
         }
 
         .card-header {
@@ -183,7 +301,7 @@
         }
 
         .card-body {
-            padding: 20px;
+            padding: 25px;
         }
 
         .card-image {
@@ -192,22 +310,36 @@
             object-fit: cover;
             border-radius: 8px;
             margin: 15px 0;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-        }
-
-        .card-content {
-            margin-bottom: 20px;
         }
 
         .card-content p {
             margin-bottom: 15px;
         }
 
-        .btn {
+        .card-highlight {
+            background-color: rgba(106, 17, 203, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .card-subheading {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--primary);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .card-btn {
             display: inline-block;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
@@ -222,27 +354,26 @@
             text-align: center;
         }
 
-        .btn:hover {
+        .card-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(106, 17, 203, 0.3);
         }
 
-        .btn-block {
-            display: block;
-            width: 100%;
+        .card-btn.secondary {
+            background: #6c757d;
         }
 
         /* Footer */
         footer {
             background-color: var(--dark-gray);
             color: var(--white);
-            padding: 50px 0 20px;
+            padding: 60px 0 20px;
         }
 
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
+            gap: 40px;
             margin-bottom: 40px;
         }
 
@@ -284,22 +415,24 @@
             color: var(--white);
         }
 
+        .footer-search {
+            margin-top: 30px;
+        }
+
+        .footer-search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+        }
+
         .copyright {
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid #444;
             color: #aaa;
             font-size: 14px;
-        }
-
-        /* User Location Banner */
-        .user-location {
-            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
-            color: white;
-            padding: 15px;
-            text-align: center;
-            margin-bottom: 20px;
-            border-radius: 8px;
         }
 
         /* Responsive Design */
@@ -310,34 +443,38 @@
             }
 
             .hero h1 {
-                font-size: 32px;
+                font-size: 36px;
             }
 
-            .search-container {
-                flex-direction: column;
-            }
-
-            .insights-grid {
+            .cards-grid {
                 grid-template-columns: 1fr;
             }
 
-            .menu-icons {
-                gap: 15px;
+            .card-footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .card-btn {
+                width: 100%;
             }
         }
 
         @media (max-width: 576px) {
             .hero {
-                padding: 40px 0 20px;
+                padding: 60px 0 40px;
             }
 
             .hero h1 {
-                font-size: 28px;
+                font-size: 32px;
             }
 
-            .menu-icons {
-                flex-wrap: wrap;
-                justify-content: center;
+            .hero p {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 28px;
             }
         }
     </style>
@@ -353,83 +490,94 @@
                     </div>
                     <div class="logo-text">InsightReport</div>
                 </div>
-                <div class="menu-icons">
-                    <a href="survey.html" class="menu-icon">
-                        <i class="fas fa-poll"></i>
-                        <span>Survey</span>
-                    </a>
-                    <a href="#" class="menu-icon">
-                        <i class="fas fa-address-card"></i>
-                        <span>About Us</span>
-                    </a>
-                    <a href="#" class="menu-icon">
-                        <i class="fas fa-envelope"></i>
-                        <span>Contact Us</span>
-                    </a>
-                    <a href="#" class="menu-icon">
-                        <i class="fas fa-file-contract"></i>
-                        <span>Terms</span>
-                    </a>
-                    <a href="#" class="menu-icon">
-                        <i class="fas fa-bell"></i>
-                        <span>Subscribe</span>
-                    </a>
-                </div>
+                <button class="modal-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
 
+    <!-- Modal Menu -->
+    <div class="overlay" id="overlay"></div>
+    <div class="modal-menu" id="modalMenu">
+        <div class="modal-menu-header">
+            <h3>Menu</h3>
+            <button class="modal-menu-close" id="modalMenuClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="modal-menu-items">
+            <li class="modal-menu-item">
+                <a href="survey.html">
+                    <i class="fas fa-poll"></i>
+                    <span>Survey</span>
+                </a>
+            </li>
+            <li class="modal-menu-item">
+                <a href="#">
+                    <i class="fas fa-address-card"></i>
+                    <span>About Us</span>
+                </a>
+            </li>
+            <li class="modal-menu-item">
+                <a href="#">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact Us</span>
+                </a>
+            </li>
+            <li class="modal-menu-item">
+                <a href="#">
+                    <i class="fas fa-file-contract"></i>
+                    <span>Terms of Service</span>
+                </a>
+            </li>
+            <li class="modal-menu-item">
+                <a href="#subscribe">
+                    <i class="fas fa-bell"></i>
+                    <span>Subscribe</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Global Economic Insights & Analysis</h1>
-            <p>Discover comprehensive data-driven reports on the world's leading economies. Our insights help businesses and policymakers make informed decisions.</p>
+            <h1>Global Population Insights</h1>
+            <p>Discover comprehensive demographic analysis and trends from countries around the world</p>
         </div>
     </section>
 
-    <!-- Search and Filter Section -->
-    <section class="search-filter">
+    <!-- Country Detection -->
+    <div class="container">
+        <div class="country-detection">
+            <h2>Recommended for you</h2>
+            <p id="user-country">Based on your location, we recommend insights from your region</p>
+        </div>
+    </div>
+
+    <!-- Search Section -->
+    <section class="search-section">
         <div class="container">
             <div class="search-container">
-                <input type="text" class="search-bar" placeholder="Search insights by keyword..." id="searchInput">
-                <select class="country-select" id="countrySelect">
-                    <option value="all">All Countries</option>
-                    <option value="China">China</option>
-                    <option value="United States">United States</option>
-                    <option value="India">India</option>
-                    <option value="Japan">Japan</option>
-                    <option value="Germany">Germany</option>
-                    <option value="Russia">Russia</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                    <option value="Brazil">Brazil</option>
-                    <option value="France">France</option>
-                    <option value="South Korea">South Korea</option>
-                    <option value="Italy">Italy</option>
-                    <option value="Canada">Canada</option>
-                    <option value="Spain">Spain</option>
-                    <option value="Australia">Australia</option>
-                    <option value="Netherlands">Netherlands</option>
-                    <option value="Turkey">Turkey</option>
-                    <option value="Iran">Iran</option>
-                    <option value="Mexico">Mexico</option>
-                    <option value="South Africa">South Africa</option>
-                    <option value="Nigeria">Nigeria</option>
-                </select>
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search for country insights...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- User Location Banner -->
-    <div class="container">
-        <div class="user-location" id="userLocation">
-            <i class="fas fa-map-marker-alt"></i> 
-            <span>Detecting your location to show relevant insights...</span>
+    <!-- Cards Section -->
+    <section class="cards-section">
+        <div class="container">
+            <h2 class="section-title">Population Insights</h2>
+            <div class="cards-grid" id="cardsContainer">
+                <!-- Cards will be dynamically generated here -->
+            </div>
         </div>
-    </div>
-
-    <!-- Insights Grid -->
-    <section class="insights-grid container" id="insightsGrid">
-        <!-- Insight cards will be dynamically generated here -->
     </section>
 
     <!-- Footer -->
@@ -438,22 +586,16 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>InsightReport</h3>
-                    <p>Transforming data into actionable insights for better decision making across global markets.</p>
+                    <p>Transforming data into actionable insights for better decision making.</p>
                 </div>
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="survey.html"><i class="fas fa-poll"></i> Surveys</a></li>
+                        <li><a href="survey.html"><i class="fas fa-poll"></i> Survey</a></li>
                         <li><a href="#"><i class="fas fa-address-card"></i> About Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Legal</h3>
-                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
                         <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
-                        <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
-                        <li><a href="#"><i class="fas fa-cookie"></i> Cookie Policy</a></li>
+                        <li><a href="#"><i class="fas fa-bell"></i> Subscribe</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -464,6 +606,12 @@
                         <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
                     </ul>
                 </div>
+                <div class="footer-column">
+                    <h3>Search Insights</h3>
+                    <div class="footer-search">
+                        <input type="text" class="footer-search-input" placeholder="Search country insights...">
+                    </div>
+                </div>
             </div>
             <div class="copyright">
                 <p>&copy; 2023 InsightReport. All rights reserved.</p>
@@ -471,157 +619,178 @@
         </div>
     </footer>
 
-    <!-- Application Script -->
     <script>
+        // Countries data
+        const countries = [
+            { name: "China", code: "CN" },
+            { name: "United States", code: "US" },
+            { name: "India", code: "IN" },
+            { name: "Japan", code: "JP" },
+            { name: "Germany", code: "DE" },
+            { name: "Russia", code: "RU" },
+            { name: "United Kingdom", code: "GB" },
+            { name: "Brazil", code: "BR" },
+            { name: "France", code: "FR" },
+            { name: "South Korea", code: "KR" },
+            { name: "Italy", code: "IT" },
+            { name: "Canada", code: "CA" },
+            { name: "Spain", code: "ES" },
+            { name: "Australia", code: "AU" },
+            { name: "Netherlands", code: "NL" },
+            { name: "Turkey", code: "TR" },
+            { name: "Iran", code: "IR" },
+            { name: "Mexico", code: "MX" },
+            { name: "South Africa", code: "ZA" },
+            { name: "Nigeria", code: "NG" }
+        ];
+
+        // Modal menu functionality
         document.addEventListener('DOMContentLoaded', function() {
-            // Countries data
-            const countries = [
-                "China", "United States", "India", "Japan", "Germany", 
-                "Russia", "United Kingdom", "Brazil", "France", "South Korea", 
-                "Italy", "Canada", "Spain", "Australia", "Netherlands", 
-                "Turkey", "Iran", "Mexico", "South Africa", "Nigeria"
-            ];
+            const modalMenuBtn = document.querySelector('.modal-menu-btn');
+            const modalMenu = document.getElementById('modalMenu');
+            const modalMenuClose = document.getElementById('modalMenuClose');
+            const overlay = document.getElementById('overlay');
 
-            // Sample insight content for each country
-            const insightsData = {
-                "China": {
-                    title: "China's Economic Transformation",
-                    content: "China continues its remarkable economic transformation, shifting from manufacturing-focused growth to innovation-driven development. With massive investments in AI, renewable energy, and biotechnology, the country is positioning itself as a global technology leader. The Belt and Road Initiative continues to expand China's global influence, while domestic consumption grows as the middle class expands. Recent policies focus on sustainable development and reducing economic disparities between urban and rural areas.",
-                    image1: "images/01",
-                    image2: "images/02"
-                },
-                "United States": {
-                    title: "US Economic Resilience and Innovation",
-                    content: "The United States maintains its position as the world's largest economy, driven by technological innovation and strong consumer spending. Silicon Valley continues to lead in AI development, while renewable energy adoption accelerates across states. The labor market shows resilience despite global challenges, with technology and healthcare sectors experiencing significant growth. Infrastructure investments and climate policies are shaping the economic landscape for the coming decade.",
-                    image1: "images/01",
-                    image2: "images/02"
-                },
-                "India": {
-                    title: "India's Digital Revolution",
-                    content: "India's digital economy is experiencing unprecedented growth, with mobile internet penetration reaching rural areas at an accelerating pace. The country's startup ecosystem continues to flourish, producing multiple unicorns each year. Government initiatives in renewable energy and manufacturing are attracting foreign investment, while the services sector maintains its global competitiveness. Demographic advantages position India for sustained economic expansion in the coming years.",
-                    image1: "images/01",
-                    image2: "images/02"
-                },
-                "Japan": {
-                    title: "Japan's Technological Renaissance",
-                    content: "Japan is undergoing a technological renaissance with increased focus on robotics, automation, and sustainable technologies. The aging population continues to drive innovation in healthcare and elderly care solutions. Corporate reforms and digital transformation initiatives are modernizing traditional industries. Despite global economic headwinds, Japan maintains its position as a leader in high-tech manufacturing and quality-focused production.",
-                    image1: "images/01",
-                    image2: "images/02"
-                },
-                "Germany": {
-                    title: "Germany's Industrial Evolution",
-                    content: "Germany's manufacturing sector continues its evolution toward Industry 4.0, integrating AI and IoT technologies into production processes. The automotive industry is transitioning rapidly to electric vehicles, with substantial government and private investment. Renewable energy adoption accelerates as the country works toward its climate goals. Export strength remains a key economic driver, though supply chain diversification efforts are underway.",
-                    image1: "images/01",
-                    image2: "images/02"
-                }
-            };
-
-            // Generate content for all countries (in a real app, this would come from a database)
-            for (let country of countries) {
-                if (!insightsData[country]) {
-                    insightsData[country] = {
-                        title: `${country}'s Economic Outlook`,
-                        content: `${country} continues to develop its economic potential through strategic investments and policy reforms. The country is focusing on key sectors to drive growth and improve living standards for its population. International partnerships and domestic innovation are creating new opportunities across various industries. Economic indicators show promising trends as the nation navigates global challenges and capitalizes on emerging opportunities.`,
-                        image1: "images/01",
-                        image2: "images/02"
-                    };
-                }
+            function openModalMenu() {
+                modalMenu.classList.add('show');
+                overlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
             }
 
-            // Detect user's country
-            let userCountry = "United States"; // Default fallback
-            const userLocationElement = document.getElementById('userLocation');
-            
+            function closeModalMenu() {
+                modalMenu.classList.remove('show');
+                overlay.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+
+            modalMenuBtn.addEventListener('click', openModalMenu);
+            modalMenuClose.addEventListener('click', closeModalMenu);
+            overlay.addEventListener('click', closeModalMenu);
+
+            // Detect user country
             fetch('https://ipapi.co/json/')
                 .then(response => response.json())
                 .then(data => {
-                    userCountry = data.country_name;
-                    userLocationElement.innerHTML = `<i class="fas fa-map-marker-alt"></i> Showing insights relevant to your location: <strong>${userCountry}</strong>`;
+                    const userCountry = data.country_name;
+                    document.getElementById('user-country').textContent = 
+                        `Based on your location in ${userCountry}, we recommend insights from your region`;
                     
-                    // Set the country select to user's country
-                    document.getElementById('countrySelect').value = userCountry;
+                    // Move user's country to the top of the list
+                    const userCountryIndex = countries.findIndex(country => 
+                        country.name === userCountry);
                     
-                    // Render insights with user's country first
-                    renderInsights(userCountry);
+                    if (userCountryIndex !== -1) {
+                        const userCountryData = countries.splice(userCountryIndex, 1)[0];
+                        countries.unshift(userCountryData);
+                    }
+                    
+                    // Generate cards
+                    generateCards();
                 })
                 .catch(error => {
                     console.error('Error detecting location:', error);
-                    userLocationElement.innerHTML = `<i class="fas fa-map-marker-alt"></i> Location detection failed. Showing global insights.`;
-                    renderInsights("all");
+                    document.getElementById('user-country').textContent = 
+                        'Discover population insights from countries around the world';
+                    generateCards();
                 });
-
-            // Render insights function
-            function renderInsights(selectedCountry) {
-                const insightsGrid = document.getElementById('insightsGrid');
-                insightsGrid.innerHTML = '';
-                
-                // Filter and sort countries
-                let countriesToShow = [...countries];
-                
-                if (selectedCountry !== "all") {
-                    // Move selected country to the front
-                    const index = countriesToShow.indexOf(selectedCountry);
-                    if (index > -1) {
-                        countriesToShow.splice(index, 1);
-                        countriesToShow.unshift(selectedCountry);
-                    }
-                }
-                
-                // Render insight cards
-                countriesToShow.forEach(country => {
-                    const insight = insightsData[country];
-                    const card = document.createElement('div');
-                    card.className = 'insight-card';
-                    card.dataset.country = country;
-                    
-                    card.innerHTML = `
-                        <div class="card-header">
-                            <h3>${insight.title}</h3>
-                            <p>${country}</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-content">
-                                <p>${insight.content}</p>
-                                <div class="card-image">
-                                    <i class="fas fa-image"></i> ${insight.image1}
-                                </div>
-                                <p>Economic indicators show positive trends with growth in key sectors. Policy reforms and international partnerships are creating new opportunities. The country is positioning itself for sustainable development in the coming years.</p>
-                                <div class="card-image">
-                                    <i class="fas fa-image"></i> ${insight.image2}
-                                </div>
-                                <p>Future outlook remains positive as the nation continues to invest in infrastructure, education, and technology. Challenges remain, but the overall trajectory points toward continued economic expansion and improved living standards.</p>
-                            </div>
-                            <a href="survey.html" class="btn btn-block">We've Got Survey For You</a>
-                        </div>
-                    `;
-                    
-                    insightsGrid.appendChild(card);
-                });
-            }
-
-            // Country select change handler
-            document.getElementById('countrySelect').addEventListener('change', function() {
-                renderInsights(this.value);
-            });
 
             // Search functionality
-            document.getElementById('searchInput').addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                const selectedCountry = document.getElementById('countrySelect').value;
-                const cards = document.querySelectorAll('.insight-card');
+            const searchInput = document.querySelector('.search-input');
+            const searchBtn = document.querySelector('.search-btn');
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const cards = document.querySelectorAll('.card');
                 
                 cards.forEach(card => {
-                    const country = card.dataset.country;
-                    const content = card.textContent.toLowerCase();
+                    const countryName = card.querySelector('.card-header h3').textContent.toLowerCase();
+                    const cardContent = card.querySelector('.card-content').textContent.toLowerCase();
                     
-                    // Show card if it matches search and country filter
-                    const matchesSearch = searchTerm === '' || content.includes(searchTerm);
-                    const matchesCountry = selectedCountry === 'all' || country === selectedCountry;
-                    
-                    card.style.display = (matchesSearch && matchesCountry) ? 'block' : 'none';
+                    if (countryName.includes(searchTerm) || cardContent.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
                 });
+            }
+            
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            // Footer search
+            const footerSearchInput = document.querySelector('.footer-search-input');
+            footerSearchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    searchInput.value = footerSearchInput.value;
+                    performSearch();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             });
         });
+
+        // Generate cards function
+        function generateCards() {
+            const cardsContainer = document.getElementById('cardsContainer');
+            cardsContainer.innerHTML = '';
+
+            countries.forEach(country => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                // Generate random population data
+                const population = (Math.random() * 1000 + 100).toFixed(1);
+                const growthRate = (Math.random() * 3 - 1).toFixed(1);
+                const urbanPopulation = (Math.random() * 40 + 50).toFixed(0);
+                const medianAge = (Math.random() * 20 + 25).toFixed(0);
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h3>${country.name}</h3>
+                        <p>Population Insights & Trends</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-content">
+                            <div class="card-highlight">
+                                <p><strong>Did you know?</strong> ${country.name}'s population dynamics are shifting in unexpected ways, creating both challenges and opportunities for the nation's future.</p>
+                            </div>
+                            
+                            <p>With a current population of <strong>${population} million</strong>, ${country.name} stands as one of the most significant demographic forces in its region. The country has experienced a population growth rate of <strong>${growthRate}%</strong> annually, reflecting complex social and economic factors at play.</p>
+                            
+                            <h4 class="card-subheading">Demographic Structure</h4>
+                            <p>The age distribution in ${country.name} shows a median age of <strong>${medianAge} years</strong>, indicating a ${medianAge > 35 ? 'maturing' : 'youthful'} population. Approximately <strong>${urbanPopulation}%</strong> of residents live in urban areas, with major cities experiencing rapid expansion and modernization.</p>
+                            
+                            <img src="https://source.unsplash.com/random/600x400/?${country.name.toLowerCase()},city" alt="${country.name} city" class="card-image">
+                            
+                            <h4 class="card-subheading">Economic Implications</h4>
+                            <p>Population trends in ${country.name} have profound economic consequences. The <strong>working-age population</strong> represents a significant portion of the total, creating both a demographic dividend and employment challenges. Migration patterns, both internal and international, further complicate the demographic landscape.</p>
+                            
+                            <h4 class="card-subheading">Future Projections</h4>
+                            <p>By 2050, experts project that ${country.name}'s population will reach approximately <strong>${(parseFloat(population) * (1 + parseFloat(growthRate)/100 * 27)).toFixed(1)} million</strong>, assuming current trends continue. This growth presents both opportunities for economic expansion and challenges in resource management and infrastructure development.</p>
+                            
+                            <img src="https://source.unsplash.com/random/600x400/?${country.name.toLowerCase()},people" alt="${country.name} people" class="card-image">
+                            
+                            <h4 class="card-subheading">Research Methodology</h4>
+                            <p>This analysis is based on comprehensive data from national census reports, United Nations population projections, and economic indicators. Our research team employed statistical modeling techniques to identify trends and make projections, cross-referencing multiple data sources to ensure accuracy and reliability.</p>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <a href="survey.html" class="card-btn">
+                                <i class="fas fa-poll"></i> We've Got Survey For You
+                            </a>
+                            <a href="https://insightreport.netlify.app" class="card-btn secondary">
+                                <i class="fas fa-share"></i> Share Insights
+                            </a>
+                        </div>
+                    </div>
+                `;
+                
+                cardsContainer.appendChild(card);
+            });
+        }
     </script>
 </body>
-</html>
+        </html>
