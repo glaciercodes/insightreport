@@ -30,6 +30,7 @@
             color: var(--text);
             line-height: 1.6;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         .container {
@@ -93,32 +94,31 @@
     top: 50%;
     transform: translateY(-50%);
         }
-
         .modal-menu-btn:hover {
-            color: var(--primary);
+            background: var(--light-gray);
         }
 
         .modal-menu {
             display: none;
             position: fixed;
             top: 0;
-            right: 0;
-            width: 280px;
+            right: -320px;
+            width: 300px;
             height: 100%;
-            background-color: var(--white);
+            background: var(--white);
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
             z-index: 1000;
-            padding: 30px 20px;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+            transition: right 0.3s ease;
         }
 
-        .modal-menu.show {
+        .modal-menu.active {
             display: block;
-            transform: translateX(0);
+            right: 0;
         }
 
-        .modal-menu-header {
+        .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -127,38 +127,40 @@
             border-bottom: 1px solid #eee;
         }
 
-        .modal-menu-close {
+        .close-modal {
             background: none;
             border: none;
-            font-size: 22px;
+            font-size: 24px;
             color: var(--text);
             cursor: pointer;
         }
 
-        .modal-menu-items {
+        .modal-nav {
             list-style: none;
         }
 
-        .modal-menu-item {
+        .modal-nav li {
             margin-bottom: 15px;
         }
 
-        .modal-menu-item a {
+        .modal-nav a {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
             color: var(--text);
             font-size: 18px;
-            padding: 10px 0;
-            transition: color 0.3s;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s;
         }
 
-        .modal-menu-item a:hover {
+        .modal-nav a:hover {
+            background: var(--light-gray);
             color: var(--primary);
         }
 
-        .modal-menu-item i {
+        .modal-nav i {
             width: 24px;
             text-align: center;
         }
@@ -170,11 +172,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
 
-        .overlay.show {
+        .overlay.active {
             display: block;
         }
 
@@ -200,18 +202,19 @@
             color: var(--dark-gray);
         }
 
-        /* Country Detection */
-        .country-detection {
+        /* Location-based Recommendation */
+        .location-recommendation {
             background: linear-gradient(135deg, var(--primary-light), var(--secondary));
             color: var(--white);
             padding: 20px;
             border-radius: 12px;
-            margin-bottom: 40px;
+            margin: 30px auto;
+            max-width: 800px;
             text-align: center;
             box-shadow: var(--shadow);
         }
 
-        .country-detection h2 {
+        .location-recommendation h2 {
             margin-bottom: 10px;
             font-size: 24px;
         }
@@ -219,7 +222,7 @@
         /* Search Bar */
         .search-section {
             padding: 30px 0;
-            background-color: var(--light-gray);
+            background: var(--light-gray);
         }
 
         .search-container {
@@ -245,21 +248,20 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
             border: none;
-            padding: 0 25px;
+            padding: 15px 25px;
             border-radius: 30px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.3s;
-            box-shadow: var(--shadow);
         }
 
         .search-btn:hover {
             transform: translateY(-3px);
         }
 
-        /* Cards Grid */
-        .cards-section {
+        /* Insights Grid */
+        .insights-section {
             padding: 60px 0;
         }
 
@@ -270,23 +272,23 @@
             color: var(--dark-gray);
         }
 
-        .cards-grid {
+        .insights-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
         }
 
-        .card {
-            background-color: var(--white);
+        .insight-card {
+            background: var(--white);
             border-radius: 16px;
             box-shadow: var(--card-shadow);
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .card:hover {
+        .insight-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
         }
 
         .card-header {
@@ -296,7 +298,7 @@
         }
 
         .card-header h3 {
-            font-size: 22px;
+            font-size: 24px;
             margin-bottom: 5px;
         }
 
@@ -308,45 +310,48 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-radius: 8px;
             margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .card-content {
+            margin-bottom: 20px;
+        }
+
+        .card-content h4 {
+            color: var(--primary);
+            margin: 15px 0 10px;
+            font-size: 20px;
         }
 
         .card-content p {
             margin-bottom: 15px;
+            line-height: 1.7;
         }
 
-        .card-highlight {
-            background-color: rgba(106, 17, 203, 0.1);
+        .highlight {
+            background: linear-gradient(135deg, #ffefd5, #ffe4b5);
             padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
             border-left: 4px solid var(--primary);
-        }
-
-        .card-subheading {
-            font-size: 18px;
-            font-weight: 600;
-            margin: 20px 0 10px;
-            color: var(--primary);
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
         }
 
         .card-footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
-            padding-top: 20px;
+            padding: 20px;
             border-top: 1px solid #eee;
         }
 
-        .card-btn {
+        .btn {
             display: inline-block;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
             border: none;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 30px;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -354,13 +359,20 @@
             text-align: center;
         }
 
-        .card-btn:hover {
+        .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(106, 17, 203, 0.3);
         }
 
-        .card-btn.secondary {
-            background: #6c757d;
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
         }
 
         /* Footer */
@@ -416,7 +428,7 @@
         }
 
         .footer-search {
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .footer-search-input {
@@ -446,17 +458,26 @@
                 font-size: 36px;
             }
 
-            .cards-grid {
+            .hero p {
+                font-size: 18px;
+            }
+
+            .insights-grid {
                 grid-template-columns: 1fr;
             }
 
             .card-footer {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
             }
 
-            .card-btn {
+            .btn {
                 width: 100%;
+            }
+
+            .modal-menu {
+                width: 280px;
+                right: -280px;
             }
         }
 
@@ -469,12 +490,28 @@
                 font-size: 32px;
             }
 
-            .hero p {
-                font-size: 18px;
-            }
-
             .section-title {
                 font-size: 28px;
+            }
+
+            .modal-menu {
+                width: 85%;
+                right: -85%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .card-body {
+                padding: 20px 15px;
+            }
+            
+            .modal-menu {
+                width: 90%;
+                right: -90%;
             }
         }
     </style>
@@ -498,45 +535,20 @@
     </header>
 
     <!-- Modal Menu -->
-    <div class="overlay" id="overlay"></div>
-    <div class="modal-menu" id="modalMenu">
-        <div class="modal-menu-header">
+    <div class="overlay"></div>
+    <div class="modal-menu">
+        <div class="modal-header">
             <h3>Menu</h3>
-            <button class="modal-menu-close" id="modalMenuClose">
+            <button class="close-modal">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <ul class="modal-menu-items">
-            <li class="modal-menu-item">
-                <a href="survey.html">
-                    <i class="fas fa-poll"></i>
-                    <span>Survey</span>
-                </a>
-            </li>
-            <li class="modal-menu-item">
-                <a href="#">
-                    <i class="fas fa-address-card"></i>
-                    <span>About Us</span>
-                </a>
-            </li>
-            <li class="modal-menu-item">
-                <a href="#">
-                    <i class="fas fa-envelope"></i>
-                    <span>Contact Us</span>
-                </a>
-            </li>
-            <li class="modal-menu-item">
-                <a href="#">
-                    <i class="fas fa-file-contract"></i>
-                    <span>Terms of Service</span>
-                </a>
-            </li>
-            <li class="modal-menu-item">
-                <a href="#subscribe">
-                    <i class="fas fa-bell"></i>
-                    <span>Subscribe</span>
-                </a>
-            </li>
+        <ul class="modal-nav">
+            <li><a href="survey.html"><i class="fas fa-poll"></i> Survey</a></li>
+            <li><a href="#"><i class="fas fa-address-card"></i> About Us</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
+            <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+            <li><a href="#"><i class="fas fa-bell"></i> Subscribe</a></li>
         </ul>
     </div>
 
@@ -548,11 +560,11 @@
         </div>
     </section>
 
-    <!-- Country Detection -->
+    <!-- Location-based Recommendation -->
     <div class="container">
-        <div class="country-detection">
-            <h2>Recommended for you</h2>
-            <p id="user-country">Based on your location, we recommend insights from your region</p>
+        <div class="location-recommendation">
+            <h2>Insights For Your Region</h2>
+            <p id="location-text">Based on your location, we recommend exploring population insights from your area</p>
         </div>
     </div>
 
@@ -562,19 +574,17 @@
             <div class="search-container">
                 <div class="search-box">
                     <input type="text" class="search-input" placeholder="Search for country insights...">
-                    <button class="search-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
+                    <button class="search-btn">Search</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Cards Section -->
-    <section class="cards-section">
+    <!-- Insights Grid -->
+    <section class="insights-section">
         <div class="container">
-            <h2 class="section-title">Population Insights</h2>
-            <div class="cards-grid" id="cardsContainer">
+            <h2 class="section-title">Population Insights by Country</h2>
+            <div class="insights-grid" id="insights-container">
                 <!-- Cards will be dynamically generated here -->
             </div>
         </div>
@@ -614,138 +624,128 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 InsightReport. All rights reserved.</p>
+                <p>&copy; 2023 InsightReport. All rights reserved. | insightreport.netlify.app</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Countries data
-        const countries = [
-            { name: "China", code: "CN" },
-            { name: "United States", code: "US" },
-            { name: "India", code: "IN" },
-            { name: "Japan", code: "JP" },
-            { name: "Germany", code: "DE" },
-            { name: "Russia", code: "RU" },
-            { name: "United Kingdom", code: "GB" },
-            { name: "Brazil", code: "BR" },
-            { name: "France", code: "FR" },
-            { name: "South Korea", code: "KR" },
-            { name: "Italy", code: "IT" },
-            { name: "Canada", code: "CA" },
-            { name: "Spain", code: "ES" },
-            { name: "Australia", code: "AU" },
-            { name: "Netherlands", code: "NL" },
-            { name: "Turkey", code: "TR" },
-            { name: "Iran", code: "IR" },
-            { name: "Mexico", code: "MX" },
-            { name: "South Africa", code: "ZA" },
-            { name: "Nigeria", code: "NG" }
-        ];
-
-        // Modal menu functionality
         document.addEventListener('DOMContentLoaded', function() {
+            // Modal Menu Functionality
             const modalMenuBtn = document.querySelector('.modal-menu-btn');
-            const modalMenu = document.getElementById('modalMenu');
-            const modalMenuClose = document.getElementById('modalMenuClose');
-            const overlay = document.getElementById('overlay');
+            const modalMenu = document.querySelector('.modal-menu');
+            const closeModal = document.querySelector('.close-modal');
+            const overlay = document.querySelector('.overlay');
 
-            function openModalMenu() {
-                modalMenu.classList.add('show');
-                overlay.classList.add('show');
+            function openModal() {
+                modalMenu.classList.add('active');
+                overlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
 
             function closeModalMenu() {
-                modalMenu.classList.remove('show');
-                overlay.classList.remove('show');
+                modalMenu.classList.remove('active');
+                overlay.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
 
-            modalMenuBtn.addEventListener('click', openModalMenu);
-            modalMenuClose.addEventListener('click', closeModalMenu);
+            modalMenuBtn.addEventListener('click', openModal);
+            closeModal.addEventListener('click', closeModalMenu);
             overlay.addEventListener('click', closeModalMenu);
 
-            // Detect user country
+            // Detect User Location
             fetch('https://ipapi.co/json/')
                 .then(response => response.json())
                 .then(data => {
-                    const userCountry = data.country_name;
-                    document.getElementById('user-country').textContent = 
-                        `Based on your location in ${userCountry}, we recommend insights from your region`;
+                    const locationText = document.getElementById('location-text');
+                    locationText.textContent = `Based on your location in ${data.country_name}, we recommend exploring population insights from your region and similar countries.`;
                     
-                    // Move user's country to the top of the list
-                    const userCountryIndex = countries.findIndex(country => 
-                        country.name === userCountry);
+                    // Store user country for later use
+                    window.userCountry = data.country_name;
                     
-                    if (userCountryIndex !== -1) {
-                        const userCountryData = countries.splice(userCountryIndex, 1)[0];
-                        countries.unshift(userCountryData);
-                    }
-                    
-                    // Generate cards
-                    generateCards();
+                    // Generate insights with user's country first
+                    generateInsightCards();
                 })
                 .catch(error => {
                     console.error('Error detecting location:', error);
-                    document.getElementById('user-country').textContent = 
-                        'Discover population insights from countries around the world';
-                    generateCards();
+                    document.getElementById('location-text').textContent = 'Explore population insights from countries around the world.';
+                    window.userCountry = 'United States'; // Default fallback
+                    generateInsightCards();
                 });
 
-            // Search functionality
-            const searchInput = document.querySelector('.search-input');
-            const searchBtn = document.querySelector('.search-btn');
-            
-            function performSearch() {
-                const searchTerm = searchInput.value.toLowerCase();
-                const cards = document.querySelectorAll('.card');
+            // Countries data with realistic population figures
+            const countries = [
+                { name: "China", population: 1412, growth: 0.3, urban: 61, age: 38 },
+                { name: "United States", population: 332, growth: 0.6, urban: 83, age: 38 },
+                { name: "India", population: 1408, growth: 0.9, urban: 35, age: 28 },
+                { name: "Japan", population: 125, growth: -0.2, urban: 92, age: 48 },
+                { name: "Germany", population: 83, growth: 0.1, urban: 77, age: 46 },
+                { name: "Russia", population: 144, growth: -0.1, urban: 75, age: 40 },
+                { name: "United Kingdom", population: 68, growth: 0.5, urban: 84, age: 40 },
+                { name: "Brazil", population: 214, growth: 0.7, urban: 87, age: 33 },
+                { name: "France", population: 65, growth: 0.3, urban: 81, age: 42 },
+                { name: "South Korea", population: 51, growth: 0.1, urban: 82, age: 43 },
+                { name: "Italy", population: 59, growth: -0.1, urban: 71, age: 47 },
+                { name: "Canada", population: 38, growth: 0.9, urban: 81, age: 41 },
+                { name: "Spain", population: 47, growth: 0.1, urban: 80, age: 44 },
+                { name: "Australia", population: 26, growth: 1.3, urban: 86, age: 38 },
+                { name: "Netherlands", population: 17, growth: 0.4, urban: 92, age: 43 },
+                { name: "Turkey", population: 85, growth: 1.1, urban: 76, age: 32 },
+                { name: "Iran", population: 87, growth: 1.2, urban: 76, age: 32 },
+                { name: "Mexico", population: 128, growth: 1.0, urban: 81, age: 29 },
+                { name: "South Africa", population: 60, growth: 1.2, urban: 67, age: 28 },
+                { name: "Nigeria", population: 216, growth: 2.6, urban: 52, age: 18 }
+            ];
+
+            // Content snippets for each country
+            const countryInsights = {
+                "China": "With the world's largest population, China is undergoing a dramatic demographic transition that will reshape global economics for decades to come.",
+                "United States": "America's diverse population continues to drive innovation, but faces challenges from an aging workforce and shifting migration patterns.",
+                "India": "On track to become the world's most populous nation, India's youthful demographic offers both opportunities and challenges for sustainable development.",
+                "Japan": "Facing one of the world's most severe aging populations, Japan is pioneering solutions for societies with declining birthrates.",
+                "Germany": "Europe's economic powerhouse relies on skilled immigration to counterbalance its aging native population and maintain productivity.",
+                "Russia": "Despite its vast territory, Russia faces population decline in many regions, creating strategic challenges for the nation's future.",
+                "United Kingdom": "Post-Brexit migration patterns and an increasingly diverse population are reshaping British society and economy.",
+                "Brazil": "South America's giant is experiencing rapid urbanization while maintaining cultural diversity across its vast regions.",
+                "France": "With one of Europe's highest birth rates, France's demographic trends contrast with many of its European neighbors.",
+                "South Korea": "From rapid development to record-low birth rates, South Korea's demographic story reflects its economic transformation.",
+                "Italy": "An aging population and youth emigration present significant challenges for Italy's economic future and social systems.",
+                "Canada": "With one of the world's most immigration-friendly policies, Canada's population continues to grow and diversify rapidly.",
+                "Spain": "Recovering from economic crisis, Spain faces demographic challenges including youth unemployment and an aging population.",
+                "Australia": "A nation built on immigration, Australia continues to benefit from population growth while managing urban concentration.",
+                "Netherlands": "One of Europe's most densely populated countries, the Netherlands demonstrates how to balance growth with sustainability.",
+                "Turkey": "Straddling Europe and Asia, Turkey's young population represents both economic potential and social transformation.",
+                "Iran": "Following a dramatic fertility decline, Iran now faces the challenges of a rapidly aging population in coming decades.",
+                "Mexico": "As migration patterns shift, Mexico's demographic dividend offers economic potential if properly harnessed.",
+                "South Africa": "With a complex demographic landscape, South Africa faces both youth unemployment and skills shortages simultaneously.",
+                "Nigeria": "Africa's most populous nation exemplifies both the challenges and opportunities of rapid population growth in developing economies."
+            };
+
+            // Generate insight cards
+            function generateInsightCards() {
+                const insightsContainer = document.getElementById('insights-container');
+                insightsContainer.innerHTML = '';
                 
-                cards.forEach(card => {
-                    const countryName = card.querySelector('.card-header h3').textContent.toLowerCase();
-                    const cardContent = card.querySelector('.card-content').textContent.toLowerCase();
-                    
-                    if (countryName.includes(searchTerm) || cardContent.includes(searchTerm)) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
+                // Reorder countries to put user's country first if available
+                let sortedCountries = [...countries];
+                if (window.userCountry) {
+                    const userCountryIndex = sortedCountries.findIndex(c => c.name === window.userCountry);
+                    if (userCountryIndex > -1) {
+                        const userCountry = sortedCountries.splice(userCountryIndex, 1)[0];
+                        sortedCountries.unshift(userCountry);
                     }
+                }
+                
+                sortedCountries.forEach(country => {
+                    const card = createInsightCard(country);
+                    insightsContainer.appendChild(card);
                 });
             }
-            
-            searchBtn.addEventListener('click', performSearch);
-            searchInput.addEventListener('keyup', function(event) {
-                if (event.key === 'Enter') {
-                    performSearch();
-                }
-            });
 
-            // Footer search
-            const footerSearchInput = document.querySelector('.footer-search-input');
-            footerSearchInput.addEventListener('keyup', function(event) {
-                if (event.key === 'Enter') {
-                    searchInput.value = footerSearchInput.value;
-                    performSearch();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Generate cards function
-        function generateCards() {
-            const cardsContainer = document.getElementById('cardsContainer');
-            cardsContainer.innerHTML = '';
-
-            countries.forEach(country => {
+            // Create individual insight card
+            function createInsightCard(country) {
                 const card = document.createElement('div');
-                card.className = 'card';
-                
-                // Generate random population data
-                const population = (Math.random() * 1000 + 100).toFixed(1);
-                const growthRate = (Math.random() * 3 - 1).toFixed(1);
-                const urbanPopulation = (Math.random() * 40 + 50).toFixed(0);
-                const medianAge = (Math.random() * 20 + 25).toFixed(0);
+                card.className = 'insight-card';
                 
                 card.innerHTML = `
                     <div class="card-header">
@@ -754,43 +754,120 @@
                     </div>
                     <div class="card-body">
                         <div class="card-content">
-                            <div class="card-highlight">
-                                <p><strong>Did you know?</strong> ${country.name}'s population dynamics are shifting in unexpected ways, creating both challenges and opportunities for the nation's future.</p>
+                            <p><strong>Did you know?</strong> ${countryInsights[country.name]}</p>
+                            
+                            <h4>Population Overview</h4>
+                            <p>With a population of approximately <strong>${country.population} million</strong> people, ${country.name} stands as ${getPopulationRank(country.population)}. The population growth rate currently sits at <strong>${country.growth}%</strong> annually, reflecting ${country.growth > 1 ? 'rapid' : country.growth > 0 ? 'moderate' : 'declining'} demographic changes.</p>
+                            
+                            <div class="highlight">
+                                <strong>Key Insight:</strong> Urbanization continues to ${country.urban > 70 ? 'characterize' : 'transform'} ${country.name}, with <strong>${country.urban}%</strong> of the population now residing in metropolitan areas, creating both opportunities and challenges for sustainable development.
                             </div>
                             
-                            <p>With a current population of <strong>${population} million</strong>, ${country.name} stands as one of the most significant demographic forces in its region. The country has experienced a population growth rate of <strong>${growthRate}%</strong> annually, reflecting complex social and economic factors at play.</p>
+                            <h4>Demographic Structure</h4>
+                            <p>The median age in ${country.name} is <strong>${country.age} years</strong>, indicating a ${country.age > 40 ? 'maturing' : country.age > 30 ? 'balanced' : 'youthful'} population structure. This demographic profile has significant implications for ${country.age > 40 ? 'pension systems and healthcare' : 'education and employment markets'}.</p>
                             
-                            <h4 class="card-subheading">Demographic Structure</h4>
-                            <p>The age distribution in ${country.name} shows a median age of <strong>${medianAge} years</strong>, indicating a ${medianAge > 35 ? 'maturing' : 'youthful'} population. Approximately <strong>${urbanPopulation}%</strong> of residents live in urban areas, with major cities experiencing rapid expansion and modernization.</p>
+                            <img src="https://source.unsplash.com/random/600x400/?${country.name.toLowerCase()},city,urban" alt="${country.name} city" class="card-image">
                             
-                            <img src="https://source.unsplash.com/random/600x400/?${country.name.toLowerCase()},city" alt="${country.name} city" class="card-image">
+                            <h4>Future Projections</h4>
+                            <p>Demographic analysts project that by 2050, ${country.name} will experience ${country.growth > 0.5 ? 'continued population growth' : country.growth > 0 ? 'population stabilization' : 'gradual population decline'}, with significant implications for ${getEconomicImplications(country)}.</p>
                             
-                            <h4 class="card-subheading">Economic Implications</h4>
-                            <p>Population trends in ${country.name} have profound economic consequences. The <strong>working-age population</strong> represents a significant portion of the total, creating both a demographic dividend and employment challenges. Migration patterns, both internal and international, further complicate the demographic landscape.</p>
+                            <img src="https://source.unsplash.com/random/600x400/?${country.name.toLowerCase()},people,culture" alt="${country.name} people" class="card-image">
                             
-                            <h4 class="card-subheading">Future Projections</h4>
-                            <p>By 2050, experts project that ${country.name}'s population will reach approximately <strong>${(parseFloat(population) * (1 + parseFloat(growthRate)/100 * 27)).toFixed(1)} million</strong>, assuming current trends continue. This growth presents both opportunities for economic expansion and challenges in resource management and infrastructure development.</p>
-                            
-                            <img src="https://source.unsplash.com/random/600x400/?${country.name.toLowerCase()},people" alt="${country.name} people" class="card-image">
-                            
-                            <h4 class="card-subheading">Research Methodology</h4>
-                            <p>This analysis is based on comprehensive data from national census reports, United Nations population projections, and economic indicators. Our research team employed statistical modeling techniques to identify trends and make projections, cross-referencing multiple data sources to ensure accuracy and reliability.</p>
+                            <h4>Research Methodology</h4>
+                            <p>This analysis was conducted using data from the World Bank, United Nations Population Division, and national statistical agencies. Our research team employed demographic projection models and trend analysis to identify key patterns. All population figures are estimates for 2023 with projections based on current fertility, mortality, and migration trends.</p>
                         </div>
-                        
                         <div class="card-footer">
-                            <a href="survey.html" class="card-btn">
-                                <i class="fas fa-poll"></i> We've Got Survey For You
-                            </a>
-                            <a href="https://insightreport.netlify.app" class="card-btn secondary">
-                                <i class="fas fa-share"></i> Share Insights
-                            </a>
+                            <a href="survey.html" class="btn">We've Got Survey For You</a>
+                            <button class="btn btn-outline share-btn" data-country="${country.name}">Share Insight</button>
                         </div>
                     </div>
                 `;
                 
-                cardsContainer.appendChild(card);
+                // Add share functionality
+                const shareBtn = card.querySelector('.share-btn');
+                shareBtn.addEventListener('click', function() {
+                    const countryName = this.getAttribute('data-country');
+                    if (navigator.share) {
+                        navigator.share({
+                            title: `${countryName} Population Insights`,
+                            text: `Check out these fascinating population insights about ${countryName} on InsightReport`,
+                            url: `https://insightreport.netlify.app/insights/${countryName.toLowerCase().replace(' ', '-')}`
+                        });
+                    } else {
+                        // Fallback for browsers that don't support Web Share API
+                        const shareUrl = `https://insightreport.netlify.app/insights/${countryName.toLowerCase().replace(' ', '-')}`;
+                        navigator.clipboard.writeText(shareUrl).then(() => {
+                            alert(`Link to ${countryName} insights copied to clipboard!`);
+                        });
+                    }
+                });
+                
+                return card;
+            }
+
+            // Helper functions for dynamic content
+            function getPopulationRank(population) {
+                if (population > 1000) return "one of the world's most populous nations";
+                if (population > 500) return "a major global population center";
+                if (population > 100) return "a significant population hub";
+                return "an important demographic entity";
+            }
+
+            function getEconomicImplications(country) {
+                if (country.growth > 1) return "economic expansion and infrastructure development";
+                if (country.growth > 0) return "economic stability and gradual market evolution";
+                return "economic restructuring and productivity enhancement";
+            }
+
+            // Search functionality
+            const searchInput = document.querySelector('.search-input');
+            const searchBtn = document.querySelector('.search-btn');
+            const footerSearchInput = document.querySelector('.footer-search-input');
+            
+            function performSearch(query) {
+                const cards = document.querySelectorAll('.insight-card');
+                let hasResults = false;
+                
+                cards.forEach(card => {
+                    const country = card.querySelector('.card-header h3').textContent;
+                    const content = card.querySelector('.card-content').textContent;
+                    
+                    if (country.toLowerCase().includes(query.toLowerCase()) || 
+                        content.toLowerCase().includes(query.toLowerCase())) {
+                        card.style.display = 'block';
+                        hasResults = true;
+                        
+                        // Move matching cards to the top
+                        if (country.toLowerCase().includes(query.toLowerCase())) {
+                            card.parentNode.prepend(card);
+                        }
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                if (!hasResults) {
+                    document.getElementById('insights-container').innerHTML = 
+                        '<p style="grid-column: 1/-1; text-align: center; font-size: 18px; padding: 40px;">No results found for your search. Try another country or topic.</p>';
+                }
+            }
+            
+            searchBtn.addEventListener('click', function() {
+                performSearch(searchInput.value);
             });
-        }
+            
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch(searchInput.value);
+                }
+            });
+            
+            footerSearchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch(footerSearchInput.value);
+                }
+            });
+        });
     </script>
 </body>
-        </html>
+</html>
