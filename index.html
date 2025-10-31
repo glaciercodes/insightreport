@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survey Available This Week | InsightReport</title>
+    <title>InsightReport - Global Data Insights</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6a1b9a;
-            --secondary: #4caf50;
-            --accent: #ff9800;
-            --light: #f5f5f5;
-            --dark: #333;
+            --primary: #6a11cb;
+            --primary-light: #8a2be2;
+            --secondary: #2575fc;
             --white: #ffffff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --text: #444444;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -24,8 +25,8 @@
         }
 
         body {
-            background-color: var(--light);
-            color: var(--dark);
+            background-color: var(--white);
+            color: var(--text);
             line-height: 1.6;
         }
 
@@ -58,252 +59,182 @@
         }
 
         .logo-icon {
-            font-size: 28px;
-            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 20px;
         }
 
         .logo-text {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
-            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        nav ul {
+        /* Menu Icons */
+        .menu-icons {
             display: flex;
-            list-style: none;
-            gap: 25px;
+            gap: 20px;
         }
 
-        nav a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
+        .menu-icon {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 5px;
+            text-decoration: none;
+            color: var(--text);
             transition: color 0.3s;
+            font-size: 14px;
         }
 
-        nav a:hover {
+        .menu-icon i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .menu-icon:hover {
             color: var(--primary);
-        }
-
-        nav i {
-            font-size: 18px;
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--primary), #8e24aa);
-            color: var(--white);
-            padding: 60px 0;
             text-align: center;
-            margin-bottom: 40px;
+            padding: 60px 0 40px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
         }
 
         .hero h1 {
-            font-size: 2.5rem;
+            font-size: 42px;
             margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 18px;
             max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--dark-gray);
+        }
+
+        /* Search and Filter Section */
+        .search-filter {
+            padding: 30px 0;
+            background-color: var(--light-gray);
+        }
+
+        .search-container {
+            display: flex;
+            gap: 15px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
-        /* Survey Cards */
-        .survey-section {
-            padding: 40px 0;
+        .search-bar, .country-select {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
         }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 2rem;
-            color: var(--dark);
+        .search-bar:focus, .country-select:focus {
+            border-color: var(--primary);
+            outline: none;
         }
 
-        .cards-container {
+        /* Insights Grid */
+        .insights-grid {
+            padding: 40px 0 80px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
-            margin-bottom: 60px;
         }
 
-        .card {
-            background: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
+        .insight-card {
+            background-color: var(--white);
+            border-radius: 16px;
             box-shadow: var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+            transition: transform 0.3s;
         }
 
-        .card:hover {
+        .insight-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         .card-header {
-            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: var(--white);
-            text-align: center;
-        }
-
-        .card-header.purple {
-            background-color: var(--primary);
-        }
-
-        .card-header.green {
-            background-color: var(--secondary);
+            padding: 20px;
         }
 
         .card-header h3 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 22px;
+            margin-bottom: 5px;
         }
 
         .card-body {
-            padding: 25px;
+            padding: 20px;
         }
 
-        .card-description {
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 15px 0;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .card-content {
             margin-bottom: 20px;
-            color: #666;
+        }
+
+        .card-content p {
+            margin-bottom: 15px;
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 25px;
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
             border: none;
-            border-radius: 6px;
-            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
             text-decoration: none;
             text-align: center;
         }
 
         .btn:hover {
-            background-color: #4a148c;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.3);
         }
 
-        .btn-green {
-            background-color: var(--secondary);
-        }
-
-        .btn-green:hover {
-            background-color: #388e3c;
-        }
-
-        .btn-accent {
-            background-color: var(--accent);
-        }
-
-        .btn-accent:hover {
-            background-color: #f57c00;
-        }
-
-        /* Survey Steps */
-        .survey-step {
-            display: none;
-        }
-
-        .survey-step.active {
+        .btn-block {
             display: block;
-        }
-
-        .step-title {
-            margin-bottom: 20px;
-            color: var(--primary);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .form-control {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        .step-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-
-        /* Subscribe Section */
-        .subscribe-section {
-            background: linear-gradient(135deg, #ff9800, #ff5722);
-            color: var(--white);
-            padding: 60px 0;
-            text-align: center;
-            border-radius: 12px;
-            margin: 40px 0;
-            display: none;
-        }
-
-        .subscribe-section.active {
-            display: block;
-        }
-
-        .subscribe-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .subscribe-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-        }
-
-        .subscribe-title {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-        }
-
-        .subscribe-description {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-        }
-
-        .subscribe-form {
-            display: flex;
-            gap: 10px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .subscribe-input {
-            flex: 1;
-            padding: 12px 15px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
         }
 
         /* Footer */
         footer {
-            background-color: var(--dark);
+            background-color: var(--dark-gray);
             color: var(--white);
             padding: 50px 0 20px;
         }
@@ -315,10 +246,21 @@
             margin-bottom: 40px;
         }
 
-        .footer-column h4 {
-            font-size: 1.2rem;
+        .footer-column h3 {
+            font-size: 20px;
             margin-bottom: 20px;
-            color: var(--accent);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
         }
 
         .footer-links {
@@ -326,11 +268,11 @@
         }
 
         .footer-links li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .footer-links a {
-            color: #ddd;
+            color: #ccc;
             text-decoration: none;
             transition: color 0.3s;
             display: flex;
@@ -339,35 +281,63 @@
         }
 
         .footer-links a:hover {
-            color: var(--accent);
+            color: var(--white);
         }
 
-        .footer-bottom {
+        .copyright {
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid #444;
-            font-size: 0.9rem;
             color: #aaa;
+            font-size: 14px;
         }
 
-        /* Responsive */
+        /* User Location Banner */
+        .user-location {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 gap: 15px;
             }
 
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-icons {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 40px 0 20px;
             }
 
             .hero h1 {
-                font-size: 2rem;
+                font-size: 28px;
             }
 
-            .subscribe-form {
-                flex-direction: column;
+            .menu-icons {
+                flex-wrap: wrap;
+                justify-content: center;
             }
         }
     </style>
@@ -378,18 +348,33 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-chart-line logo-icon"></i>
-                    <span class="logo-text">InsightReport</span>
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="logo-text">InsightReport</div>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a href="survey.html"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="#"><i class="fas fa-chart-bar"></i> Insights</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
-                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms</a></li>
-                        <li><a href="#"><i class="fas fa-users"></i> About Us</a></li>
-                    </ul>
-                </nav>
+                <div class="menu-icons">
+                    <a href="survey.html" class="menu-icon">
+                        <i class="fas fa-poll"></i>
+                        <span>Survey</span>
+                    </a>
+                    <a href="#" class="menu-icon">
+                        <i class="fas fa-address-card"></i>
+                        <span>About Us</span>
+                    </a>
+                    <a href="#" class="menu-icon">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact Us</span>
+                    </a>
+                    <a href="#" class="menu-icon">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Terms</span>
+                    </a>
+                    <a href="#" class="menu-icon">
+                        <i class="fas fa-bell"></i>
+                        <span>Subscribe</span>
+                    </a>
+                </div>
             </div>
         </div>
     </header>
@@ -397,120 +382,54 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Survey Available This Week</h1>
-            <p>Help us gather valuable insights by participating in our surveys. Your responses help shape better products and services.</p>
+            <h1>Global Economic Insights & Analysis</h1>
+            <p>Discover comprehensive data-driven reports on the world's leading economies. Our insights help businesses and policymakers make informed decisions.</p>
         </div>
     </section>
 
-    <!-- Survey Section -->
-    <section class="survey-section">
+    <!-- Search and Filter Section -->
+    <section class="search-filter">
         <div class="container">
-            <h2 class="section-title">Available Surveys</h2>
-            <div class="cards-container">
-                <!-- General Survey Card -->
-                <div class="card" id="general-card">
-                    <div class="card-header purple">
-                        <h3>General Survey</h3>
-                        <p>For users worldwide</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="survey-step active" id="general-step-1">
-                            <p class="card-description">This survey helps us understand general preferences and trends across different demographics.</p>
-                            <button class="btn" onclick="startSurvey('general')">Get Started</button>
-                        </div>
-                        <div class="survey-step" id="general-step-2">
-                            <h4 class="step-title">About You</h4>
-                            <div class="form-group">
-                                <label for="general-age">What is your age?</label>
-                                <input type="number" id="general-age" class="form-control" placeholder="Enter your age">
-                            </div>
-                            <div class="form-group">
-                                <label for="general-generation">Which generation do you identify with?</label>
-                                <input type="text" id="general-generation" class="form-control" placeholder="e.g., Millennial, Gen Z">
-                            </div>
-                            <div class="step-actions">
-                                <button class="btn" onclick="goToStep('general', 1)">Back</button>
-                                <button class="btn" onclick="goToStep('general', 3)">Next</button>
-                            </div>
-                        </div>
-                        <div class="survey-step" id="general-step-3">
-                            <h4 class="step-title">Food Preferences</h4>
-                            <div class="form-group">
-                                <label for="general-favorite-food">What is your favorite type of cuisine?</label>
-                                <input type="text" id="general-favorite-food" class="form-control" placeholder="e.g., Italian, Asian, etc.">
-                            </div>
-                            <div class="form-group">
-                                <label for="general-eating-habits">How often do you eat out per week?</label>
-                                <input type="text" id="general-eating-habits" class="form-control" placeholder="e.g., 2-3 times">
-                            </div>
-                            <div class="step-actions">
-                                <button class="btn" onclick="goToStep('general', 2)">Back</button>
-                                <button class="btn" onclick="submitSurvey('general')">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Nigerian Survey Card -->
-                <div class="card" id="nigerian-card">
-                    <div class="card-header green">
-                        <h3>For Nigerians</h3>
-                        <p>Exclusive for Nigerian residents</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="survey-step active" id="nigerian-step-1">
-                            <p class="card-description">This survey focuses on specific preferences and trends within Nigeria.</p>
-                            <button class="btn btn-green" onclick="startSurvey('nigerian')">Get Started</button>
-                        </div>
-                        <div class="survey-step" id="nigerian-step-2">
-                            <h4 class="step-title">About You</h4>
-                            <div class="form-group">
-                                <label for="nigerian-age">What is your age?</label>
-                                <input type="number" id="nigerian-age" class="form-control" placeholder="Enter your age">
-                            </div>
-                            <div class="form-group">
-                                <label for="nigerian-generation">Which generation do you identify with?</label>
-                                <input type="text" id="nigerian-generation" class="form-control" placeholder="e.g., Millennial, Gen Z">
-                            </div>
-                            <div class="step-actions">
-                                <button class="btn btn-green" onclick="goToStep('nigerian', 1)">Back</button>
-                                <button class="btn btn-green" onclick="goToStep('nigerian', 3)">Next</button>
-                            </div>
-                        </div>
-                        <div class="survey-step" id="nigerian-step-3">
-                            <h4 class="step-title">Relationship Preferences</h4>
-                            <div class="form-group">
-                                <label for="nigerian-love-language">What is your primary love language?</label>
-                                <input type="text" id="nigerian-love-language" class="form-control" placeholder="e.g., Words of Affirmation, Acts of Service">
-                            </div>
-                            <div class="form-group">
-                                <label for="nigerian-relationship">What do you value most in a relationship?</label>
-                                <input type="text" id="nigerian-relationship" class="form-control" placeholder="e.g., Trust, Communication">
-                            </div>
-                            <div class="step-actions">
-                                <button class="btn btn-green" onclick="goToStep('nigerian', 2)">Back</button>
-                                <button class="btn btn-green" onclick="submitSurvey('nigerian')">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search insights by keyword..." id="searchInput">
+                <select class="country-select" id="countrySelect">
+                    <option value="all">All Countries</option>
+                    <option value="China">China</option>
+                    <option value="United States">United States</option>
+                    <option value="India">India</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Russia">Russia</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="France">France</option>
+                    <option value="South Korea">South Korea</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Netherlands">Netherlands</option>
+                    <option value="Turkey">Turkey</option>
+                    <option value="Iran">Iran</option>
+                    <option value="Mexico">Mexico</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="Nigeria">Nigeria</option>
+                </select>
             </div>
         </div>
     </section>
 
-    <!-- Subscribe Section -->
-    <section class="subscribe-section" id="subscribe-section">
-        <div class="container">
-            <div class="subscribe-content">
-                <i class="fas fa-envelope-open-text subscribe-icon"></i>
-                <h2 class="subscribe-title">Stay Updated!</h2>
-                <p class="subscribe-description">Subscribe to our newsletter to receive the latest insights and survey results directly in your inbox.</p>
-                <form class="subscribe-form" id="subscribe-form">
-                    <input type="email" class="subscribe-input" placeholder="Enter your email address" required>
-                    <button type="submit" class="btn btn-accent">Subscribe</button>
-                </form>
-            </div>
+    <!-- User Location Banner -->
+    <div class="container">
+        <div class="user-location" id="userLocation">
+            <i class="fas fa-map-marker-alt"></i> 
+            <span>Detecting your location to show relevant insights...</span>
         </div>
+    </div>
+
+    <!-- Insights Grid -->
+    <section class="insights-grid container" id="insightsGrid">
+        <!-- Insight cards will be dynamically generated here -->
     </section>
 
     <!-- Footer -->
@@ -518,19 +437,19 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <h4>InsightReport</h4>
-                    <p>Your trusted source for data-driven insights and analytics.</p>
+                    <h3>InsightReport</h3>
+                    <p>Transforming data into actionable insights for better decision making across global markets.</p>
                 </div>
                 <div class="footer-column">
-                    <h4>Quick Links</h4>
+                    <h3>Quick Links</h3>
                     <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="#"><i class="fas fa-chart-bar"></i> Insights</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                        <li><a href="survey.html"><i class="fas fa-poll"></i> Surveys</a></li>
+                        <li><a href="#"><i class="fas fa-address-card"></i> About Us</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h4>Legal</h4>
+                    <h3>Legal</h3>
                     <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
                         <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
@@ -538,176 +457,169 @@
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h4>Connect</h4>
+                    <h3>Connect</h3>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-users"></i> About Us</a></li>
-                        <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
-                        <li><a href="#"><i class="fas fa-handshake"></i> Partnerships</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
+            <div class="copyright">
                 <p>&copy; 2023 InsightReport. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCXqNe_BDdh9WIJ9lyrFPeQ_-733qbXW4s",
-            authDomain: "realinsightreport.firebaseapp.com",
-            projectId: "realinsightreport",
-            storageBucket: "realinsightreport.firebasestorage.app",
-            messagingSenderId: "1083096764833",
-            appId: "1:1083096764833:web:4b526f278471212ba43be0",
-            measurementId: "G-6LHBN68HMH"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const database = getDatabase(app);
-
-        // Make Firebase functions available globally
-        window.firebaseDatabase = database;
-        window.firebaseRef = ref;
-        window.firebaseSet = set;
-    </script>
-
-    <!-- App Script -->
+    <!-- Application Script -->
     <script>
-        // Country detection (simplified for demo)
-        let userCountry = "Unknown";
-        
-        // In a real implementation, you would use a geolocation API
-        // For demo purposes, we'll randomly assign a country
-        const countries = ["Nigeria", "USA", "UK", "Canada", "Germany", "France", "Australia"];
-        userCountry = countries[Math.floor(Math.random() * countries.length)];
-        
-        // Filter cards based on country
         document.addEventListener('DOMContentLoaded', function() {
-            // For demo, show Nigerian card only to Nigerian users
-            if (userCountry !== "Nigeria") {
-                document.getElementById('nigerian-card').style.display = 'none';
-            }
-            
-            // Update the card descriptions to show the country
-            document.querySelectorAll('.card-description').forEach(desc => {
-                desc.innerHTML += ` <br><small><em>Detected country: ${userCountry}</em></small>`;
-            });
-        });
+            // Countries data
+            const countries = [
+                "China", "United States", "India", "Japan", "Germany", 
+                "Russia", "United Kingdom", "Brazil", "France", "South Korea", 
+                "Italy", "Canada", "Spain", "Australia", "Netherlands", 
+                "Turkey", "Iran", "Mexico", "South Africa", "Nigeria"
+            ];
 
-        // Survey navigation functions
-        function startSurvey(type) {
-            goToStep(type, 2);
-        }
-
-        function goToStep(type, stepNumber) {
-            // Hide all steps for this survey type
-            const steps = document.querySelectorAll(`#${type}-card .survey-step`);
-            steps.forEach(step => {
-                step.classList.remove('active');
-            });
-            
-            // Show the requested step
-            document.getElementById(`${type}-step-${stepNumber}`).classList.add('active');
-        }
-
-        function submitSurvey(type) {
-            // Validate all fields
-            let isValid = true;
-            const inputs = document.querySelectorAll(`#${type}-card .form-control`);
-            
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    input.style.borderColor = 'red';
-                } else {
-                    input.style.borderColor = '#ddd';
+            // Sample insight content for each country
+            const insightsData = {
+                "China": {
+                    title: "China's Economic Transformation",
+                    content: "China continues its remarkable economic transformation, shifting from manufacturing-focused growth to innovation-driven development. With massive investments in AI, renewable energy, and biotechnology, the country is positioning itself as a global technology leader. The Belt and Road Initiative continues to expand China's global influence, while domestic consumption grows as the middle class expands. Recent policies focus on sustainable development and reducing economic disparities between urban and rural areas.",
+                    image1: "images/01",
+                    image2: "images/02"
+                },
+                "United States": {
+                    title: "US Economic Resilience and Innovation",
+                    content: "The United States maintains its position as the world's largest economy, driven by technological innovation and strong consumer spending. Silicon Valley continues to lead in AI development, while renewable energy adoption accelerates across states. The labor market shows resilience despite global challenges, with technology and healthcare sectors experiencing significant growth. Infrastructure investments and climate policies are shaping the economic landscape for the coming decade.",
+                    image1: "images/01",
+                    image2: "images/02"
+                },
+                "India": {
+                    title: "India's Digital Revolution",
+                    content: "India's digital economy is experiencing unprecedented growth, with mobile internet penetration reaching rural areas at an accelerating pace. The country's startup ecosystem continues to flourish, producing multiple unicorns each year. Government initiatives in renewable energy and manufacturing are attracting foreign investment, while the services sector maintains its global competitiveness. Demographic advantages position India for sustained economic expansion in the coming years.",
+                    image1: "images/01",
+                    image2: "images/02"
+                },
+                "Japan": {
+                    title: "Japan's Technological Renaissance",
+                    content: "Japan is undergoing a technological renaissance with increased focus on robotics, automation, and sustainable technologies. The aging population continues to drive innovation in healthcare and elderly care solutions. Corporate reforms and digital transformation initiatives are modernizing traditional industries. Despite global economic headwinds, Japan maintains its position as a leader in high-tech manufacturing and quality-focused production.",
+                    image1: "images/01",
+                    image2: "images/02"
+                },
+                "Germany": {
+                    title: "Germany's Industrial Evolution",
+                    content: "Germany's manufacturing sector continues its evolution toward Industry 4.0, integrating AI and IoT technologies into production processes. The automotive industry is transitioning rapidly to electric vehicles, with substantial government and private investment. Renewable energy adoption accelerates as the country works toward its climate goals. Export strength remains a key economic driver, though supply chain diversification efforts are underway.",
+                    image1: "images/01",
+                    image2: "images/02"
                 }
-            });
-            
-            if (!isValid) {
-                alert('Please fill in all fields before submitting.');
-                return;
-            }
-            
-            // Gather survey data
-            const surveyData = {};
-            inputs.forEach(input => {
-                surveyData[input.id] = input.value;
-            });
-            
-            // In a real implementation, you would collect the user's email
-            const userEmail = "user@example.com"; // This would come from authentication
-            
-            // Save to Firebase
-            const db = window.firebaseDatabase;
-            const surveyRef = window.firebaseRef(db, 'surveys/' + type + '/' + Date.now());
-            
-            window.firebaseSet(surveyRef, {
-                country: userCountry,
-                email: userEmail,
-                responses: surveyData,
-                timestamp: new Date().toISOString()
-            }).then(() => {
-                // Show success message and move to subscribe section
-                alert('Thank you for completing the survey!');
-                
-                // Reset the survey card
-                goToStep(type, 1);
-                inputs.forEach(input => {
-                    input.value = '';
-                });
-                
-                // Show subscribe section
-                document.getElementById('subscribe-section').classList.add('active');
-            }).catch((error) => {
-                console.error('Error saving survey data:', error);
-                alert('There was an error submitting your survey. Please try again.');
-            });
-        }
+            };
 
-        // Subscribe form handler
-        document.getElementById('subscribe-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = this.querySelector('input[type="email"]').value;
-            
-            if (!email) {
-                alert('Please enter your email address.');
-                return;
+            // Generate content for all countries (in a real app, this would come from a database)
+            for (let country of countries) {
+                if (!insightsData[country]) {
+                    insightsData[country] = {
+                        title: `${country}'s Economic Outlook`,
+                        content: `${country} continues to develop its economic potential through strategic investments and policy reforms. The country is focusing on key sectors to drive growth and improve living standards for its population. International partnerships and domestic innovation are creating new opportunities across various industries. Economic indicators show promising trends as the nation navigates global challenges and capitalizes on emerging opportunities.`,
+                        image1: "images/01",
+                        image2: "images/02"
+                    };
+                }
             }
+
+            // Detect user's country
+            let userCountry = "United States"; // Default fallback
+            const userLocationElement = document.getElementById('userLocation');
             
-            // Save to Firebase
-            const db = window.firebaseDatabase;
-            const subscribeRef = window.firebaseRef(db, 'subscribers/' + Date.now());
-            
-            window.firebaseSet(subscribeRef, {
-                email: email,
-                country: userCountry,
-                timestamp: new Date().toISOString()
-            }).then(() => {
-                // Show success message
-                alert('Thank you for subscribing!');
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    userCountry = data.country_name;
+                    userLocationElement.innerHTML = `<i class="fas fa-map-marker-alt"></i> Showing insights relevant to your location: <strong>${userCountry}</strong>`;
+                    
+                    // Set the country select to user's country
+                    document.getElementById('countrySelect').value = userCountry;
+                    
+                    // Render insights with user's country first
+                    renderInsights(userCountry);
+                })
+                .catch(error => {
+                    console.error('Error detecting location:', error);
+                    userLocationElement.innerHTML = `<i class="fas fa-map-marker-alt"></i> Location detection failed. Showing global insights.`;
+                    renderInsights("all");
+                });
+
+            // Render insights function
+            function renderInsights(selectedCountry) {
+                const insightsGrid = document.getElementById('insightsGrid');
+                insightsGrid.innerHTML = '';
                 
-                // Clear the form
-                this.reset();
+                // Filter and sort countries
+                let countriesToShow = [...countries];
                 
-                // Hide the subscribe section after a delay
-                setTimeout(() => {
-                    document.getElementById('subscribe-section').classList.remove('active');
-                }, 3000);
-            }).catch((error) => {
-                console.error('Error saving subscriber:', error);
-                alert('There was an error with your subscription. Please try again.');
+                if (selectedCountry !== "all") {
+                    // Move selected country to the front
+                    const index = countriesToShow.indexOf(selectedCountry);
+                    if (index > -1) {
+                        countriesToShow.splice(index, 1);
+                        countriesToShow.unshift(selectedCountry);
+                    }
+                }
+                
+                // Render insight cards
+                countriesToShow.forEach(country => {
+                    const insight = insightsData[country];
+                    const card = document.createElement('div');
+                    card.className = 'insight-card';
+                    card.dataset.country = country;
+                    
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <h3>${insight.title}</h3>
+                            <p>${country}</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-content">
+                                <p>${insight.content}</p>
+                                <div class="card-image">
+                                    <i class="fas fa-image"></i> ${insight.image1}
+                                </div>
+                                <p>Economic indicators show positive trends with growth in key sectors. Policy reforms and international partnerships are creating new opportunities. The country is positioning itself for sustainable development in the coming years.</p>
+                                <div class="card-image">
+                                    <i class="fas fa-image"></i> ${insight.image2}
+                                </div>
+                                <p>Future outlook remains positive as the nation continues to invest in infrastructure, education, and technology. Challenges remain, but the overall trajectory points toward continued economic expansion and improved living standards.</p>
+                            </div>
+                            <a href="survey.html" class="btn btn-block">We've Got Survey For You</a>
+                        </div>
+                    `;
+                    
+                    insightsGrid.appendChild(card);
+                });
+            }
+
+            // Country select change handler
+            document.getElementById('countrySelect').addEventListener('change', function() {
+                renderInsights(this.value);
+            });
+
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const selectedCountry = document.getElementById('countrySelect').value;
+                const cards = document.querySelectorAll('.insight-card');
+                
+                cards.forEach(card => {
+                    const country = card.dataset.country;
+                    const content = card.textContent.toLowerCase();
+                    
+                    // Show card if it matches search and country filter
+                    const matchesSearch = searchTerm === '' || content.includes(searchTerm);
+                    const matchesCountry = selectedCountry === 'all' || country === selectedCountry;
+                    
+                    card.style.display = (matchesSearch && matchesCountry) ? 'block' : 'none';
+                });
             });
         });
     </script>
