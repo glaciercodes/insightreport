@@ -3,66 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survey Available This Week | InsightReport</title>
+    <title>Survey Available This Week - InsightReport</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <style>
         :root {
-            --primary: #6a11cb;
-            --primary-light: #8a2be2;
-            --secondary: #2575fc;
+            --primary: #6a0dad;
+            --secondary: #8a2be2;
+            --accent: #ff3366;
+            --light: #f8f9fa;
+            --dark: #212529;
             --white: #ffffff;
-            --light-gray: #f5f5f5;
-            --dark-gray: #333333;
-            --text: #444444;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --gray: #6c757d;
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
             background-color: var(--white);
-            color: var(--text);
+            color: var(--dark);
             line-height: 1.6;
-            scroll-behavior: smooth;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-
+        
         .container {
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
-
+        
         /* Header Styles */
         header {
             background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
+        
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 0;
         }
-
+        
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
+        
         .logo-icon {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
             width: 40px;
             height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -70,256 +71,299 @@
             color: var(--white);
             font-size: 20px;
         }
-
+        
         .logo-text {
             font-size: 24px;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
         }
-
-        /* Hero Section */
-        .hero {
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 40px 0;
+        }
+        
+        .page-title {
             text-align: center;
-            padding: 60px 0 40px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            margin-bottom: 40px;
         }
-
-        .hero h1 {
-            font-size: 42px;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        
+        .page-title h1 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 10px;
         }
-
-        .hero p {
+        
+        .page-title p {
             font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            color: var(--dark-gray);
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
         }
-
-        /* Survey Card */
-        .survey-section {
-            padding: 40px 0 80px;
-        }
-
+        
+        /* Card Styles */
         .card {
-            background-color: var(--white);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             max-width: 800px;
             margin: 0 auto;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
         .card-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
-            padding: 20px 30px;
+            padding: 25px 30px;
         }
-
+        
         .card-header h2 {
-            font-size: 28px;
-            margin-bottom: 5px;
+            font-size: 24px;
+            margin-bottom: 10px;
         }
-
+        
         .card-body {
             padding: 30px;
         }
-
+        
         .location-info {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding: 15px;
-            background-color: var(--light-gray);
+            background: rgba(106, 13, 173, 0.1);
             border-radius: 10px;
         }
-
+        
         .location-info i {
             color: var(--primary);
             font-size: 20px;
         }
-
+        
         .btn {
             display: inline-block;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--accent);
             color: var(--white);
-            border: none;
-            padding: 12px 30px;
+            padding: 12px 25px;
             border-radius: 30px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
             text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
         }
-
+        
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.3);
+            background: #e02e5a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
         }
-
+        
         .btn-block {
             display: block;
             width: 100%;
-            text-align: center;
         }
-
+        
+        .btn-purple {
+            background: var(--primary);
+        }
+        
+        .btn-purple:hover {
+            background: #5a0a9c;
+        }
+        
         /* Survey Form */
         .survey-form {
             display: none;
         }
-
+        
         .form-group {
             margin-bottom: 25px;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            transition: all 0.3s ease;
         }
-
-        .form-group:focus-within {
-            border-color: var(--primary);
-            background-color: #f0f0f0;
-            box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.1);
-        }
-
+        
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: var(--dark-gray);
+            color: var(--dark);
         }
-
+        
         .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
+            padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 16px;
-            transition: border 0.3s;
             resize: vertical;
             min-height: 100px;
-            font-family: inherit;
-            line-height: 1.5;
+            font-size: 16px;
+            transition: border-color 0.3s;
         }
-
+        
         .form-group textarea:focus {
-            border-color: var(--primary);
             outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.1);
         }
-
-        .form-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 30px;
+        
+        .char-count {
+            text-align: right;
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 5px;
         }
-
+        
+        .char-count.invalid {
+            color: var(--accent);
+        }
+        
         /* Subscribe Section */
         .subscribe-section {
-            padding: 60px 0;
-            background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
-        }
-
-        .subscribe-card {
-            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
-            color: var(--white);
-            border-radius: 16px;
-            padding: 40px;
+            margin-top: 50px;
             text-align: center;
+        }
+        
+        .subscribe-card {
+            background: linear-gradient(135deg, #f8f5ff 0%, #f0e6ff 100%);
+            border-radius: 15px;
+            padding: 40px;
             max-width: 600px;
             margin: 0 auto;
-            box-shadow: var(--shadow);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-
+        
         .subscribe-card h2 {
-            font-size: 32px;
+            color: var(--primary);
             margin-bottom: 15px;
+            font-size: 28px;
         }
-
+        
         .subscribe-card p {
+            color: var(--gray);
             margin-bottom: 25px;
-            font-size: 18px;
-            opacity: 0.9;
+            font-size: 16px;
         }
-
+        
         .subscribe-form {
             display: flex;
             gap: 10px;
-            max-width: 450px;
+            max-width: 400px;
             margin: 0 auto;
         }
-
-        .subscribe-input {
+        
+        .subscribe-form input {
             flex: 1;
-            padding: 12px 20px;
-            border: none;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
             border-radius: 30px;
             font-size: 16px;
+            transition: border-color 0.3s;
         }
-
-        .subscribe-btn {
-            background-color: var(--white);
+        
+        .subscribe-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .message.success {
+            background: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+            border: 1px solid #2ecc71;
+        }
+        
+        .message.error {
+            background: rgba(231, 76, 60, 0.1);
+            color: #c0392b;
+            border: 1px solid #e74c3c;
+        }
+        
+        /* Share Section */
+        .share-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .share-btn {
+            background: var(--white);
             color: var(--primary);
-            border: none;
-            padding: 12px 25px;
+            border: 2px solid var(--primary);
+            padding: 10px 20px;
             border-radius: 30px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
         }
-
-        .subscribe-btn:hover {
-            transform: translateY(-3px);
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark-gray);
+        
+        .share-btn:hover {
+            background: var(--primary);
             color: var(--white);
-            padding: 50px 0 20px;
         }
-
+        
+        /* Footer Styles */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
             margin-bottom: 40px;
         }
-
+        
         .footer-column h3 {
-            font-size: 20px;
+            color: var(--white);
             margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
+            font-size: 18px;
         }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
+        
         .footer-links {
             list-style: none;
         }
-
+        
         .footer-links li {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
-
+        
         .footer-links a {
             color: #ccc;
             text-decoration: none;
@@ -328,306 +372,211 @@
             align-items: center;
             gap: 8px;
         }
-
+        
         .footer-links a:hover {
             color: var(--white);
         }
-
+        
         .copyright {
             text-align: center;
             padding-top: 20px;
-            border-top: 1px solid #444;
-            color: #aaa;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
             font-size: 14px;
         }
-
-        /* Messages */
-        .message {
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin: 15px 0;
-            display: none;
-        }
-
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        /* Menu Icons */
-        .menu-icons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .menu-icon {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text);
-            transition: color 0.3s;
-            font-size: 14px;
-        }
-
-        .menu-icon i {
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        .menu-icon:hover {
-            color: var(--primary);
-        }
-
-        /* Responsive Design */
+        
+        /* Responsive Styles */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 gap: 15px;
             }
-
-            .hero h1 {
-                font-size: 32px;
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
             }
-
+            
             .subscribe-form {
                 flex-direction: column;
             }
-
+            
             .card-body {
                 padding: 20px;
-            }
-
-            .form-footer {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .menu-icons {
-                gap: 15px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero {
-                padding: 40px 0 20px;
-            }
-
-            .hero h1 {
-                font-size: 28px;
-            }
-
-            .subscribe-card {
-                padding: 25px;
-            }
-
-            .subscribe-card h2 {
-                font-size: 26px;
-            }
-
-            .menu-icons {
-                flex-wrap: wrap;
-                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">
-                        <i class="fas fa-chart-bar"></i>
+                        <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="logo-text">InsightReport</div>
                 </div>
-                <div class="menu-icons">
-                    <a href="#" class="menu-icon">
-                        <i class="fas fa-home"></i>
-                        <span>Home</span>
-                    </a>
-                    <a href="#" class="menu-icon">
-                        <i class="fas fa-address-card"></i>
-                        <span>About Us</span>
-                    </a>
-                    <a href="#" class="menu-icon">
-                        <i class="fas fa-envelope"></i>
-                        <span>Contact Us</span>
-                    </a>
-                    <a href="#" class="menu-icon">
-                        <i class="fas fa-file-contract"></i>
-                        <span>Terms</span>
-                    </a>
-                    <a href="#subscribe" class="menu-icon">
-                        <i class="fas fa-bell"></i>
-                        <span>Subscribe</span>
-                    </a>
+                <div class="nav-links">
+                    <a href="survey.html"><i class="fas fa-poll"></i> Survey</a>
+                    <a href="about.html"><i class="fas fa-address-card"></i> About Us</a>
+                    <a href="termsofservice.html"><i class="fas fa-file-contract"></i> Terms of Service</a>
+                    <a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a>
+                    <a href="subscribe.html" id="subscribe-nav"><i class="fas fa-bell"></i> Subscribe</a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <main>
         <div class="container">
-            <h1>Survey Available This Week</h1>
-            <p>Share your insights and help us understand current trends. Your responses will contribute to valuable data analysis and reports.</p>
-        </div>
-    </section>
+            <div class="page-title">
+                <h1>Survey Available This Week</h1>
+                <p>Share your insights and help us understand global trends. Your responses contribute to our comprehensive data analysis.</p>
+            </div>
 
-    <!-- Survey Section -->
-    <section class="survey-section" id="survey">
-        <div class="container">
             <div class="card">
                 <div class="card-header">
-                    <h2>General Survey</h2>
-                    <p>For all users - Share your perspectives</p>
+                    <h2>General Survey (For All Users)</h2>
+                    <p>Help us understand your perspective on online earning trends</p>
                 </div>
                 <div class="card-body">
                     <div class="location-info">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span id="user-location">Detecting your location...</span>
+                        <span id="country-name">Detecting your location...</span>
                     </div>
                     
                     <div id="survey-intro">
-                        <p>This survey contains questions about your experiences and opinions. Please answer all questions thoughtfully.</p>
-                        <button id="get-started" class="btn btn-block" style="margin-top: 20px;">Get Started</button>
+                        <p>This survey focuses on your experiences and opinions regarding online earning opportunities. Your responses will help us analyze global trends and provide better insights.</p>
+                        <button id="get-started-btn" class="btn btn-block">Get Started</button>
                     </div>
                     
                     <form id="survey-form" class="survey-form">
                         <div class="form-group">
-                            <label>What industry or field are you currently working in?</label>
-                            <textarea required minlength="1" placeholder="Type your answer here. Press Enter to move to the next line."></textarea>
+                            <label>What online earning methods have you tried in the past year?</label>
+                            <textarea id="q1" placeholder="Please describe the online earning methods you've explored..."></textarea>
+                            <div class="char-count"><span id="q1-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
-                            <label>What is the biggest challenge you're facing in your work right now?</label>
-                            <textarea required minlength="1" placeholder="Type your answer here. Press Enter to move to the next line."></textarea>
+                            <label>What challenges have you faced while earning money online?</label>
+                            <textarea id="q2" placeholder="Describe any difficulties or obstacles you've encountered..."></textarea>
+                            <div class="char-count"><span id="q2-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
-                            <label>How has technology changed your daily routine in the past year?</label>
-                            <textarea required minlength="1" placeholder="Type your answer here. Press Enter to move to the next line."></textarea>
+                            <label>How has online earning impacted your financial situation?</label>
+                            <textarea id="q3" placeholder="Share how online income has affected your finances..."></textarea>
+                            <div class="char-count"><span id="q3-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
-                            <label>What skill do you believe is most important for success in today's world?</label>
-                            <textarea required minlength="1" placeholder="Type your answer here. Press Enter to move to the next line."></textarea>
+                            <label>What skills have you developed to improve your online earning potential?</label>
+                            <textarea id="q4" placeholder="Describe any skills you've learned or improved..."></textarea>
+                            <div class="char-count"><span id="q4-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
-                            <label>What topic would you like to learn more about in the coming months?</label>
-                            <textarea required minlength="1" placeholder="Type your answer here. Press Enter to move to the next line."></textarea>
+                            <label>What platforms or tools do you find most effective for online work?</label>
+                            <textarea id="q5" placeholder="Mention specific platforms, apps, or tools you use..."></textarea>
+                            <div class="char-count"><span id="q5-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
-                            <label>How do you typically stay informed about industry trends?</label>
-                            <textarea required minlength="1" placeholder="Type your answer here. Press Enter to move to the next line."></textarea>
+                            <label>How do you see the future of online earning evolving?</label>
+                            <textarea id="q6" placeholder="Share your predictions or expectations..."></textarea>
+                            <div class="char-count"><span id="q6-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
-                            <label>What improvement would make the biggest difference in your professional life?</label>
-                            <textarea required minlength="1" placeholder="Type your answer here. Press Enter to move to the next line."></textarea>
+                            <label>What advice would you give to someone starting with online earning?</label>
+                            <textarea id="q7" placeholder="Provide tips or guidance based on your experience..."></textarea>
+                            <div class="char-count"><span id="q7-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
-                            <label>What values are most important to you when choosing products or services?</label>
-                            <textarea required minlength="1" placeholder="Type your answer here. Press Enter to move to the next line."></textarea>
+                            <label>How do you balance online work with other responsibilities?</label>
+                            <textarea id="q8" placeholder="Describe your time management strategies..."></textarea>
+                            <div class="char-count"><span id="q8-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
-                            <label>How do you balance work demands with personal time?</label>
-                            <textarea required minlength="1" placeholder="Type your answer here. Press Enter to move to the next line."></textarea>
+                            <label>What motivates you to continue earning online?</label>
+                            <textarea id="q9" placeholder="Share what drives your online work efforts..."></textarea>
+                            <div class="char-count"><span id="q9-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
-                            <label>What change would you like to see in your community or industry?</label>
-                            <textarea required minlength="1" placeholder="Type your answer here. Press Enter to move to the next line."></textarea>
+                            <label>How do you stay updated with new online earning opportunities?</label>
+                            <textarea id="q10" placeholder="Describe your methods for discovering new opportunities..."></textarea>
+                            <div class="char-count"><span id="q10-count">0</span>/1 characters</div>
                         </div>
                         
-                        <div class="form-footer">
-                            <button type="button" id="back-to-intro" class="btn" style="background: #6c757d;">Back</button>
-                            <button type="submit" class="btn">Submit Survey</button>
-                        </div>
+                        <button type="submit" id="submit-survey" class="btn btn-block btn-purple" disabled>Submit Survey</button>
                     </form>
                     
-                    <div id="survey-message" class="message"></div>
+                    <div id="survey-success" class="message success" style="display: none;">
+                        <i class="fas fa-check-circle"></i> Thank you! Your survey responses have been successfully submitted.
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+            
+          <div class="share-section">
 
-    <!-- Subscribe Section -->
-    <section class="subscribe-section" id="subscribe">
-        <div class="container">
-            <div class="subscribe-card">
-                <h2>Stay Informed</h2>
-                <p>Subscribe to our newsletter to receive the latest insights and reports directly to your inbox.</p>
-                <form id="subscribe-form" class="subscribe-form">
-                    <input type="email" class="subscribe-input" placeholder="Enter your email address" required>
-                    <button type="submit" class="subscribe-btn">Subscribe</button>
-                </form>
-                <div id="subscribe-message" class="message" style="margin-top: 20px;"></div>
+                <button class="share-btn" id="share-survey">
+
+                    <i class="fas fa-share-alt"></i> Share This Survey
+
+                </button>
+
             </div>
+          
+            <div class="subscribe-section">
+                <div class="subscribe-card">
+                    <h2>Stay Informed</h2>
+                    <p>Subscribe to our newsletter to receive the latest insights and survey opportunities.</p>
+                    <form id="subscribe-form" class="subscribe-form">
+                        <input type="email" id="subscribe-email" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                    <div id="subscribe-message" class="message"></div>
+                </div>
+            </div>
+            
+           
         </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>InsightReport</h3>
-                    <p>Transforming data into actionable insights for better decision making.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="#"><i class="fas fa-address-card"></i> About Us</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="survey.html"><i class="fas fa-poll"></i> Surveys</a></li>
+                        <li><a href="about.html"><i class="fas fa-newspaper"></i> Who We Are</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Legal</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
-                        <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
-                        <li><a href="#"><i class="fas fa-cookie"></i> Cookie Policy</a></li>
-                    </ul>
+               
                 </div>
                 <div class="footer-column">
                     <h3>Connect</h3>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                        <li><a href="xavier.html"><i class="fas fa-headset"></i> Support team</a></li>
+                        <li><a href="termsofservice.html"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 InsightReport. All rights reserved.</p>
+                <p>&copy; 2025 InsightReport - Weekly Global Data Analysis. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-        import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        // Your web app's Firebase configuration
+    <script>
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCXqNe_BDdh9WIJ9lyrFPeQ_-733qbXW4s",
             authDomain: "realinsightreport.firebaseapp.com",
@@ -639,167 +588,255 @@
         };
 
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const db = getFirestore(app);
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
 
-        // Make Firebase available globally
-        window.firebaseApp = app;
-        window.firebaseDb = db;
-        window.firebaseCollection = collection;
-        window.firebaseAddDoc = addDoc;
-        window.firebaseGetDocs = getDocs;
-        window.firebaseQuery = query;
-        window.firebaseWhere = where;
-    </script>
-
-    <!-- Application Script -->
-    <script>
+        // DOM elements
+        const getStartedBtn = document.getElementById('get-started-btn');
+        const surveyIntro = document.getElementById('survey-intro');
+        const surveyForm = document.getElementById('survey-form');
+        const submitSurveyBtn = document.getElementById('submit-survey');
+        const surveySuccess = document.getElementById('survey-success');
+        const countryName = document.getElementById('country-name');
+        const subscribeForm = document.getElementById('subscribe-form');
+        const subscribeEmail = document.getElementById('subscribe-email');
+        const subscribeMessage = document.getElementById('subscribe-message');
+        const shareSurveyBtn = document.getElementById('share-survey');
+        const subscribeNav = document.getElementById('subscribe-nav');
+        
+        // Questions array
+        const questions = [
+            "What online earning methods have you tried in the past year?",
+            "What challenges have you faced while earning money online?",
+            "How has online earning impacted your financial situation?",
+            "What skills have you developed to improve your online earning potential?",
+            "What platforms or tools do you find most effective for online work?",
+            "How do you see the future of online earning evolving?",
+            "What advice would you give to someone starting with online earning?",
+            "How do you balance online work with other responsibilities?",
+            "What motivates you to continue earning online?",
+            "How do you stay updated with new online earning opportunities?"
+        ];
+        
+        // User data
+        let userCountry = "Unknown";
+        let userEmail = "";
+        
+        // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            // Detect user country
+            // Detect user's country
+            detectCountry();
+            
+            // Set up character counters for textareas
+            setupCharacterCounters();
+            
+            // Set up event listeners
+            getStartedBtn.addEventListener('click', startSurvey);
+            surveyForm.addEventListener('input', validateSurveyForm);
+            surveyForm.addEventListener('submit', submitSurvey);
+            subscribeForm.addEventListener('submit', handleSubscription);
+            shareSurveyBtn.addEventListener('click', shareSurvey);
+            subscribeNav.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector('.subscribe-section').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            });
+        });
+        
+        // Detect user's country using IP
+        function detectCountry() {
             fetch('https://ipapi.co/json/')
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('user-location').textContent = `Your country: ${data.country_name}`;
-                    window.userCountry = data.country_name;
+                    userCountry = data.country_name;
+                    countryName.textContent = `Your location: ${userCountry}`;
                 })
                 .catch(error => {
-                    console.error('Error detecting location:', error);
-                    document.getElementById('user-location').textContent = 'Country: Unknown';
-                    window.userCountry = 'Unknown';
+                    console.error('Error detecting country:', error);
+                    // Fallback to a free API if the first one fails
+                    fetch('https://api.country.is/')
+                        .then(response => response.json())
+                        .then(data => {
+                            userCountry = data.country;
+                            countryName.textContent = `Your location: ${userCountry}`;
+                        })
+                        .catch(error2 => {
+                            console.error('Error detecting country with fallback:', error2);
+                            countryName.textContent = 'Your location: Unknown';
+                        });
                 });
-            
-            // Survey form handling
-            const getStartedBtn = document.getElementById('get-started');
-            const surveyIntro = document.getElementById('survey-intro');
-            const surveyForm = document.getElementById('survey-form');
-            const backToIntroBtn = document.getElementById('back-to-intro');
-            const surveyMessage = document.getElementById('survey-message');
-            const surveySection = document.getElementById('survey');
-            
-            getStartedBtn.addEventListener('click', function() {
-                surveyIntro.style.display = 'none';
-                surveyForm.style.display = 'block';
-                // Scroll to the top of the survey form
-                surveySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-            
-            backToIntroBtn.addEventListener('click', function() {
-                surveyForm.style.display = 'none';
-                surveyIntro.style.display = 'block';
-                // Scroll to the top of the survey section
-                surveySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-            
-            surveyForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
+        }
+        
+        // Start the survey
+        function startSurvey() {
+            surveyIntro.style.display = 'none';
+            surveyForm.style.display = 'block';
+        }
+        
+        // Set up character counters for all textareas
+        function setupCharacterCounters() {
+            for (let i = 1; i <= 10; i++) {
+                const textarea = document.getElementById(`q${i}`);
+                const counter = document.getElementById(`q${i}-count`);
                 
-                // Validate all fields have at least 1 character
-                const textareas = surveyForm.querySelectorAll('textarea');
-                let allValid = true;
-                
-                textareas.forEach(textarea => {
-                    if (textarea.value.trim().length < 1) {
-                        allValid = false;
-                        textarea.style.borderColor = 'red';
+                textarea.addEventListener('input', function() {
+                    const count = this.value.length;
+                    counter.textContent = count;
+                    
+                    if (count < 1) {
+                        counter.classList.add('invalid');
                     } else {
-                        textarea.style.borderColor = '#ddd';
+                        counter.classList.remove('invalid');
                     }
-                });
-                
-                if (!allValid) {
-                    showMessage(surveyMessage, 'Please answer all questions before submitting.', 'error');
-                    return;
-                }
-                
-                // Collect survey responses
-                const responses = {};
-                textareas.forEach((textarea, index) => {
-                    responses[`question_${index + 1}`] = textarea.value.trim();
-                });
-                
-                try {
-                    // Save to Firebase
-                    await window.firebaseAddDoc(window.firebaseCollection(window.firebaseDb, 'survey_responses'), {
-                        country: window.userCountry || 'Unknown',
-                        responses: responses,
-                        timestamp: new Date()
-                    });
                     
-                    showMessage(surveyMessage, 'Thank you for completing our survey! Your responses have been recorded.', 'success');
-                    surveyForm.reset();
+                    validateSurveyForm();
+                });
+            }
+        }
+        
+        // Validate the survey form
+        function validateSurveyForm() {
+            let allValid = true;
+            
+            for (let i = 1; i <= 10; i++) {
+                const textarea = document.getElementById(`q${i}`);
+                if (textarea.value.length < 1) {
+                    allValid = false;
+                    break;
+                }
+            }
+            
+            submitSurveyBtn.disabled = !allValid;
+        }
+        
+        // Submit the survey
+        function submitSurvey(e) {
+            e.preventDefault();
+            
+            // Collect responses
+            const responses = {};
+            for (let i = 1; i <= 10; i++) {
+                const question = questions[i-1];
+                const answer = document.getElementById(`q${i}`).value;
+                responses[question] = answer;
+            }
+            
+            // Prepare data for Firebase
+            const surveyData = {
+                country: userCountry,
+                email: userEmail || "Not provided",
+                responses: responses,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Save to Firebase
+            db.collection("surveyResponses").add(surveyData)
+                .then((docRef) => {
+                    console.log("Survey submitted with ID: ", docRef.id);
+                    
+                    // Show success message
                     surveyForm.style.display = 'none';
-                    surveyIntro.style.display = 'block';
+                    surveySuccess.style.display = 'block';
                     
-                    // Scroll to the top of the survey section after submission
-                    setTimeout(() => {
-                        surveySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                    
-                    // Reset message after 5 seconds
-                    setTimeout(() => {
-                        surveyMessage.style.display = 'none';
-                    }, 5000);
-                } catch (error) {
-                    console.error('Error saving survey:', error);
-                    showMessage(surveyMessage, 'There was an error submitting your survey. Please try again.', 'error');
-                }
-            });
+                    // Scroll to success message
+                    surveySuccess.scrollIntoView({ behavior: 'smooth' });
+                })
+                .catch((error) => {
+                    console.error("Error submitting survey: ", error);
+                    alert("There was an error submitting your survey. Please try again.");
+                });
+        }
+        
+        // Handle email subscription
+        function handleSubscription(e) {
+            e.preventDefault();
             
-            // Subscribe form handling
-            const subscribeForm = document.getElementById('subscribe-form');
-            const subscribeMessage = document.getElementById('subscribe-message');
+            const email = subscribeEmail.value.trim();
             
-            subscribeForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const email = subscribeForm.querySelector('input[type="email"]').value.trim();
-                
-                if (!email) {
-                    showMessage(subscribeMessage, 'Please enter a valid email address.', 'error');
-                    return;
-                }
-                
-                try {
-                    // Check if email already exists
-                    const q = window.firebaseQuery(
-                        window.firebaseCollection(window.firebaseDb, 'subscribers'), 
-                        window.firebaseWhere('email', '==', email)
-                    );
-                    
-                    const querySnapshot = await window.firebaseGetDocs(q);
-                    
+            if (!email) {
+                showSubscribeMessage("Please enter a valid email address.", "error");
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                showSubscribeMessage("Please enter a valid email address.", "error");
+                return;
+            }
+            
+            // Check if email already exists
+            db.collection("subscribers")
+                .where("email", "==", email)
+                .get()
+                .then((querySnapshot) => {
                     if (!querySnapshot.empty) {
-                        showMessage(subscribeMessage, 'This email is already subscribed to our newsletter.', 'error');
+                        showSubscribeMessage("This email is already subscribed.", "error");
                         return;
                     }
                     
                     // Save to Firebase
-                    await window.firebaseAddDoc(window.firebaseCollection(window.firebaseDb, 'subscribers'), {
+                    return db.collection("subscribers").add({
                         email: email,
-                        country: window.userCountry || 'Unknown',
-                        timestamp: new Date()
+                        country: userCountry,
+                        subscribedAt: new Date().toISOString()
                     });
-                    
-                    showMessage(subscribeMessage, 'Thank you for subscribing! You will receive our latest insights soon.', 'success');
-                    subscribeForm.reset();
-                    
-                    // Reset message after 5 seconds
-                    setTimeout(() => {
-                        subscribeMessage.style.display = 'none';
-                    }, 5000);
-                } catch (error) {
-                    console.error('Error subscribing:', error);
-                    showMessage(subscribeMessage, 'There was an error with your subscription. Please try again.', 'error');
-                }
-            });
+                })
+                .then(() => {
+                    showSubscribeMessage("Thank you for subscribing! You'll receive our latest insights soon.", "success");
+                    subscribeEmail.value = "";
+                    userEmail = email;
+                })
+                .catch((error) => {
+                    console.error("Error subscribing: ", error);
+                    showSubscribeMessage("There was an error processing your subscription. Please try again.", "error");
+                });
+        }
+        
+        // Email validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // Show subscription message
+        function showSubscribeMessage(message, type) {
+            subscribeMessage.textContent = message;
+            subscribeMessage.className = `message ${type}`;
+            subscribeMessage.style.display = 'block';
             
-            // Helper function to show messages
-            function showMessage(element, text, type) {
-                element.textContent = text;
-                element.className = `message ${type}`;
-                element.style.display = 'block';
+            // Scroll to message
+            subscribeMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                subscribeMessage.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Share survey
+        function shareSurvey() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'InsightReport Survey',
+                    text: 'Help Take part in this survey to boost real and verified insights ',
+                    url: window.location.href
+                })
+                .then(() => console.log('Survey shared successfully'))
+                .catch(error => console.log('Error sharing:', error));
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const tempInput = document.createElement('input');
+                tempInput.value = window.location.href;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                
+                alert('Survey link copied to clipboard!');
             }
-        });
+        }
     </script>
 </body>
-                            </html>
+</html>
