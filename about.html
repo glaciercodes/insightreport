@@ -3,66 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Who We Are | InsightReport</title>
+    <title>Who We Are - InsightReport</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6a11cb;
-            --primary-light: #8a2be2;
-            --secondary: #2575fc;
+            --primary: #6a0dad;
+            --secondary: #8a2be2;
+            --accent: #ff3366;
+            --light: #f8f9fa;
+            --dark: #212529;
             --white: #ffffff;
-            --light-gray: #f5f5f5;
-            --dark-gray: #333333;
-            --text: #444444;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --gray: #6c757d;
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
             background-color: var(--white);
-            color: var(--text);
+            color: var(--dark);
             line-height: 1.6;
-            scroll-behavior: smooth;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-
+        
         .container {
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
-
+        
         /* Header Styles */
         header {
             background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
+        
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 0;
         }
-
+        
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
+        
         .logo-icon {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
             width: 40px;
             height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -70,304 +69,280 @@
             color: var(--white);
             font-size: 20px;
         }
-
+        
         .logo-text {
             font-size: 24px;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
         }
-
-        /* Modal Menu */
-        .modal-menu-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: var(--text);
-    cursor: pointer;
-    transition: color 0.3s;
-    position: absolute;
-    right: 20px; /* Adjust based on your container padding */
-    top: 50%;
-    transform: translateY(-50%);
-        }
-        .modal-menu-btn:hover {
-            background: var(--light-gray);
-        }
-
-    
-
-        .modal-menu {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 300px;
-            height: 100%;
-            background-color: var(--white);
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .modal-menu-header {
+        
+        .nav-links {
             display: flex;
-            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            display: flex;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
+            gap: 8px;
+            transition: color 0.3s;
         }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text);
+        
+        .nav-links a:hover {
+            color: var(--primary);
         }
-
-        .modal-nav {
-            list-style: none;
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 40px 0;
         }
-
-        .modal-nav li {
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-title h1 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .page-title p {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Content Sections */
+        .content-section {
+            max-width: 1000px;
+            margin: 0 auto 50px;
+            background: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .content-section h3 {
+            color: var(--secondary);
+            margin: 25px 0 15px;
+            font-size: 22px;
+        }
+        
+        .content-section p {
+            margin-bottom: 20px;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+        
+        .highlight {
+            background-color: rgba(255, 51, 102, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+        
+        .bold-text {
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        /* Founder Section */
+        .founder-section {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            margin: 50px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f5ff 0%, #f0e6ff 100%);
+            border-radius: 15px;
+        }
+        
+        .founder-image {
+            flex: 0 0 300px;
+        }
+        
+        .founder-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .founder-info {
+            flex: 1;
+        }
+        
+        .founder-info h2 {
+            color: var(--primary);
             margin-bottom: 15px;
+            font-size: 28px;
         }
-
-        .modal-nav a {
+        
+        .founder-info h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        /* Values Section */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .value-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .value-card h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
-            text-decoration: none;
-            color: var(--text);
-            font-size: 18px;
-            padding: 10px;
-            border-radius: 8px;
-            transition: all 0.3s;
         }
-
-        .modal-nav a:hover {
-            background-color: var(--light-gray);
-            color: var(--primary);
+        
+        .value-card h4 i {
+            color: var(--accent);
         }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
+        
+        /* Process Section */
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 40px 0;
         }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 80px 0 60px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        
+        .process-step {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
         }
-
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
+        
+        .step-number {
+            flex: 0 0 50px;
+            height: 50px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 20px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            color: var(--dark-gray);
+            font-weight: bold;
         }
-
-        /* About Content */
-        .about-content {
-            padding: 60px 0;
+        
+        .step-content {
+            flex: 1;
         }
-
-        .about-section {
-            margin-bottom: 60px;
-        }
-
-        .about-section h2 {
-            font-size: 32px;
-            margin-bottom: 20px;
+        
+        .step-content h4 {
             color: var(--primary);
-            position: relative;
-            padding-bottom: 10px;
+            margin-bottom: 10px;
+            font-size: 20px;
         }
-
-        .about-section h2::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        
+        /* Rewards Section */
+        .rewards-section {
+            background: linear-gradient(135deg, #f8f5ff 0%, #f0e6ff 100%);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+            text-align: center;
         }
-
-        .about-section p {
+        
+        .rewards-section h2 {
+            color: var(--primary);
             margin-bottom: 20px;
-            font-size: 18px;
+            font-size: 28px;
         }
-
-        .highlight-box {
-            background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
-            border-left: 4px solid var(--primary);
-            padding: 25px;
-            margin: 30px 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .values-grid {
+        
+        .rewards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
             margin-top: 40px;
         }
-
-        .value-card {
-            background-color: var(--white);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            text-align: center;
+        
+        .reward-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s;
         }
-
-        .value-card:hover {
+        
+        .reward-card:hover {
             transform: translateY(-5px);
         }
-
-        .value-icon {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: var(--white);
-            font-size: 30px;
-        }
-
-        .value-card h3 {
-            font-size: 22px;
+        
+        .reward-card i {
+            font-size: 40px;
+            color: var(--accent);
             margin-bottom: 15px;
-            color: var(--dark-gray);
         }
-
-        .founder-section {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            margin-top: 50px;
-            padding: 40px;
-            background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
-            border-radius: 16px;
-        }
-
-        .founder-image {
-            flex: 0 0 300px;
-            height: 350px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 100px;
-        }
-
-        .founder-info {
-            flex: 1;
-        }
-
-        .founder-info h2 {
-            font-size: 32px;
-            margin-bottom: 15px;
+        
+        .reward-card h4 {
             color: var(--primary);
-        }
-
-        .founder-info h3 {
+            margin-bottom: 10px;
             font-size: 20px;
-            margin-bottom: 20px;
-            color: var(--dark-gray);
-            font-weight: 600;
         }
-
-        .founder-info p {
-            margin-bottom: 15px;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--white);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.3);
-        }
-
-        /* Footer */
+        
+        /* Footer Styles */
         footer {
-            background-color: var(--dark-gray);
+            background: var(--dark);
             color: var(--white);
-            padding: 50px 0 20px;
+            padding: 40px 0 20px;
+            margin-top: 50px;
         }
-
+        
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
             margin-bottom: 40px;
         }
-
+        
         .footer-column h3 {
-            font-size: 20px;
+            color: var(--white);
             margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
+            font-size: 18px;
         }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
+        
         .footer-links {
             list-style: none;
         }
-
+        
         .footer-links li {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
-
+        
         .footer-links a {
             color: #ccc;
             text-decoration: none;
@@ -376,281 +351,246 @@
             align-items: center;
             gap: 8px;
         }
-
+        
         .footer-links a:hover {
             color: var(--white);
         }
-
+        
         .copyright {
             text-align: center;
             padding-top: 20px;
-            border-top: 1px solid #444;
-            color: #aaa;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
             font-size: 14px;
         }
-
-        /* Responsive Design */
+        
+        /* Responsive Styles */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 gap: 15px;
             }
-
-            .hero h1 {
-                font-size: 36px;
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
             }
-
+            
             .founder-section {
                 flex-direction: column;
-                text-align: center;
             }
-
+            
             .founder-image {
-                flex: 0 0 250px;
-                height: 250px;
-            }
-
-            .values-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero {
-                padding: 60px 0 40px;
-            }
-
-            .hero h1 {
-                font-size: 32px;
-            }
-
-            .modal-menu {
+                flex: 0 0 auto;
                 width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
             }
-
-            .about-section h2 {
-                font-size: 28px;
+            
+            .content-section {
+                padding: 25px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">
-                        <i class="fas fa-chart-bar"></i>
+                        <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="logo-text">InsightReport</div>
                 </div>
-                <button class="modal-menu-btn" id="modalMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <div class="nav-links">
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                    <a href="survey.html"><i class="fas fa-poll"></i> Survey</a>
+                    <a href="xavier.html"><i class="fas fa-address-card"></i> Founder </a>
+                    <a href="termsofservice.html"><i class="fas fa-file-contract"></i> Terms of Service</a>
+                    <a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a>
+                    <a href="subscribe.html"><i class="fas fa-bell"></i> Subscribe</a>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Modal Menu -->
-    <div class="modal-overlay" id="modalOverlay"></div>
-    <div class="modal-menu" id="modalMenu">
-        <div class="modal-menu-header">
-            <h3>Menu</h3>
-            <button class="close-modal" id="closeModal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <ul class="modal-nav">
-            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="survey.html"><i class="fas fa-poll"></i> Survey</a></li>
-            <li><a href="#"><i class="fas fa-address-card"></i> About Us</a></li>
-            <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
-            <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
-        </ul>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="hero">
+    <main>
         <div class="container">
-            <h1>Who We Are</h1>
-            <p>Transforming Raw Data into Actionable Insights for a Better World</p>
-        </div>
-    </section>
-
-    <!-- About Content -->
-    <main class="container">
-        <div class="about-content">
-            <div class="about-section">
-                <h2>Our Mission</h2>
-                <p>At InsightReport, we believe that data holds the key to understanding our complex world. Founded by Xavier Becon, our platform is dedicated to analyzing and processing raw data from across the globe through meticulous research, comprehensive reviews, and targeted surveys. Our mission is to transform this data into actionable insights that empower individuals, organizations, and governments to make informed decisions.</p>
-                
-                <p>In today's information age, we're surrounded by vast amounts of data, but making sense of it all remains a challenge. That's where we come in. Our team of data scientists, researchers, and analysts work tirelessly to sift through the noise, identify meaningful patterns, and present our findings in ways that are accessible, engaging, and truly useful.</p>
-                
-                <div class="highlight-box">
-                    <p><strong>Every week, InsightReport gifts random subscribers and survey participants</strong> as our way of saying thank you for contributing to our global data ecosystem. These rewards range from exclusive data reports and premium subscriptions to special recognition in our publications.</p>
-                </div>
+            <div class="page-title">
+                <h1>Who We Are</h1>
+                <p>Discover the story behind InsightReport and our mission to transform global data into actionable insights</p>
             </div>
 
-            <div class="about-section">
-                <h2>Our Story</h2>
-                <p>InsightReport began as a passion project in 2018, when Xavier Becon recognized a critical gap in how data was being collected, analyzed, and shared. While working on various research projects across different continents, Xavier noticed that valuable data often remained siloed, inaccessible, or poorly presented—limiting its potential impact.</p>
+            <div class="content-section">
+                <h2>Our Origin Story</h2>
+                <p>InsightReport was born from a simple yet powerful vision: to make sense of the overwhelming amount of data generated across our planet every day. Founded by <span class="bold-text">Xavier Baron</span>, a data scientist with over a decade of experience in global market research, our platform emerged from the realization that while data is abundant, true insight is scarce.</p>
                 
-                <p>Driven by a vision to create a platform where data could truly serve humanity, Xavier assembled a team of like-minded professionals who shared his commitment to data excellence. What started as a small initiative has grown into a global operation with contributors from over 50 countries, all united by a common purpose: to make data work for people, not the other way around.</p>
+                <p>Xavier's journey began during his postgraduate studies in statistical analysis, where he observed a critical gap between raw data collection and practical, actionable intelligence. While working with multinational corporations, he noticed that organizations were drowning in data but starving for insights. This realization sparked the creation of InsightReport - a platform dedicated to bridging this gap through rigorous research, comprehensive reviews, and global surveys.</p>
                 
-                <p>Our journey hasn't been without challenges. From developing robust data collection methodologies to ensuring the ethical use of information, we've continuously evolved our approach. Today, InsightReport stands as a testament to what's possible when curiosity meets capability, and when data is treated not just as numbers, but as stories waiting to be told.</p>
-            </div>
-
-            <div class="about-section">
-                <h2>Our Values</h2>
-                <div class="values-grid">
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3>Data Integrity</h3>
-                        <p>We maintain the highest standards of accuracy and reliability in all our research and reporting.</p>
-                    </div>
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <h3>Global Perspective</h3>
-                        <p>Our insights span continents and cultures, providing a truly worldwide understanding of trends.</p>
-                    </div>
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h3>Community Focus</h3>
-                        <p>We believe in giving back to our community of users through rewards and recognition programs.</p>
-                    </div>
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        <h3>Innovation</h3>
-                        <p>We continuously explore new methodologies and technologies to enhance our data analysis capabilities.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="about-section">
-                <h2>Our Methodology</h2>
-                <p>At the heart of InsightReport is a rigorous, multi-stage methodology that ensures the quality and reliability of our insights. Our process begins with comprehensive data collection from diverse sources, including government databases, academic research, industry reports, and our proprietary survey platform.</p>
-                
-                <p>Once collected, data undergoes a thorough cleaning and validation process where our team identifies and corrects inconsistencies, removes duplicates, and verifies source credibility. This meticulous approach ensures that the insights we generate are built on a foundation of trustworthy information.</p>
-                
-                <p>Our analysis phase employs both quantitative and qualitative techniques, from statistical modeling and machine learning algorithms to expert reviews and contextual interpretation. We believe that numbers tell only part of the story—understanding the human, cultural, and economic contexts behind the data is equally important.</p>
-                
-                <p>Finally, our presentation stage focuses on making complex information accessible and engaging. Through intuitive visualizations, clear narratives, and actionable recommendations, we transform raw data into insights that can drive real-world impact.</p>
-            </div>
-
-            <div class="about-section">
-                <h2>Our Impact</h2>
-                <p>Since our inception, InsightReport has contributed to numerous initiatives and decisions across various sectors. Our population insights have informed public health strategies in developing nations, our economic analyses have guided investment decisions, and our social trend reports have helped organizations better understand and serve their communities.</p>
-                
-                <p>One of our proudest achievements is our weekly reward program, which has distributed over $50,000 in value to our dedicated community members. These rewards not only show our appreciation but also help foster a vibrant ecosystem of data enthusiasts who actively contribute to and benefit from our work.</p>
-                
-                <p>Looking ahead, we're expanding our capabilities in predictive analytics and real-time data processing, with the goal of providing even more timely and relevant insights. We're also developing partnerships with educational institutions to help train the next generation of data professionals.</p>
+                <p>What started as a personal project in 2020 has evolved into a comprehensive data analysis platform serving thousands of users worldwide. Our growth has been fueled by an unwavering commitment to accuracy, transparency, and the belief that data should serve humanity, not confuse it.</p>
             </div>
 
             <div class="founder-section">
                 <div class="founder-image">
-                    <i class="fas fa-user"></i>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Xavier Baron - Founder of InsightReport">
                 </div>
                 <div class="founder-info">
-                    <h2>Xavier Becon</h2>
+                    <h2>Xavier Baron</h2>
                     <h3>Founder & Chief Data Analyst</h3>
-                    <p>Xavier Becon is the visionary behind InsightReport, with over 15 years of experience in data science, statistical analysis, and research methodology. His passion for uncovering patterns in complex datasets began during his postgraduate studies in Computational Statistics at Stanford University.</p>
-                    <p>Prior to founding InsightReport, Xavier led data analytics teams at several multinational corporations, where he developed innovative approaches to transforming business data into strategic insights. His work has been recognized with numerous awards, including the Global Data Innovation Prize in 2017.</p>
-                    <p>Under Xavier's leadership, InsightReport has grown from a concept to a platform serving millions of users worldwide. He remains actively involved in the company's research direction while mentoring the next generation of data professionals.</p>
-                    <p>"Data is more than numbers—it's the story of our world," Xavier often says. "At InsightReport, we're not just analyzing data; we're helping write the next chapter of human understanding."</p>
-                    <a href="#" class="btn" style="margin-top: 20px;">Contact Xavier</a>
+                    <p>Xavier Baron brings over 12 years of experience in data science, statistical analysis, and global market research to InsightReport. Holding advanced degrees in Statistics and Data Analytics from leading institutions, Xavier has dedicated his career to making complex data accessible and meaningful.</p>
+                    
+                    <p>Prior to founding InsightReport, Xavier worked with Fortune 500 companies, government agencies, and international organizations, helping them transform raw data into strategic insights. His expertise spans multiple domains including economic forecasting, consumer behavior analysis, and trend prediction.</p>
+                    
+                    <p>"Data tells stories that numbers alone cannot convey. Our mission is to listen carefully to these stories and share them with the world in ways that inspire action and understanding," says Xavier about his vision for InsightReport.</p>
+                    
+                    <p>Under Xavier's leadership, InsightReport has developed proprietary methodologies for data collection, validation, and analysis that set new standards in the industry for accuracy and reliability.</p>
                 </div>
             </div>
 
-            <div class="about-section">
-                <h2>Join Our Mission</h2>
-                <p>InsightReport is more than just a platform—it's a community of curious minds dedicated to understanding our world through data. Whether you're a casual reader, a dedicated survey participant, or a potential collaborator, there are many ways to get involved with our work.</p>
+            <div class="content-section">
+                <h2>Our Mission & Vision</h2>
+                <p>At InsightReport, our mission is to democratize access to high-quality data insights. We believe that informed decisions should not be the privilege of large corporations with massive research budgets. Through our platform, we aim to empower individuals, small businesses, educators, and organizations of all sizes with the same quality of insights that were previously available only to major enterprises.</p>
                 
-                <p>Participate in our weekly surveys to share your perspectives and contribute to our global dataset. Subscribe to our newsletter to receive curated insights directly in your inbox. Or consider partnering with us on research projects that align with your organization's mission.</p>
-                
-                <p>Together, we can continue to transform raw data into meaningful insights that inform, inspire, and impact lives around the world.</p>
-                
-                <div style="text-align: center; margin-top: 40px;">
-                    <a href="survey.html" class="btn" style="margin-right: 15px;">Take Our Survey</a>
-                    <a href="#" class="btn" style="background: transparent; border: 2px solid var(--primary); color: var(--primary);">Subscribe Now</a>
+                <h3>Our Core Values</h3>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <h4><i class="fas fa-bullseye"></i> Accuracy First</h4>
+                        <p>We prioritize precision and reliability in all our data collection and analysis processes. Every insight we publish undergoes multiple validation checks to ensure it meets our rigorous standards.</p>
+                    </div>
+                    <div class="value-card">
+                        <h4><i class="fas fa-eye"></i> Transparency</h4>
+                        <p>We believe in showing our work. Our methodologies, data sources, and analytical processes are clearly documented and accessible to our community.</p>
+                    </div>
+                    <div class="value-card">
+                        <h4><i class="fas fa-globe"></i> Global Perspective</h4>
+                        <p>Our research spans continents and cultures. We recognize that valuable insights often emerge from understanding diverse perspectives and contexts.</p>
+                    </div>
+                    <div class="value-card">
+                        <h4><i class="fas fa-users"></i> Community Focus</h4>
+                        <p>Our subscribers and survey participants are not just data points - they are partners in our mission to understand global trends and patterns.</p>
+                    </div>
                 </div>
+                
+                <h3>Our Research Methodology</h3>
+                <p>InsightReport employs a multi-layered approach to data analysis that combines quantitative and qualitative research methods. Our process begins with comprehensive data collection from diverse global sources, including:</p>
+                
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Global Surveys</h4>
+                            <p>We design and deploy sophisticated surveys across multiple platforms and regions, ensuring diverse demographic representation. Our surveys are carefully crafted to eliminate bias and capture authentic responses.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Data Aggregation</h4>
+                            <p>We collect data from verified public sources, academic research, government publications, and proprietary databases. All sources undergo rigorous verification before inclusion in our analysis.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Statistical Analysis</h4>
+                            <p>Our team of data scientists applies advanced statistical models and machine learning algorithms to identify patterns, correlations, and trends that might otherwise remain hidden.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Expert Review</h4>
+                            <p>All findings are reviewed by domain experts to ensure contextual accuracy and practical relevance. This human element is crucial for interpreting data within real-world frameworks.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Insight Synthesis</h4>
+                            <p>We transform complex data into clear, actionable insights that our audience can understand and apply. This involves creating visualizations, summaries, and practical recommendations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rewards-section">
+                <h2>Our Appreciation Program</h2>
+                <p>At InsightReport, we believe in giving back to our community. Our subscribers and survey participants are the lifeblood of our research, and we've developed a comprehensive rewards program to show our appreciation.</p>
+                
+                <div class="rewards-grid">
+                    <div class="reward-card">
+                        <i class="fas fa-gift"></i>
+                        <h4>Weekly Gift Cards</h4>
+                        <p>Every week, we randomly select active subscribers and survey participants to receive $100 gift cards. This is our way of saying thank you for contributing to our global research community.</p>
+                    </div>
+                    <div class="reward-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Exclusive Insights</h4>
+                        <p>Subscribers receive early access to our research findings, special reports, and personalized content recommendations based on their interests and participation history.</p>
+                    </div>
+                    <div class="reward-card">
+                        <i class="fas fa-award"></i>
+                        <h4>Recognition Program</h4>
+                        <p>Our most engaged community members receive special recognition, including featured profiles, invitations to exclusive events, and opportunities to influence our research direction.</p>
+                    </div>
+                    <div class="reward-card">
+                        <i class="fas fa-handshake"></i>
+                        <h4>Partnership Opportunities</h4>
+                        <p>Regular participants may be invited to join our research partner program, offering additional benefits and opportunities to collaborate on special projects.</p>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 30px;">Since launching our rewards program, we've distributed over <span class="highlight">$50,000 in gift cards</span> to our community members across 42 countries. Our commitment to rewarding participation reflects our belief that valuable insights deserve valuable recognition.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>Our Impact & Future Vision</h2>
+                <p>Since our inception, InsightReport has published over 200 comprehensive research studies, analyzed data from more than 150 countries, and built a community of over 50,000 active participants. Our insights have been referenced in academic papers, business strategies, and policy discussions worldwide.</p>
+                
+                <h3>Looking Forward</h3>
+                <p>As we continue to grow, our focus remains on expanding our global reach while maintaining the quality and integrity that define our work. Our future initiatives include:</p>
+                
+                <p><span class="bold-text">Regional Research Hubs:</span> Establishing localized research centers in key global regions to better understand and represent diverse perspectives.</p>
+                
+                <p><span class="bold-text">AI-Enhanced Analysis:</span> Developing proprietary artificial intelligence tools to enhance our data processing capabilities while maintaining human oversight and ethical standards.</p>
+                
+                <p><span class="bold-text">Educational Partnerships:</span> Collaborating with academic institutions to advance data literacy and research methodology education worldwide.</p>
+                
+                <p><span class="bold-text">Real-Time Insights Platform:</span> Building a next-generation platform that will provide near real-time insights on emerging global trends and patterns.</p>
+                
+                <h3>Join Our Journey</h3>
+                <p>Whether you're a data enthusiast, a professional seeking insights, or simply curious about global trends, there's a place for you in the InsightReport community. Participate in our surveys, subscribe to our insights, or just explore our published research - every interaction helps us build a more informed world.</p>
+                
+                <p>As Xavier often says, <span class="highlight">"Data without insight is noise, but insight without action is opportunity lost."</span> At InsightReport, we're committed to transforming data into insights and insights into action.</p>
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>InsightReport</h3>
-                    <p>Transforming data into actionable insights for better decision making.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
                     <ul class="footer-links">
                         <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="survey.html"><i class="fas fa-poll"></i> Survey</a></li>
-                        <li><a href="#"><i class="fas fa-address-card"></i> About Us</a></li>
-                        <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
-                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+                        <li><a href="survey.html"><i class="fas fa-poll"></i> Surveys</a></li>
+                        <li><a href="about.html"><i class="fas fa-newspaper"></i> Who We Are</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Connect</h3>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                        <li><a href="xavier.html"><i class="fas fa-headset"></i> Support team</a></li>
+                        <li><a href="termsofservice.html"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
                     </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Newsletter</h3>
-                    <p>Subscribe to receive our latest insights and reports.</p>
-                    <div style="margin-top: 15px;">
-                        <input type="email" placeholder="Your email" style="padding: 10px; border-radius: 4px; border: none; width: 100%; margin-bottom: 10px;">
-                        <button class="btn" style="width: 100%; padding: 10px;">Subscribe</button>
-                    </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 InsightReport. All rights reserved. | insightreport.netlify.app</p>
+                <p>&copy; 2025 InsightReport - Weekly Global Data Analysis. All rights reserved.</p>
             </div>
         </div>
     </footer>
-
-    <script>
-        // Modal Menu Functionality
-        const modalMenuBtn = document.getElementById('modalMenuBtn');
-        const modalMenu = document.getElementById('modalMenu');
-        const modalOverlay = document.getElementById('modalOverlay');
-        const closeModal = document.getElementById('closeModal');
-
-        modalMenuBtn.addEventListener('click', () => {
-            modalMenu.style.display = 'block';
-            modalOverlay.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        });
-
-        closeModal.addEventListener('click', () => {
-            modalMenu.style.display = 'none';
-            modalOverlay.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-
-        modalOverlay.addEventListener('click', () => {
-            modalMenu.style.display = 'none';
-            modalOverlay.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-    </script>
 </body>
 </html>
