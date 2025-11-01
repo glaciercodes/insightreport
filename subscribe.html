@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe - InsightReport</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <style>
+        :root {
+            --primary: #6a0dad;
+            --secondary: #8a2be2;
+            --accent: #ff3366;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --white: #ffffff;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 20px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 40px 0;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-title h1 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .page-title p {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Content Section */
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            background: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .content-section p {
+            margin-bottom: 20px;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+        
+        .benefits-list {
+            list-style: none;
+            margin: 25px 0;
+        }
+        
+        .benefits-list li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .benefits-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .highlight {
+            background-color: rgba(255, 51, 102, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+        
+        /* Subscribe Card */
+        .subscribe-section {
+            margin-top: 50px;
+        }
+        
+        .subscribe-card {
+            background: linear-gradient(135deg, #f8f5ff 0%, #f0e6ff 100%);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 2px solid var(--primary);
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 10px 30px rgba(106, 13, 173, 0.2);
+            }
+            50% {
+                box-shadow: 0 10px 40px rgba(106, 13, 173, 0.4);
+            }
+            100% {
+                box-shadow: 0 10px 30px rgba(106, 13, 173, 0.2);
+            }
+        }
+        
+        .subscribe-card h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        
+        .subscribe-card p {
+            color: var(--gray);
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .subscribe-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .subscribe-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: #e02e5a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .message.success {
+            background: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+            border: 1px solid #2ecc71;
+        }
+        
+        .message.error {
+            background: rgba(231, 76, 60, 0.1);
+            color: #c0392b;
+            border: 1px solid #e74c3c;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: var(--white);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--white);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .subscribe-form {
+                flex-direction: column;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="logo-text">InsightReport</div>
+                </div>
+                <div class="nav-links">
+                    <a href="survey.html"><i class="fas fa-poll"></i> Survey</a>
+                    <a href="about.html"><i class="fas fa-address-card"></i> About Us</a>
+                    <a href="termsofservice.html"><i class="fas fa-file-contract"></i> Terms of Service</a>
+                    <a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a>
+                    <a href="subscribe.html" id="subscribe-nav"><i class="fas fa-bell"></i> Subscribe</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-title">
+                <h1>Join Our Exclusive Community</h1>
+                <p>Subscribe to receive premium insights and exclusive benefits</p>
+            </div>
+
+            <div class="content-section">
+                <h2>Why Subscribe to InsightReport?</h2>
+                <p>When you join our exclusive subscriber community, you'll gain access to premium content and special benefits that aren't available to regular visitors. Our subscribers are the first to receive cutting-edge research findings and data-driven insights that can help you make informed decisions.</p>
+                
+                <p>We're committed to rewarding our loyal subscribers with tangible benefits. Each week, we randomly select subscribers to receive <span class="highlight">$100 gift cards</span> as our way of saying thank you for being part of our community. These gift cards can be used at major retailers and online platforms, giving you additional value beyond the insights we provide.</p>
+                
+                <p>Our subscribers receive early access to all our research reports, special analytical briefings, and personalized content recommendations based on your interests. You'll also be invited to exclusive webinars with our research team and get opportunities to participate in private surveys that shape our future research directions.</p>
+                
+                <ul class="benefits-list">
+                    <li><strong>Weekly gift card drawings</strong> with $100 prizes for active subscribers</li>
+                    <li><strong>Early access</strong> to all research reports and findings</li>
+                    <li><strong>Exclusive analytical briefings</strong> not available to the public</li>
+                    <li><strong>Personalized content recommendations</strong> based on your interests</li>
+                    <li><strong>Invitations to subscriber-only webinars</strong> with our research team</li>
+                    <li><strong>Priority participation</strong> in special research surveys</li>
+                </ul>
+                
+                <p>Don't miss this opportunity to join a community of informed individuals who value data-driven insights. Subscribe today and start receiving these exclusive benefits immediately!</p>
+            </div>
+            
+            <div class="subscribe-section" id="subscribe-section">
+                <div class="subscribe-card">
+                    <h2>Subscribe Now</h2>
+                    <p>Enter your email to join our exclusive community and start receiving special benefits.</p>
+                    <form id="subscribe-form" class="subscribe-form">
+                        <input type="email" id="subscribe-email" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                    <div id="subscribe-message" class="message"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>InsightReport</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="survey.html"><i class="fas fa-poll"></i> Surveys</a></li>
+                        <li><a href="about.html"><i class="fas fa-newspaper"></i> Who We Are</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <ul class="footer-links">
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                        <li><a href="xavier.html"><i class="fas fa-headset"></i> Support team</a></li>
+                        <li><a href="termsofservice.html"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 InsightReport - Weekly Global Data Analysis. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCXqNe_BDdh9WIJ9lyrFPeQ_-733qbXW4s",
+            authDomain: "realinsightreport.firebaseapp.com",
+            projectId: "realinsightreport",
+            storageBucket: "realinsightreport.firebasestorage.app",
+            messagingSenderId: "1083096764833",
+            appId: "1:1083096764833:web:4b526f278471212ba43be0",
+            measurementId: "G-6LHBN68HMH"
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+
+        // DOM elements
+        const subscribeForm = document.getElementById('subscribe-form');
+        const subscribeEmail = document.getElementById('subscribe-email');
+        const subscribeMessage = document.getElementById('subscribe-message');
+        const subscribeSection = document.getElementById('subscribe-section');
+        
+        // User data
+        let userCountry = "Unknown";
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Detect user's country
+            detectCountry();
+            
+            // Set up event listeners
+            subscribeForm.addEventListener('submit', handleSubscription);
+            
+            // Auto-scroll to subscribe section after a short delay
+            setTimeout(() => {
+                scrollToSubscribeSection();
+            }, 800);
+        });
+        
+        // Auto-scroll to subscribe section
+        function scrollToSubscribeSection() {
+            subscribeSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
+            
+            // Add a visual highlight effect
+            subscribeSection.style.transition = 'all 0.5s ease';
+            subscribeSection.style.transform = 'scale(1.02)';
+            
+            setTimeout(() => {
+                subscribeSection.style.transform = 'scale(1)';
+            }, 500);
+        }
+        
+        // Detect user's country using IP
+        function detectCountry() {
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    userCountry = data.country_name;
+                })
+                .catch(error => {
+                    console.error('Error detecting country:', error);
+                    // Fallback to a free API if the first one fails
+                    fetch('https://api.country.is/')
+                        .then(response => response.json())
+                        .then(data => {
+                            userCountry = data.country;
+                        })
+                        .catch(error2 => {
+                            console.error('Error detecting country with fallback:', error2);
+                        });
+                });
+        }
+        
+        // Handle email subscription
+        function handleSubscription(e) {
+            e.preventDefault();
+            
+            const email = subscribeEmail.value.trim();
+            
+            if (!email) {
+                showSubscribeMessage("Please enter a valid email address.", "error");
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                showSubscribeMessage("Please enter a valid email address.", "error");
+                return;
+            }
+            
+            // Check if email already exists
+            db.collection("subscribers")
+                .where("email", "==", email)
+                .get()
+                .then((querySnapshot) => {
+                    if (!querySnapshot.empty) {
+                        showSubscribeMessage("This email is already subscribed. Thank you for your interest!", "error");
+                        return;
+                    }
+                    
+                    // Save to Firebase
+                    return db.collection("subscribers").add({
+                        email: email,
+                        country: userCountry,
+                        subscribedAt: new Date().toISOString(),
+                        subscriptionType: "premium",
+                        giftCardEligible: true
+                    });
+                })
+                .then(() => {
+                    showSubscribeMessage("🎉 Welcome to our exclusive community! You've been successfully subscribed and are now eligible for our weekly gift card drawings. Check your email for a confirmation message.", "success");
+                    subscribeEmail.value = "";
+                })
+                .catch((error) => {
+                    console.error("Error subscribing: ", error);
+                    showSubscribeMessage("There was an error processing your subscription. Please try again.", "error");
+                });
+        }
+        
+        // Email validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // Show subscription message
+        function showSubscribeMessage(message, type) {
+            subscribeMessage.textContent = message;
+            subscribeMessage.className = `message ${type}`;
+            subscribeMessage.style.display = 'block';
+            
+            // Scroll to message
+            subscribeMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Hide message after 8 seconds for success, 5 for error
+            setTimeout(() => {
+                subscribeMessage.style.display = 'none';
+            }, type === 'success' ? 8000 : 5000);
+        }
+    </script>
+</body>
+</html>
