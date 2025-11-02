@@ -244,27 +244,6 @@
             color: var(--accent);
         }
         
-        .progress-container {
-            margin-bottom: 25px;
-            background-color: #f0f0f0;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .progress-bar {
-            height: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        
-        .progress-text {
-            text-align: center;
-            margin-top: 5px;
-            font-size: 14px;
-            color: var(--gray);
-        }
-        
         /* Subscribe Section */
         .subscribe-section {
             margin-top: 50px;
@@ -444,7 +423,8 @@
                     <a href="termsofservice.html"><i class="fas fa-file-contract"></i> Terms of Service</a>
                     <a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a>
                     <a href="subscribe.html" id="subscribe-nav"><i class="fas fa-bell"></i> Subscribe</a>
-                </div>
+
+             </div>
             </div>
         </div>
     </header>
@@ -468,135 +448,69 @@
                     </div>
                     
                     <div id="survey-intro">
-                        <p>This comprehensive survey focuses on your experiences and opinions regarding online earning opportunities. Your detailed responses will help us analyze global trends and provide better insights.</p>
-                        <p><strong>Note:</strong> Each response requires a minimum of 10 words to ensure quality data.</p>
+                        <p>This survey focuses on your experiences and opinions regarding online earning opportunities. Your responses will help us analyze global trends and provide better insights.</p>
                         <button id="get-started-btn" class="btn btn-block">Get Started</button>
                     </div>
                     
                     <form id="survey-form" class="survey-form">
-                        <div class="progress-container">
-                            <div class="progress-bar" id="progress-bar"></div>
-                        </div>
-                        <div class="progress-text" id="progress-text">0/20 questions completed</div>
-                        
                         <div class="form-group">
                             <label>What online earning methods have you tried in the past year?</label>
-                            <textarea id="q1" placeholder="Please describe the online earning methods you've explored in detail..."></textarea>
-                            <div class="char-count"><span id="q1-count">0</span> words (Minimum: 10 words)</div>
+                            <textarea id="q1" placeholder="Please describe the online earning methods you've explored..."></textarea>
+                            <div class="char-count"><span id="q1-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
                             <label>What challenges have you faced while earning money online?</label>
                             <textarea id="q2" placeholder="Describe any difficulties or obstacles you've encountered..."></textarea>
-                            <div class="char-count"><span id="q2-count">0</span> words (Minimum: 10 words)</div>
+                            <div class="char-count"><span id="q2-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
                             <label>How has online earning impacted your financial situation?</label>
                             <textarea id="q3" placeholder="Share how online income has affected your finances..."></textarea>
-                            <div class="char-count"><span id="q3-count">0</span> words (Minimum: 10 words)</div>
+                            <div class="char-count"><span id="q3-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
                             <label>What skills have you developed to improve your online earning potential?</label>
                             <textarea id="q4" placeholder="Describe any skills you've learned or improved..."></textarea>
-                            <div class="char-count"><span id="q4-count">0</span> words (Minimum: 10 words)</div>
+                            <div class="char-count"><span id="q4-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
                             <label>What platforms or tools do you find most effective for online work?</label>
                             <textarea id="q5" placeholder="Mention specific platforms, apps, or tools you use..."></textarea>
-                            <div class="char-count"><span id="q5-count">0</span> words (Minimum: 10 words)</div>
+                            <div class="char-count"><span id="q5-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
                             <label>How do you see the future of online earning evolving?</label>
                             <textarea id="q6" placeholder="Share your predictions or expectations..."></textarea>
-                            <div class="char-count"><span id="q6-count">0</span> words (Minimum: 10 words)</div>
+                            <div class="char-count"><span id="q6-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
                             <label>What advice would you give to someone starting with online earning?</label>
                             <textarea id="q7" placeholder="Provide tips or guidance based on your experience..."></textarea>
-                            <div class="char-count"><span id="q7-count">0</span> words (Minimum: 10 words)</div>
+                            <div class="char-count"><span id="q7-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
                             <label>How do you balance online work with other responsibilities?</label>
                             <textarea id="q8" placeholder="Describe your time management strategies..."></textarea>
-                            <div class="char-count"><span id="q8-count">0</span> words (Minimum: 10 words)</div>
+                            <div class="char-count"><span id="q8-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
                             <label>What motivates you to continue earning online?</label>
                             <textarea id="q9" placeholder="Share what drives your online work efforts..."></textarea>
-                            <div class="char-count"><span id="q9-count">0</span> words (Minimum: 10 words)</div>
+                            <div class="char-count"><span id="q9-count">0</span>/1 characters</div>
                         </div>
                         
                         <div class="form-group">
                             <label>How do you stay updated with new online earning opportunities?</label>
                             <textarea id="q10" placeholder="Describe your methods for discovering new opportunities..."></textarea>
-                            <div class="char-count"><span id="q10-count">0</span> words (Minimum: 10 words)</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>What role does social media play in your online earning activities?</label>
-                            <textarea id="q11" placeholder="Explain how you use social media for earning..."></textarea>
-                            <div class="char-count"><span id="q11-count">0</span> words (Minimum: 10 words)</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>How do you handle taxes and financial planning for your online income?</label>
-                            <textarea id="q12" placeholder="Describe your approach to financial management..."></textarea>
-                            <div class="char-count"><span id="q12-count">0</span> words (Minimum: 10 words)</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>What security measures do you take to protect your online earnings?</label>
-                            <textarea id="q13" placeholder="Explain your security practices and concerns..."></textarea>
-                            <div class="char-count"><span id="q13-count">0</span> words (Minimum: 10 words)</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>How has the pandemic affected your online earning patterns?</label>
-                            <textarea id="q14" placeholder="Describe changes in your online work since COVID-19..."></textarea>
-                            <div class="char-count"><span id="q14-count">0</span> words (Minimum: 10 words)</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>What demographic factors influence your online earning opportunities?</label>
-                            <textarea id="q15" placeholder="Discuss how age, location, or education affect your earnings..."></textarea>
-                            <div class="char-count"><span id="q15-count">0</span> words (Minimum: 10 words)</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>How do you measure success in your online earning endeavors?</label>
-                            <textarea id="q16" placeholder="Explain your criteria for measuring success..."></textarea>
-                            <div class="char-count"><span id="q16-count">0</span> words (Minimum: 10 words)</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>What ethical considerations do you face in online earning?</label>
-                            <textarea id="q17" placeholder="Discuss any ethical dilemmas or considerations..."></textarea>
-                            <div class="char-count"><span id="q17-count">0</span> words (Minimum: 10 words)</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>How do cultural differences impact online earning opportunities?</label>
-                            <textarea id="q18" placeholder="Share your perspective on cultural influences..."></textarea>
-                            <div class="char-count"><span id="q18-count">0</span> words (Minimum: 10 words)</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>What support systems do you rely on for your online work?</label>
-                            <textarea id="q19" placeholder="Describe any communities, mentors, or resources..."></textarea>
-                            <div class="char-count"><span id="q19-count">0</span> words (Minimum: 10 words)</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>How do you envision online earning evolving in the next five years?</label>
-                            <textarea id="q20" placeholder="Share your long-term predictions and hopes..."></textarea>
-                            <div class="char-count"><span id="q20-count">0</span> words (Minimum: 10 words)</div>
+                            <div class="char-count"><span id="q10-count">0</span>/1 characters</div>
                         </div>
                         
                         <button type="submit" id="submit-survey" class="btn btn-block btn-purple" disabled>Submit Survey</button>
@@ -608,10 +522,14 @@
                 </div>
             </div>
             
-            <div class="share-section">
+          <div class="share-section">
+
                 <button class="share-btn" id="share-survey">
+
                     <i class="fas fa-share-alt"></i> Share This Survey
+
                 </button>
+
             </div>
           
             <div class="subscribe-section">
@@ -625,32 +543,14 @@
                     <div id="subscribe-message" class="message"></div>
                 </div>
             </div>
+            
+           
         </div>
     </main>
 
     <footer>
         <div class="container">
             <div class="footer-content">
-              
-               <div class="footer-column">
-
-                    <h3>Follow us on..</h3>
-
-                    <ul class="footer-links">
-
-                        <li><a href="https://www.facebook.com/profile.php?id=61582762929958"><i class="fab fa-facebook"></i> Facebook</a></li>
-
-                        <li><a href="https://x.com/health_hubss?t=j4f-0vi0Sp5hLeecZlxraQ&s=09"><i class="fab fa-twitter"></i> twitter</a></li>
-
-                        <li><a href="https://whatsapp.com/channel/0029VaSor7M0LKZHGVh8872O"><i class="fab fa-whatsapp"></i> whatsapp</a></li>
-                                      <li><a href="https://t.me/+0uDfyWxNHo0wMWZk"><i class="fab fa-telegram"></i> telegram</a></li>
-
-                                      <li><a href="https://www.tiktok.com/@healthhubss?_t=ZM-90uXILoCNyq&_r=1"><i class="fab fa-tiktok"></i> tiktok</a></li>
-                    </ul>
-
-                </div>
-
-            </div>
                 <div class="footer-column">
                     <h3>InsightReport</h3>
                     <ul class="footer-links">
@@ -658,6 +558,8 @@
                         <li><a href="survey.html"><i class="fas fa-poll"></i> Surveys</a></li>
                         <li><a href="about.html"><i class="fas fa-newspaper"></i> Who We Are</a></li>
                     </ul>
+                </div>
+               
                 </div>
                 <div class="footer-column">
                     <h3>Connect</h3>
@@ -704,8 +606,6 @@
         const subscribeMessage = document.getElementById('subscribe-message');
         const shareSurveyBtn = document.getElementById('share-survey');
         const subscribeNav = document.getElementById('subscribe-nav');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
         
         // Questions array
         const questions = [
@@ -718,17 +618,7 @@
             "What advice would you give to someone starting with online earning?",
             "How do you balance online work with other responsibilities?",
             "What motivates you to continue earning online?",
-            "How do you stay updated with new online earning opportunities?",
-            "What role does social media play in your online earning activities?",
-            "How do you handle taxes and financial planning for your online income?",
-            "What security measures do you take to protect your online earnings?",
-            "How has the pandemic affected your online earning patterns?",
-            "What demographic factors influence your online earning opportunities?",
-            "How do you measure success in your online earning endeavors?",
-            "What ethical considerations do you face in online earning?",
-            "How do cultural differences impact online earning opportunities?",
-            "What support systems do you rely on for your online work?",
-            "How do you envision online earning evolving in the next five years?"
+            "How do you stay updated with new online earning opportunities?"
         ];
         
         // User data
@@ -740,8 +630,8 @@
             // Detect user's country
             detectCountry();
             
-            // Set up word counters for textareas
-            setupWordCounters();
+            // Set up character counters for textareas
+            setupCharacterCounters();
             
             // Set up event listeners
             getStartedBtn.addEventListener('click', startSurvey);
@@ -787,55 +677,34 @@
             surveyForm.style.display = 'block';
         }
         
-        // Count words in a string
-        function countWords(text) {
-            return text.trim().split(/\s+/).filter(word => word.length > 0).length;
-        }
-        
-        // Set up word counters for all textareas
-        function setupWordCounters() {
-            for (let i = 1; i <= 20; i++) {
+        // Set up character counters for all textareas
+        function setupCharacterCounters() {
+            for (let i = 1; i <= 10; i++) {
                 const textarea = document.getElementById(`q${i}`);
                 const counter = document.getElementById(`q${i}-count`);
                 
                 textarea.addEventListener('input', function() {
-                    const wordCount = countWords(this.value);
-                    counter.textContent = wordCount;
+                    const count = this.value.length;
+                    counter.textContent = count;
                     
-                    if (wordCount < 10) {
+                    if (count < 1) {
                         counter.classList.add('invalid');
                     } else {
                         counter.classList.remove('invalid');
                     }
                     
                     validateSurveyForm();
-                    updateProgress();
                 });
             }
-        }
-        
-        // Update progress bar and text
-        function updateProgress() {
-            let completed = 0;
-            for (let i = 1; i <= 20; i++) {
-                const textarea = document.getElementById(`q${i}`);
-                if (countWords(textarea.value) >= 10) {
-                    completed++;
-                }
-            }
-            
-            const percentage = (completed / 20) * 100;
-            progressBar.style.width = `${percentage}%`;
-            progressText.textContent = `${completed}/20 questions completed`;
         }
         
         // Validate the survey form
         function validateSurveyForm() {
             let allValid = true;
             
-            for (let i = 1; i <= 20; i++) {
+            for (let i = 1; i <= 10; i++) {
                 const textarea = document.getElementById(`q${i}`);
-                if (countWords(textarea.value) < 10) {
+                if (textarea.value.length < 1) {
                     allValid = false;
                     break;
                 }
@@ -850,7 +719,7 @@
             
             // Collect responses
             const responses = {};
-            for (let i = 1; i <= 20; i++) {
+            for (let i = 1; i <= 10; i++) {
                 const question = questions[i-1];
                 const answer = document.getElementById(`q${i}`).value;
                 responses[question] = answer;
@@ -916,7 +785,7 @@
                     });
                 })
                 .then(() => {
-                    showSubscribeMessage("Thank you for subscribing! to our exclusive community! You've been successfully subscribed and are now eligible for our weekly gift card drawings.👏"", "success");
+                    showSubscribeMessage("Thank you for subscribing! You'll receive our latest insights soon.", "success");
                     subscribeEmail.value = "";
                     userEmail = email;
                 })
