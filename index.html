@@ -398,6 +398,20 @@
             font-size: 14px;
         }
         
+        /* Search Results Styles */
+        .search-highlight {
+            background-color: rgba(255, 215, 0, 0.3);
+            padding: 2px 0;
+            border-radius: 3px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+            font-style: italic;
+        }
+        
         /* Responsive Styles */
         @media (max-width: 768px) {
             .header-nav {
@@ -453,8 +467,8 @@
                     <a href="subscribe.html"><i class="fas fa-bell"></i> Subscribe</a>
                 </div>
                 <div class="search-bar">
-                    <input type="text" placeholder="Search for results...">
-                    <button><i class="fas fa-search"></i></button>
+                    <input type="text" id="searchInput" placeholder="Search for results...">
+                    <button id="searchButton"><i class="fas fa-search"></i></button>
                 </div>
             </div>
         </div>
@@ -466,7 +480,7 @@
         </div>
     </section>
     <main class="container">
-        <article class="article-content">
+        <article class="article-content" id="articleContent">
             <div class="article-meta">
                 <div class="author">
                     Research by <a href="xavier.html">Xavier Baron</a>
@@ -811,21 +825,102 @@
         });
 
         // Search functionality
-        document.querySelector('.search-bar button').addEventListener('click', function() {
-            const searchTerm = document.querySelector('.search-bar input').value;
-            if (searchTerm.trim() !== '') {
-                alert(`Searching for: ${searchTerm}`);
-                // In a real implementation, this would filter articles
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const articleContent = document.getElementById('articleContent');
+        const originalContent = articleContent.innerHTML;
+
+        function performSearch() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            
+            if (searchTerm === '') {
+                // If search is empty, restore original content
+                articleContent.innerHTML = originalContent;
+                return;
+            }
+            
+            // Create a temporary div to work with the original content
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = originalContent;
+            
+            // Find all text nodes in the article content
+            const textNodes = [];
+            const walker = document.createTreeWalker(
+                tempDiv,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+            
+            // Highlight search terms in text nodes
+            textNodes.forEach(textNode => {
+                const parent = textNode.parentNode;
+                if (parent.nodeName === 'SCRIPT' || parent.nodeName === 'STYLE') {
+                    return; // Skip script and style tags
+                }
+                
+                const text = textNode.textContent;
+                const lowerText = text.toLowerCase();
+                
+                if (lowerText.includes(searchTerm)) {
+                    const fragment = document.createDocumentFragment();
+                    let lastIndex = 0;
+                    
+                    // Find all occurrences of the search term
+                    let index = lowerText.indexOf(searchTerm);
+                    while (index !== -1) {
+                        // Add text before the match
+                        if (index > lastIndex) {
+                            fragment.appendChild(document.createTextNode(text.substring(lastIndex, index)));
+                        }
+                        
+                        // Add highlighted match
+                        const highlight = document.createElement('span');
+                        highlight.className = 'search-highlight';
+                        highlight.textContent = text.substring(index, index + searchTerm.length);
+                        fragment.appendChild(highlight);
+                        
+                        lastIndex = index + searchTerm.length;
+                        index = lowerText.indexOf(searchTerm, lastIndex);
+                    }
+                    
+                    // Add remaining text after last match
+                    if (lastIndex < text.length) {
+                        fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
+                    }
+                    
+                    // Replace the original text node with the highlighted version
+                    parent.replaceChild(fragment, textNode);
+                }
+            });
+            
+            // Update the article content with highlighted version
+            articleContent.innerHTML = tempDiv.innerHTML;
+            
+            // Scroll to first highlighted term
+            const firstHighlight = articleContent.querySelector('.search-highlight');
+            if (firstHighlight) {
+                firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Add event listeners for search
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
             }
         });
 
-        document.querySelector('.search-bar input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const searchTerm = this.value;
-                if (searchTerm.trim() !== '') {
-                    alert(`Searching for: ${searchTerm}`);
-                    // In a real implementation, this would filter articles
-                }
+        // Clear search when input is emptied
+        searchInput.addEventListener('input', function() {
+            if (this.value.trim() === '') {
+                articleContent.innerHTML = originalContent;
             }
         });
     </script>
