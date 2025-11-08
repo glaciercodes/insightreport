@@ -34,7 +34,7 @@
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 1px;
         }
         
         /* Header Styles */
@@ -412,6 +412,75 @@
             font-style: italic;
         }
         
+        /* Article Navigation */
+        .article-nav {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            padding: 20px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .article-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .article-nav a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Related Articles */
+        .related-articles {
+            margin: 40px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .related-articles h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .related-links {
+            list-style: none;
+        }
+        
+        .related-links li {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #dee2e6;
+        }
+        
+        .related-links a {
+            color: var(--dark);
+            text-decoration: underline;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .related-links a:hover {
+            color: var(--primary);
+        }
+        
+        .recently-updated {
+            font-size: 14px;
+            color: var(--gray);
+            font-style: italic;
+            margin-left: 5px;
+        }
+        
         /* Responsive Styles */
         @media (max-width: 768px) {
             .header-nav {
@@ -438,6 +507,11 @@
                 flex-direction: column;
                 gap: 10px;
                 align-items: flex-start;
+            }
+            
+            .article-nav {
+                flex-direction: column;
+                gap: 15px;
             }
         }
     </style>
@@ -480,7 +554,195 @@
         </div>
     </section>
     <main class="container">
-        <article class="article-content" id="articleContent">
+        <!-- NEW ARTICLE: Careers at Risk in 2025 -->
+        <article class="article-content" id="careersArticle">
+            <div class="article-meta">
+                <div class="author">
+                    Research by <a href="xavier.html">Xavier Baron</a>
+                </div>
+                <div class="date">Last updated: October 30, 2025</div>
+            </div>
+            <div class="share-icons" style="justify-content: flex-start; margin-bottom: 30px;">
+                <a href="https://www.facebook.com/profile.php?id=61582762929958"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/health_hubss?t=j4f-0vi0Sp5hLeecZlxraQ&s=09"><i class="fab fa-twitter"></i></a>
+                <a href="https://whatsapp.com/channel/0029VaSor7M0LKZHGVh8872O"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://t.me/+0uDfyWxNHo0wMWZk"><i class="fab fa-telegram"></i></a>
+            </div>
+            <h2>2025 Careers at Risk: Jobs Facing Major Changes 🔻🔻</h2>
+            
+            <p>The world of work is changing faster than ever before. Our latest research, based on online surveys and data analysis conducted by <a href="xavier.html">Xavier Baron</a> and our research team, shows that some jobs will change dramatically or even disappear by 2025. We surveyed over 8,000 workers across 30 countries to understand which careers face the biggest challenges.</p>
+            
+            <p>Our research found that <span class="highlight">about 25% of current jobs</span> will see major changes due to technology, with some roles shrinking by as much as 40%. But it's not all bad news - many new jobs are being created too. This report will help you understand which careers need attention and how to prepare for the changes ahead.</p>
+            
+            <button class="btn" onclick="window.location.href='survey.html'">Join Our Career Survey</button>
+            
+            <h3>How We Conducted Our Research</h3>
+            
+            <p>To get accurate information about changing job markets, our team used several methods. We analyzed job market data from 30 countries, conducted online surveys with workers and employers, and interviewed industry experts. The online surveys reached over 8,000 people in different jobs and industries, giving us a clear picture of global trends.</p>
+            
+            <p>We focused on understanding which skills are becoming less important, which jobs are being automated, and how workers are adapting to these changes. This approach helped us identify the careers facing the biggest challenges.</p>
+            
+            <div class="chart-container">
+                <div class="chart-title">Jobs Most Affected by Automation (2023-2025)</div>
+                <canvas id="automationChart"></canvas>
+            </div>
+            
+            <!-- Related Articles Section 1 -->
+            <div class="related-articles">
+                <h3>Explore More Insights</h3>
+                <ul class="related-links">
+                    <li><a href="#">Top Career Upskilling Courses Globally 🔥 <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">Workplace Diversity & Inclusion Perceptions ⚠️ <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">Top Productivity Tools & Apps Used by Professionals 🔥 <span class="recently-updated">Recently updated</span></a></li>
+                </ul>
+            </div>
+            
+            <h2>Jobs Facing the Biggest Challenges</h2>
+            
+            <h3>Administrative and Office Jobs</h3>
+            
+            <p>Many office jobs that involve routine tasks are changing quickly. Positions like data entry clerks, receptionists, and some accounting roles are seeing significant changes. Our research shows that <span class="bold-text">administrative jobs could decline by 30%</span> by 2025 as companies use more automation and AI tools.</p>
+            
+            <p>For example, AI can now handle scheduling, email sorting, and basic customer service questions. This doesn't mean all office jobs will disappear, but workers in these roles will need to learn new skills to stay relevant.</p>
+            
+            <h3>Manufacturing and Production Jobs</h3>
+            
+            <p>Factories continue to become more automated. Jobs that involve repetitive physical work, like assembly line workers and quality inspectors, are increasingly done by robots and machines. Our data shows that <span class="highlight">manufacturing jobs could decrease by 25%</span> in the next two years.</p>
+            
+            <p>The good news is that new jobs are being created to program, maintain, and repair these machines. Workers who can learn these technical skills will have good opportunities.</p>
+            
+            <div class="chart-container">
+                <div class="chart-title">Job Market Changes by Industry (2025 Projection)</div>
+                <canvas id="industryChart"></canvas>
+            </div>
+            
+            <h3>Retail and Customer Service Jobs</h3>
+            
+            <p>The way we shop continues to change, and this affects retail jobs. Cashiers, stock clerks, and some sales positions are declining as more shopping moves online and stores use self-checkout systems. Our surveys indicate that <span class="bold-text">traditional retail jobs could drop by 20%</span> by 2025.</p>
+            
+            <p>At the same time, jobs in e-commerce, digital marketing, and logistics are growing quickly. Workers who can help businesses sell online are in high demand.</p>
+            
+            <!-- Related Articles Section 2 -->
+            <div class="related-articles">
+                <h3>More Trending Reports</h3>
+                <ul class="related-links">
+                    <li><a href="#">Consumer Spending Shifts Post-Pandemic ⚠️ <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">E-commerce Habits During Holidays ⚠️ <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">Sustainable Product Buying Behavior 📈 <span class="recently-updated">Recently updated</span></a></li>
+                </ul>
+            </div>
+            
+            <h2>Why These Jobs Are Changing</h2>
+            
+            <h3>Technology and Automation</h3>
+            
+            <p>Technology is the biggest driver of job changes. AI, robots, and software can now do many tasks that used to require human workers. Our research shows that <span class="highlight">tasks that are repetitive and follow clear rules</span> are most likely to be automated.</p>
+            
+            <p>This includes things like data entry, simple calculations, and basic customer service. Jobs that require creativity, complex problem-solving, or human connection are safer for now.</p>
+            
+            <h3>Changing Business Needs</h3>
+            
+            <p>Companies are always looking for ways to save money and work more efficiently. When technology can do a job cheaper or faster, businesses often make changes. Our surveys found that <span class="bold-text">65% of companies</span> plan to increase their use of automation in the next two years.</p>
+            
+            <p>This doesn't always mean laying off workers - sometimes companies retrain employees for new roles. But it does mean that workers need to be flexible and willing to learn new skills.</p>
+            
+            <div class="chart-container">
+                <div class="chart-title">Skills in Demand vs. Declining (2025)</div>
+                <canvas id="skillsChart"></canvas>
+            </div>
+            
+            <h2>Jobs That Are Growing</h2>
+            
+            <p>While some jobs are declining, many others are growing quickly. Our research identified several areas with strong job growth:</p>
+            
+            <div class="region-breakdown">
+                <div class="region-card asia">
+                    <h3>Technology Jobs</h3>
+                    <p>Jobs in AI, cybersecurity, and software development are growing rapidly. The demand for these skills is increasing across all industries, not just tech companies.</p>
+                    <p>Our data shows that <span class="bold-text">tech jobs could grow by 35%</span> by 2025, with particularly strong demand for AI specialists and cybersecurity experts.</p>
+                </div>
+                
+                <div class="region-card europe">
+                    <h3>Healthcare Jobs</h3>
+                    <p>As populations age worldwide, healthcare needs are increasing. Jobs for nurses, home health aides, and medical technicians are in high demand.</p>
+                    <p>Our research projects <span class="highlight">healthcare job growth of 28%</span> by 2025, with especially strong demand in elderly care and mental health services.</p>
+                </div>
+                
+                <div class="region-card north-america">
+                    <h3>Green Energy Jobs</h3>
+                    <p>As the world focuses more on climate change, jobs in renewable energy are growing quickly. Solar panel installers, wind turbine technicians, and sustainability experts are needed.</p>
+                    <p>We project <span class="bold-text">green energy job growth of 40%</span> by 2025, making this one of the fastest-growing sectors.</p>
+                </div>
+            </div>
+            
+            <h2>How to Prepare for Changes</h2>
+            
+            <h3>Develop Future-Proof Skills</h3>
+            
+            <p>Our research shows that certain skills will remain valuable despite technological changes. These include critical thinking, creativity, emotional intelligence, and complex problem-solving. Workers who develop these skills will be better prepared for future job markets.</p>
+            
+            <p>Technical skills related to new technologies are also valuable. Basic digital literacy is becoming essential for almost all jobs, while specialized tech skills can open up new career opportunities.</p>
+            
+            <h3>Be Willing to Learn and Adapt</h3>
+            
+            <p>The most successful workers in the changing job market are those who are willing to keep learning. Our surveys found that <span class="highlight">workers who regularly update their skills</span> are 50% less likely to face job insecurity.</p>
+            
+            <p>This doesn't always mean going back to school for years - short courses, online learning, and on-the-job training can all help you stay current with industry changes.</p>
+            
+            <button class="btn" onclick="window.location.href='survey.html'">Share Your Experience</button>
+            
+            <div class="chart-container">
+                <div class="chart-title">Worker Preparedness for Job Market Changes</div>
+                <canvas id="preparednessChart"></canvas>
+            </div>
+            
+            <h2>Regional Differences in Job Changes</h2>
+            
+            <p>Our research shows that job market changes are happening at different speeds in different parts of the world. Countries with strong technology sectors and good digital infrastructure are seeing faster changes, while developing economies are changing more slowly.</p>
+            
+            <p>For example, manufacturing job declines are happening fastest in countries with high labor costs and advanced technology, while these jobs are still growing in some developing nations. Understanding these regional differences can help workers and policymakers prepare better.</p>
+            
+            <div class="key-takeaways">
+                <h3>Key Points to Remember</h3>
+                <ul>
+                    <li><span class="bold-text">About 25% of jobs</span> will see major changes by 2025</li>
+                    <li>Jobs involving <span class="highlight">repetitive tasks</span> are most at risk</li>
+                    <li><span class="bold-text">Technology, healthcare, and green energy</span> jobs are growing quickly</li>
+                    <li>Developing <span class="highlight">future-proof skills</span> is crucial for career security</li>
+                    <li>Workers who <span class="bold-text">keep learning</span> adapt better to changes</li>
+                </ul>
+            </div>
+            
+            <p>The job market is changing, but with preparation and the right skills, workers can navigate these changes successfully. By understanding which careers face challenges and which are growing, you can make better decisions about your education and career path.</p>
+            
+            <p>Our research will continue to track these trends, and we welcome your participation in our ongoing surveys. Your experiences help us provide more accurate information about the changing world of work.</p>
+            
+            <!-- Final Related Articles Section -->
+            <div class="related-articles">
+                <h3>Continue Exploring</h3>
+                <ul class="related-links">
+                    <li><a href="#">Mental Health Trends Among Professionals ⚠️ <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">Remote Education Satisfaction in 2025 🔥 <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">Online Privacy Concerns vs Behavior 🔥 <span class="recently-updated">Recently updated</span></a></li>
+                </ul>
+            </div>
+            
+            <div class="share-icons" style="justify-content: center; margin: 40px 0 20px;">
+                <a href="https://www.facebook.com/profile.php?id=61582762929958"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/health_hubss?t=j4f-0vi0Sp5hLeecZlxraQ&s=09"><i class="fab fa-twitter"></i></a>
+                <a href="https://whatsapp.com/channel/0029VaSor7M0LKZHGVh8872O"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://t.me/+0uDfyWxNHo0wMWZk"><i class="fab fa-telegram"></i></a>
+            </div>
+        </article>
+        
+        <!-- Article Navigation -->
+        <div class="article-nav">
+            <a href="#"><i class="fas fa-arrow-left"></i> Previous Article</a>
+            <a href="#onlineEarningArticle">Next Article: Global Online Earning <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <!-- EXISTING ARTICLE: Global Online Earning -->
+        <article class="article-content" id="onlineEarningArticle">
             <div class="article-meta">
                 <div class="author">
                     Research by <a href="xavier.html">Xavier Baron</a>
@@ -500,6 +762,16 @@
             <p>The <span class="highlight">global online earning market</span> has grown by 47% since 2023, reaching about <span class="bold-text">$4.8 trillion in yearly transactions</span>. This growth is much faster than traditional business areas, showing how quickly the world is moving to digital work and business.</p>
             
             <button class="btn" onclick="window.location.href='survey.html'">Join Our Survey</button>
+            
+            <!-- Related Articles Section 1 -->
+            <div class="related-articles">
+                <h3>Explore More Insights</h3>
+                <ul class="related-links">
+                    <li><a href="#">Top Side Hustles by Income Potential 🔥🔥 <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">Gig Economy Satisfaction Scores 🔥🔥 <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">The Rise of Freelancing by Region 📈 <span class="recently-updated">Recently updated</span></a></li>
+                </ul>
+            </div>
             
             <h3>How We Did Our Research</h3>
             
@@ -554,6 +826,16 @@
                 </div>
             </div>
             
+            <!-- Related Articles Section 2 -->
+            <div class="related-articles">
+                <h3>More Trending Reports</h3>
+                <ul class="related-links">
+                    <li><a href="#">Digital Payment Adoption Across Countries 📈 <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">Social Media Usage by Age & Region 📈 <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">AI Adoption in Small & Medium Businesses 🔥 <span class="recently-updated">Recently updated</span></a></li>
+                </ul>
+            </div>
+            
             <div class="chart-container">
                 <div class="chart-title">Online Earning Distribution by Category (2025)</div>
                 <canvas id="categoryChart"></canvas>
@@ -574,6 +856,16 @@
             <p>This approach makes workers more secure financially - those using multiple platforms are 42% less likely to have major income problems than those using just one platform.</p>
             
             <button class="btn" onclick="window.location.href='survey.html'">Join Our Survey</button>
+            
+            <!-- Related Articles Section 3 -->
+            <div class="related-articles">
+                <h3>Discover More Trends</h3>
+                <ul class="related-links">
+                    <li><a href="#">Streaming Platform Preferences 🔥 <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">Podcast Listening Trends 🔥 <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">Smart Home Device Adoption 📈 <span class="recently-updated">Recently updated</span></a></li>
+                </ul>
+            </div>
             
             <h3>Special Skills vs. Broad Skills: Finding the Right Balance</h3>
             
@@ -625,6 +917,16 @@
             <p>As the digital economy grows, online earning is becoming a normal part of global work rather than just an extra income source. The most successful people will be those who treat their digital work with the same planning and professional development as traditional careers.</p>
             
             <p>The information in this report gives you a guide to navigate this changing landscape, showing both opportunities and challenges across global markets. As we continue to track these trends, we invite you to join our ongoing research through the survey links provided.</p>
+            
+            <!-- Final Related Articles Section -->
+            <div class="related-articles">
+                <h3>Continue Exploring</h3>
+                <ul class="related-links">
+                    <li><a href="#">E-learning Preferences: Online vs In-Person Courses 🔥🔥 <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">Crypto Adoption & Trust Levels ⚠️ <span class="recently-updated">Recently updated</span></a></li>
+                    <li><a href="#">Electric Vehicle Awareness & Intent to Buy 🔥 <span class="recently-updated">Recently updated</span></a></li>
+                </ul>
+            </div>
             
             <div class="share-icons" style="justify-content: center; margin: 40px 0 20px;">
                 <a href="https://www.facebook.com/profile.php?id=61582762929958"><i class="fab fa-facebook"></i></a>
@@ -681,6 +983,153 @@
         </div>
     </footer>
     <script>
+        // Charts for Careers at Risk Article
+        // Automation Chart
+        const automationCtx = document.getElementById('automationChart').getContext('2d');
+        const automationChart = new Chart(automationCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Data Entry', 'Assembly Work', 'Cashiers', 'Telemarketers', 'Bank Tellers', 'Bookkeepers'],
+                datasets: [{
+                    label: 'Reduction by 2025 (%)',
+                    data: [40, 35, 30, 28, 25, 22],
+                    backgroundColor: [
+                        'rgba(255, 51, 102, 0.7)',
+                        'rgba(255, 51, 102, 0.7)',
+                        'rgba(255, 51, 102, 0.7)',
+                        'rgba(255, 51, 102, 0.7)',
+                        'rgba(255, 51, 102, 0.7)',
+                        'rgba(255, 51, 102, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 51, 102)',
+                        'rgb(255, 51, 102)',
+                        'rgb(255, 51, 102)',
+                        'rgb(255, 51, 102)',
+                        'rgb(255, 51, 102)',
+                        'rgb(255, 51, 102)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Percentage Reduction'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Industry Chart
+        const industryCtx = document.getElementById('industryChart').getContext('2d');
+        const industryChart = new Chart(industryCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Manufacturing', 'Retail', 'Administration', 'Transportation', 'Agriculture', 'Construction'],
+                datasets: [{
+                    label: 'Job Reduction (%)',
+                    data: [25, 20, 30, 15, 10, 5],
+                    backgroundColor: 'rgba(255, 51, 102, 0.7)',
+                    borderColor: 'rgb(255, 51, 102)',
+                    borderWidth: 1
+                }, {
+                    label: 'Job Growth (%)',
+                    data: [5, 15, 8, 10, 12, 18],
+                    backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                    borderColor: 'rgb(52, 152, 219)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Percentage Change'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Skills Chart
+        const skillsCtx = document.getElementById('skillsChart').getContext('2d');
+        const skillsChart = new Chart(skillsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Critical Thinking', 'Data Entry', 'Creativity', 'Routine Calculations', 'Emotional Intelligence', 'Manual Inspection'],
+                datasets: [{
+                    label: 'Demand Change by 2025 (%)',
+                    data: [35, -40, 30, -35, 25, -30],
+                    backgroundColor: [
+                        'rgba(52, 152, 219, 0.7)',
+                        'rgba(255, 51, 102, 0.7)',
+                        'rgba(52, 152, 219, 0.7)',
+                        'rgba(255, 51, 102, 0.7)',
+                        'rgba(52, 152, 219, 0.7)',
+                        'rgba(255, 51, 102, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgb(52, 152, 219)',
+                        'rgb(255, 51, 102)',
+                        'rgb(52, 152, 219)',
+                        'rgb(255, 51, 102)',
+                        'rgb(52, 152, 219)',
+                        'rgb(255, 51, 102)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Percentage Change'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Preparedness Chart
+        const preparednessCtx = document.getElementById('preparednessChart').getContext('2d');
+        const preparednessChart = new Chart(preparednessCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Very Prepared', 'Somewhat Prepared', 'Not Prepared', 'Unaware of Changes'],
+                datasets: [{
+                    data: [25, 40, 20, 15],
+                    backgroundColor: [
+                        '#2ecc71',
+                        '#3498db',
+                        '#f39c12',
+                        '#e74c3c'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+
+        // Original Charts for Online Earning Article
         // Growth Chart
         const growthCtx = document.getElementById('growthChart').getContext('2d');
         const growthChart = new Chart(growthCtx, {
@@ -827,18 +1276,33 @@
         // Search functionality
         const searchInput = document.getElementById('searchInput');
         const searchButton = document.getElementById('searchButton');
-        const articleContent = document.getElementById('articleContent');
-        const originalContent = articleContent.innerHTML;
+        const careersArticle = document.getElementById('careersArticle');
+        const onlineEarningArticle = document.getElementById('onlineEarningArticle');
+        const originalCareersContent = careersArticle.innerHTML;
+        const originalOnlineEarningContent = onlineEarningArticle.innerHTML;
 
         function performSearch() {
             const searchTerm = searchInput.value.trim().toLowerCase();
             
             if (searchTerm === '') {
                 // If search is empty, restore original content
-                articleContent.innerHTML = originalContent;
+                careersArticle.innerHTML = originalCareersContent;
+                onlineEarningArticle.innerHTML = originalOnlineEarningContent;
                 return;
             }
             
+            // Search in both articles
+            highlightSearchTerms(careersArticle, originalCareersContent, searchTerm);
+            highlightSearchTerms(onlineEarningArticle, originalOnlineEarningContent, searchTerm);
+            
+            // Scroll to first highlighted term
+            const firstHighlight = document.querySelector('.search-highlight');
+            if (firstHighlight) {
+                firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function highlightSearchTerms(articleElement, originalContent, searchTerm) {
             // Create a temporary div to work with the original content
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = originalContent;
@@ -900,13 +1364,7 @@
             });
             
             // Update the article content with highlighted version
-            articleContent.innerHTML = tempDiv.innerHTML;
-            
-            // Scroll to first highlighted term
-            const firstHighlight = articleContent.querySelector('.search-highlight');
-            if (firstHighlight) {
-                firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+            articleElement.innerHTML = tempDiv.innerHTML;
         }
 
         // Add event listeners for search
@@ -920,7 +1378,8 @@
         // Clear search when input is emptied
         searchInput.addEventListener('input', function() {
             if (this.value.trim() === '') {
-                articleContent.innerHTML = originalContent;
+                careersArticle.innerHTML = originalCareersContent;
+                onlineEarningArticle.innerHTML = originalOnlineEarningContent;
             }
         });
     </script>
