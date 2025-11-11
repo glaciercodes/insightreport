@@ -42,7 +42,11 @@
   <lastmod>2025-11-11T13:25:50+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-
-
+<url>
+  <loc>https://insightreport.netlify.app/result</loc>
+  <lastmod>2025-11-11T13:25:50+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
 
 </urlset>
+
